@@ -2,12 +2,16 @@
 
 ![wowowo](http://static.fjcdn.com/gifs/Trippy_c2d391_2720253.gif)
 
-### Version de Ionic 3 ###
+## Dependencias
+
++ Firebase **4.1.3** -> npm install firebase@4.1.3
+
+### Version exacta de Ionic 3 ###
 
 global packages:
 
-    @ionic/cli-utils : 1.0.0-rc.2
-    Ionic CLI        : 3.0.0-rc.2
+    @ionic/cli-utils : 1.5.0
+    Ionic CLI        : 3.5.0
 
 System:
 
@@ -16,3 +20,11 @@ System:
     Xcode      : not installed
     ios-deploy : not installed
     ios-sim    : not installed
+    npm        : 5.0.0
+
+
+
+## Clave Ionic View ##
+
+072d4f52
+
