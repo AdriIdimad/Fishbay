@@ -1,26 +1,30 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# README #
 
-## How to use this template
+![wowowo](http://static.fjcdn.com/gifs/Trippy_c2d391_2720253.gif)
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Dependencias/Instalaciones
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
++ npm install firebase angularfire2 --save
 
-### With the Ionic CLI:
+### Version exacta de Ionic 3 ###
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+global packages:
 
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
-```
+    @ionic/cli-utils : 1.5.0
+    Ionic CLI        : 3.5.0
 
-Then, to run it, cd into `myBlank` and run:
+System:
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
+    Node       : v6.10.1
+    OS         : Windows 10
+    Xcode      : not installed
+    ios-deploy : not installed
+    ios-sim    : not installed
+    npm        : 5.0.0
 
-Substitute ios for android if not on a Mac.
 
+
+## Clave Ionic View ##
+
+
+![mira arriba](https://image.ibb.co/hxONnv/ezgif_com_rotate.gif)
