@@ -5,6 +5,7 @@
 ## Dependencias/Instalaciones
 
 + npm install firebase angularfire2 --save
++ npm install promise-polyfill --save-exact
 
 ### Version exacta de Ionic 3 ###
 
