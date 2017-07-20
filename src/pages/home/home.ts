@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 
+/**
+ * Generated class for the HomePage tabs.
+ *
+ * See https://angular.io/docs/ts/latest/guide/dependency-injection.html for
+ * more info on providers and Angular DI.
+ */
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -8,8 +14,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  izqRoot = 'IzqPage'
+  cntRoot = 'CntPage'
+  derRoot = 'DerPage'
 
-  }
+
+  constructor(public navCtrl: NavController) {}
 
 }
