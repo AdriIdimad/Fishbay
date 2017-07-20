@@ -1,10 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "Fishbay",
   "app_id": "",
-=======
-  "name": "applanzarote",
-  "app_id": "ccdb25e7",
->>>>>>> 9e4c7c9917789c08ca35c44ff6b499e89c122eb5
   "type": "ionic-angular"
 }
