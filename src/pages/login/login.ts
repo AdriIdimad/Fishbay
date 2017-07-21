@@ -45,4 +45,8 @@ export class LoginPage {
     this.navCtrl.push('RegisterPage');
   }
 
+  lostpass(){
+    this.navCtrl.push('LostpassPage')
+  }
+
 }
