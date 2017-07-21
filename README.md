@@ -6,6 +6,7 @@
 
 + npm install firebase angularfire2 --save
 + npm install promise-polyfill --save-exact
++ ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="1979552525599427" --variable APP_NAME="FISHBAY"
 
 ### Version exacta de Ionic 3 ###
 
