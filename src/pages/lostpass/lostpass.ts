@@ -1,6 +1,7 @@
+import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage, AlertController,ToastController } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 
 /**
@@ -15,10 +16,11 @@ import { AngularFireAuth } from "angularfire2/auth";
   templateUrl: 'lostpass.html',
 })
 export class LostpassPage {
+  [x: string]: any;
 
   user = {} as User;
 
-  constructor(public alertCtrl: AlertController,private toastCtrl: ToastController,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public fallo: Funciones_utilesProvider,public alertCtrl: AlertController,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams) {
   }
   
   doAlert() {
@@ -31,14 +33,6 @@ export class LostpassPage {
     this.navCtrl.push('LoginPage');
   }
 
-  avisoerror(msg: string){
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'bottom'});
-      toast.present();
-  }
-      
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LostpassPage');
@@ -53,10 +47,11 @@ export class LostpassPage {
     }catch(e){
       let error: string= e.code;
       if(error == "auth/invalid-email"){
-        this.avisoerror("El formato del email es incorrecto.");
+        this.fallo.aviso_error("El formato del email es incorrecto.");
 
       }else if(error= "auth/user-not-found"){
-        this.avisoerror("El email introducido no corresponde a ningún usuario.");
+        this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
+        
 
       }
     
