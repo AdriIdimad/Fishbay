@@ -37,7 +37,7 @@ export class LoginPage {
     })
   }
 
-
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -57,5 +57,10 @@ export class LoginPage {
   register(){
     this.navCtrl.push('RegisterPage');
   }
+
+    lostpass(){
+    this.navCtrl.push('LostpassPage')
+  }
+
 
 }

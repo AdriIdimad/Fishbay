@@ -9,6 +9,8 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import {Facebook} from '@ionic-native/facebook';
 import firebase from 'firebase';
 import { MyApp } from './app.component';
+import { Funciones_utilesProvider } from '../providers/funciones_utiles/funciones_utiles';
+import { HttpModule } from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { MyApp } from './app.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule
