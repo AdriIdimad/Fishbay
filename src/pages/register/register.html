@@ -15,7 +15,27 @@
 
 <ion-content padding>
 <ion-item class="no-left-padding">
-  <ion-label stacked>Usuario</ion-label>
+  <ion-label stacked>Nombre</ion-label>
+  <ion-input type="text" [(ngModel)]="user.nombre"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked>Apellido</ion-label>
+  <ion-input type="text" [(ngModel)]="user.apellido"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked>Edad</ion-label>
+  <ion-input type="text" [(ngModel)]="user.edad"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked>Ciudad</ion-label>
+  <ion-input type="text" [(ngModel)]="user.ciudad"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked>Email</ion-label>
   <ion-input type="text" [(ngModel)]="user.email"></ion-input>
 </ion-item>
 
