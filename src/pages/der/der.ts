@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
-
+import {Facebook} from '@ionic-native/facebook';
+import { AngularFireAuth} from "angularfire2/auth";
 /**
  * Generated class for the DerPage page.
  *
@@ -14,11 +15,24 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
 })
 export class DerPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  usuario= {};
+
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DerPage');
+  }
+
+  getInfo(){
+    this.Facebook.api('/me?fields=id,name,email,first_name,picture,last_name,gender',['public_profile','email'])
+    .then(data=>{
+      console.log(data);
+      this.usuario = data;
+    })
+    .catch(error =>{
+      console.error( error );
+    });
   }
 
 }
