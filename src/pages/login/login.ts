@@ -29,6 +29,7 @@ export class LoginPage {
         const fc=firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
         firebase.auth().signInWithCredential(fc).then(fs=>{
           alert("firebase sec")
+          
       }).catch(err=>{
         alert("firebase erro")
       })
@@ -61,6 +62,5 @@ export class LoginPage {
     lostpass(){
     this.navCtrl.push('LostpassPage')
   }
-
 
 }
