@@ -31,6 +31,7 @@ import { HttpModule } from "@angular/http";
     StatusBar,
     SplashScreen,
     Facebook,
+    Funciones_utilesProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

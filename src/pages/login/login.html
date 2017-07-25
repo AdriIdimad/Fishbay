@@ -14,19 +14,18 @@
 
 
 <ion-content padding>
-<ion-item>
-  <ion-label floating>Usuario</ion-label>
+<ion-item class="no-left-padding">
+  <ion-label stacked>Email</ion-label>
   <ion-input type="text" [(ngModel)]="user.email"></ion-input>
 </ion-item>
 
-<ion-item>
-  <ion-label floating>Contraseña</ion-label>
+<ion-item class="no-left-padding">
+  <ion-label stacked>Contraseña</ion-label>
   <ion-input type="password" [(ngModel)]="user.password"></ion-input>
 </ion-item>
 
-<button ion-button (click)="login(user)" color="secondary" full>Login</button>
-<button ion-button (click)="lostpass()" color="danger" full>Recuperar contraseña</button>
-<button ion-button (click)="register()" full>Registrarse</button>
+<button icon-left ion-button (click)="login(user)" color="secondary" full><ion-icon name="ios-paper-plane"></ion-icon>Login</button>
+<button icon-left ion-button (click)="register()" full><ion-icon name="ios-paper"></ion-icon>Registrarse</button>
 
 <br>
 
@@ -37,3 +36,7 @@
 </button>
 
 </ion-content>
+
+<ion-footer >
+  <button ion-button (click)="lostpass()" color="danger" clear full>Recuperar contraseña</button>
+</ion-footer>

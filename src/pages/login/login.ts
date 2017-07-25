@@ -1,3 +1,4 @@
+import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -20,7 +21,7 @@ export class LoginPage {
   user = {} as User;
   
 
-  constructor(private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook) {
+  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook) {
   }
 
 
@@ -28,7 +29,7 @@ export class LoginPage {
       this.Facebook.login(['email']).then(res=>{
         const fc=firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
         firebase.auth().signInWithCredential(fc).then(fs=>{
-          alert("firebase sec")
+          this.navCtrl.push('HomePage');
       }).catch(err=>{
         alert("firebase erro")
       })
@@ -48,7 +49,16 @@ export class LoginPage {
       const result = await this.ofAuth.auth.signInWithEmailAndPassword(user.email,user.password);
       this.navCtrl.push('HomePage');
     }catch(e){
-      console.error(e);
+      let error: string= e.code;
+      if(error == "auth/invalid-email"){
+        this.fallo.aviso_error("El formato del email es incorrecto.");
+      }else if(error=="auth/user-not-found"){
+        this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
+      }else if(error=="auth/wrong-password"){
+        this.fallo.aviso_error("Contraseña incorrecta");
+      }else if(error=="auth/argument-error"){
+        this.fallo.aviso_error("Los campos email y contraseña estan vacios.")      }
+      
     }
     
 

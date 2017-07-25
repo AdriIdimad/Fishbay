@@ -1,3 +1,4 @@
+import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from "../../models/user";
@@ -14,7 +15,7 @@ export class RegisterPage {
 
   user = {} as User;
 
-  constructor(private ofAuth: AngularFireAuth,private toastCtrl: ToastController,
+  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,private toastCtrl: ToastController,
     public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -28,13 +29,17 @@ export class RegisterPage {
       const result = await this.ofAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
       console.log(result);
     }catch(e){
-      console.error(e.message);
-      var msg = e.message;
-      let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'top'});
-      toast.present();
+      let error: string= e.code;
+      if(error == "auth/invalid-email"){
+        this.fallo.aviso_error("El formato del email es incorrecto.");
+      }else if(error=="auth/user-not-found"){
+        this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
+      }else if(error=="auth/wrong-password"){
+        this.fallo.aviso_error("Contraseña incorrecta");
+      }else if(error=="auth/argument-error"){
+        this.fallo.aviso_error("Los campos email y contraseña estan vacios.")
+      }
+      
     }
   }
 
