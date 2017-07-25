@@ -6,7 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AngularFireAuthModule } from "angularfire2/auth";
-
+import {Facebook} from '@ionic-native/facebook';
+import firebase from 'firebase';
 import { MyApp } from './app.component';
 import { Funciones_utilesProvider } from '../providers/funciones_utiles/funciones_utiles';
 import { HttpModule } from "@angular/http";
@@ -29,7 +30,7 @@ import { HttpModule } from "@angular/http";
   providers: [
     StatusBar,
     SplashScreen,
-    Funciones_utilesProvider,
+    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

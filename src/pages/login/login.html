@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar hideBackButton>
+  <ion-navbar>
     <ion-title>Iniciar sesión</ion-title>
   </ion-navbar>
 
@@ -15,7 +15,7 @@
 
 <ion-content padding>
 <ion-item>
-  <ion-label floating>Email</ion-label>
+  <ion-label floating>Usuario</ion-label>
   <ion-input type="text" [(ngModel)]="user.email"></ion-input>
 </ion-item>
 
@@ -24,11 +24,16 @@
   <ion-input type="password" [(ngModel)]="user.password"></ion-input>
 </ion-item>
 
-
-
 <button ion-button (click)="login(user)" color="secondary" full>Login</button>
 <button ion-button (click)="lostpass()" color="danger" full>Recuperar contraseña</button>
 <button ion-button (click)="register()" full>Registrarse</button>
 
+<br>
+
+<button ion-button icon-left full (click)="fblogin()">
+  <ion-icon name="logo-facebook"></ion-icon>
+  Facebook
+  
+</button>
 
 </ion-content>
