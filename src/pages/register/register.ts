@@ -31,7 +31,7 @@ export class RegisterPage {
       console.log(result);
       this.ofAuth.authState.take(1).subscribe(auth =>{
         this.afDatabase.object(`Perfil/${auth.uid}`).set(this.user)
-        .then(() => this.navCtrl.push('HomePage'))
+        .then(() => this.navCtrl.setRoot('HomePage'))
       })
     }catch(e){
       let error: string= e.code;

@@ -7,15 +7,50 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>der</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-navbar>
  
 </ion-header>
 
 
 <ion-content padding>
-<ion-item class="no-left-padding">
-  <ion-label stacked>Nombre</ion-label>
-  <ion-input type="text" >{{usuario}}</ion-input>
-</ion-item>
+  <ion-list>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/advance-card-bttf.png?alt=media&token=9a81b766-9ec1-4ad8-ad67-00125bc15443">
+        </ion-avatar>
+        <h2>{{(perfilData | async)?.nombre}}</h2>
+        <p>{{(perfilData | async)?.apellido}}</p>
+      </ion-item>
+      
+       <ion-item>
+        Edad
+        <ion-note item-end>
+          {{(perfilData | async)?.edad}}
+        </ion-note>
+      </ion-item>
+
+       <ion-item>
+        Ciudad
+        <ion-note item-end>
+          {{(perfilData | async)?.ciudad}}
+        </ion-note>
+      </ion-item>
+
+
+      <ion-item>
+        Email
+        <ion-note item-end>
+          {{(perfilData | async)?.email}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item>
+        Contraseña
+        <ion-note item-end>
+          {{(perfilData | async)?.password}}
+        </ion-note>
+      </ion-item>
+           
+  </ion-list>
 </ion-content>
