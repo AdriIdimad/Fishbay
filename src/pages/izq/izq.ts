@@ -1,3 +1,4 @@
+import { Evento } from './../../models/evento';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
@@ -14,6 +15,8 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
   templateUrl: 'izq.html',
 })
 export class IzqPage {
+
+  evento = {} as Evento;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
