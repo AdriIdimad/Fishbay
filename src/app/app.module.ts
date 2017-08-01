@@ -13,6 +13,7 @@ import { MyApp } from './app.component';
 import { Funciones_utilesProvider } from '../providers/funciones_utiles/funciones_utiles';
 import { HttpModule } from "@angular/http";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
     StatusBar,
     SplashScreen,
     Facebook,
+    Camera,
     Funciones_utilesProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
