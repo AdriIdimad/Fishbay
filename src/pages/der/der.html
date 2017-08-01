@@ -17,7 +17,7 @@
   <ion-list>
       <ion-item>
         <ion-avatar item-start>
-          <img src="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/advance-card-bttf.png?alt=media&token=9a81b766-9ec1-4ad8-ad67-00125bc15443">
+          <img src=""+{{(perfilData | async)?.imagen}}+"">
         </ion-avatar>
         <h2>{{(perfilData | async)?.nombre}}</h2>
         <p>{{(perfilData | async)?.apellido}}</p>

@@ -9,6 +9,12 @@
 + ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="1979552525599427" --variable APP_NAME="FISHBAY"
 + npm install --save @ionic-native/facebook
 
++ //////plugins camara///////
+
++ ionic cordova plugin add cordova-plugin-camera
++ npm install --save @ionic-native/camera
++ ionic cordova plugin add cordova-plugin-compat@1.1.0
+
 ### Version exacta de Ionic 3 ###
 
 global packages:

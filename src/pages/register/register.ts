@@ -6,6 +6,10 @@ import { User } from "../../models/user";
 import { ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth} from "angularfire2/auth";
+import { Camera } from '@ionic-native/camera';
+import firebase from 'firebase';
+
+   
 
 @IonicPage()
 @Component({
@@ -13,11 +17,16 @@ import { AngularFireAuth} from "angularfire2/auth";
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-
   user = {} as User;
+  public myPhotosRef: any;
+  public myPhoto: any;
+  public myPhotoURL: any;
 
   constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,private toastCtrl: ToastController,
-    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase) {
+    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera) {
+      this.myPhotoURL="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/1467646262_522853_1467646344_noticia_normal.jpg?alt=media&token=becd877e-b16c-43fe-8a68-f1267d38cff0";
+      this.myPhotosRef = firebase.storage().ref('/Imagenes/');
+      
   }
 
   
@@ -29,6 +38,7 @@ export class RegisterPage {
     try{
       const result = await this.ofAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
       console.log(result);
+      user.imagen=this.myPhotoURL;
       this.ofAuth.authState.take(1).subscribe(auth =>{
         this.afDatabase.object(`Perfil/${auth.uid}`).set(this.user)
         .then(() => this.navCtrl.setRoot('HomePage'))
@@ -48,8 +58,36 @@ export class RegisterPage {
     }
   } 
 
-  registroBD(){
+  subirImagen(): void {
+    this.camera.getPicture({
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      quality: 30,
+      encodingType: this.camera.EncodingType.PNG,
+    }).then(imageData => {
+      this.myPhoto = imageData;
+      this.uploadPhoto();
+    }, error => {
+      console.log("ERROR -> " + JSON.stringify(error));
+    });
+  }
+ 
+  private uploadPhoto(): void {
+    this.myPhotosRef.child(this.generateUUID()).child('imagen.png')
+      .putString(this.myPhoto, 'base64', { contentType: 'image/png' })
+      .then((savedPicture) => {
+        this.myPhotoURL = savedPicture.downloadURL;
+      });
+  }
 
+  private generateUUID(): any {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, function (c) {
+      var r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
   }
 
 }
