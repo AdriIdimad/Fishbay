@@ -21,5 +21,8 @@ export class CntPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CntPage');
   }
+  goprofile(){
+    this.navCtrl.push('ProfilePage');
+  }
 
 }
