@@ -21,6 +21,7 @@ export class RegisterPage {
   public myPhotosRef: any;
   public myPhoto: any;
   public myPhotoURL: any;
+  public nombre: any;
 
   constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,private toastCtrl: ToastController,
     public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera) {
@@ -62,7 +63,7 @@ export class RegisterPage {
     this.camera.getPicture({
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      quality: 30,
+      quality: 10,
       encodingType: this.camera.EncodingType.PNG,
     }).then(imageData => {
       this.myPhoto = imageData;
@@ -73,13 +74,16 @@ export class RegisterPage {
   }
  
   private uploadPhoto(): void {
-    this.myPhotosRef.child(this.generateUUID()).child('imagen.png')
+    this.nombre = this.generateUUID();
+    this.myPhotosRef.child(this.nombre+'.png')
       .putString(this.myPhoto, 'base64', { contentType: 'image/png' })
       .then((savedPicture) => {
         this.myPhotoURL = savedPicture.downloadURL;
       });
   }
 
+  
+  // GENERA NOMBRE RANDOM IMAGEN
   private generateUUID(): any {
     var d = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, function (c) {
@@ -87,7 +91,7 @@ export class RegisterPage {
       d = Math.floor(d / 16);
       return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
-    return uuid;
+    return uuid.toString();
   }
 
 }

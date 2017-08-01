@@ -17,7 +17,7 @@
   <ion-list>
       <ion-item>
         <ion-avatar item-start>
-          <img src=""+{{(perfilData | async)?.imagen}}+"">
+          <img src="{{(perfilData | async)?.imagen}}">
         </ion-avatar>
         <h2>{{(perfilData | async)?.nombre}}</h2>
         <p>{{(perfilData | async)?.apellido}}</p>
