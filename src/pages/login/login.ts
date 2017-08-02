@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
@@ -19,11 +20,12 @@ import firebase from 'firebase';
 export class LoginPage {
 
   user = {} as User;
+
+
   
 
-  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook) {
+  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook, private storage: Storage) {
   }
-
 
     fblogin(){
       this.Facebook.login(['email']).then(res=>{
@@ -41,7 +43,14 @@ export class LoginPage {
   
 
   ionViewDidLoad() {
+    var test;
     console.log('ionViewDidLoad LoginPage');
+    this.storage.get('id_user').then((id_user) =>{
+      if(id_user!=null){
+        this.navCtrl.setRoot("HomePage");
+      }
+    });
+
   }
 
   async login(user: User){
