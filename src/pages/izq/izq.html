@@ -12,21 +12,40 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content class="no-left-padding">
 
 <ion-searchbar ></ion-searchbar>
-<ion-list>
-  <ion-card>
-    <img src=""/>
+<ion-list class="no-left-padding" >
+  <ion-card *ngFor="let evento of eventos | async" class="no-left-padding">
+    <img with="100" height="150" src="{{evento.imagen}}"/>
     <ion-card-content>
       <ion-card-title>
-        Nine Inch Nails Live
+        {{evento.nombre}}
         </ion-card-title>
       <p>
-        The most popular industrial group ever, and largely
-        responsible for bringing the music to a mass audience.
+        {{evento.descripcion}}
       </p>
     </ion-card-content>
+    <ion-row>
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>12 Likes</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>4 Comments</div>
+      </button>
+    </ion-col>
+    <ion-col center text-center>
+      <ion-note>
+        11h ago
+      </ion-note>
+    </ion-col>
+  </ion-row>
+
   </ion-card>
 </ion-list>
 
