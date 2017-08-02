@@ -20,16 +20,16 @@
           <img src="{{(perfilData | async)?.imagen}}">
         </ion-avatar>
         <h2 ng-if="fb==true">
-          {{(usuario | async)?.name}}
+            {{nombre}}
         </h2>
         <h2 ng-if="fb!=true">
-          {{(perfilData | async)?.nombre}}
+        {{(perfilData | async)?.nombre}}
         </h2>
         <p ng-if="fb!=true">
           {{(perfilData | async)?.apellido}}
         </p>
         <p ng-if="fb==true">
-          {{(usuario | async)?.first_name}}
+          {{apellido}}
         </p>
       </ion-item>
       
@@ -52,7 +52,6 @@
         Email
         <ion-note item-end>
           {{(perfilData | async)?.email}}
-          {{(usuario | async)?.email}}
         </ion-note>
       </ion-item>
 

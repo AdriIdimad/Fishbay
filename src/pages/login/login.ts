@@ -31,7 +31,8 @@ export class LoginPage {
       this.Facebook.login(['email']).then(res=>{
         const fc=firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
         firebase.auth().signInWithCredential(fc).then(fs=>{
-          this.storage.set('fb', true);
+          var fb=true;
+          this.storage.set('fb', fb);
           this.navCtrl.push('HomePage');
       }).catch(err=>{
         alert("firebase erro")
@@ -57,6 +58,8 @@ export class LoginPage {
   async login(user: User){
     try{
       const result = await this.ofAuth.auth.signInWithEmailAndPassword(user.email,user.password);
+      var fb=false;
+      this.storage.set('fb', fb);
       this.navCtrl.push('HomePage');
     }catch(e){
       let error: string= e.code;
@@ -79,7 +82,7 @@ export class LoginPage {
   }
 
     lostpass(){
-    this.navCtrl.push('LostpassPage')
+    this.navCtrl.push('LostpassPage');
   }
 
 

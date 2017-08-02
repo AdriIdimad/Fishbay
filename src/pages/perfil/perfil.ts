@@ -18,8 +18,10 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'perfil.html',
 })
 export class PerfilPage {
-  usuario= {};
+  usuario: {};
   perfilData: FirebaseObjectObservable<User>
+  nombre: string;
+  apellido: string;
 
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook,
   private afDatabase: AngularFireDatabase,private storage: Storage) {
@@ -33,7 +35,6 @@ export class PerfilPage {
       this.storage.get('fb').then((fb) =>{
       if(fb==true){
         this.getInfo();
-        this.navCtrl.push('PerfilPage');
       }
     });
     })
@@ -43,11 +44,11 @@ export class PerfilPage {
   getInfo(){
     this.Facebook.api('/me?fields=id,name,email,first_name,picture,last_name,gender',['public_profile','email'])
     .then(data=>{
-      this.usuario = data;
+      var nombre=data.name;
+      var apellido=data.last_name;
     }) 
     .catch(error =>{
       console.error( error );
     });
   }
-
 }
