@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
 
 /**
  * Generated class for the CntPage page.
@@ -15,14 +15,14 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
 })
 export class CntPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CntPage');
   }
   goprofile(){
-    this.navCtrl.setRoot('ProfilePage');
+    this.app.getRootNav().push('PerfilPage');
   }
 
 }

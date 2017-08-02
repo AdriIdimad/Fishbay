@@ -1,5 +1,5 @@
 <!--
-  Generated template for the DerPage page.
+  Generated template for the IzqPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,50 +7,64 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="center">Perfil</ion-title>
+    <ion-title class="center">Mis Eventos</ion-title>
   </ion-navbar>
- 
+
 </ion-header>
 
-
 <ion-content padding>
-  <ion-list>
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="{{(perfilData | async)?.imagen}}">
-        </ion-avatar>
-        <h2>{{(perfilData | async)?.nombre}}</h2>
-        <p>{{(perfilData | async)?.apellido}}</p>
-      </ion-item>
-      
-       <ion-item>
-        Edad
-        <ion-note item-end>
-          {{(perfilData | async)?.edad}}
-        </ion-note>
-      </ion-item>
+<ion-item class="no-left-padding"> 
+  <ion-label stacked><ion-icon name="calendar"></ion-icon> Titulo</ion-label>
+  <ion-input type="text" [(ngModel)]="evento.nombre"></ion-input>
+</ion-item>
+   
+<ion-item class="no-left-padding">
+  <ion-label stacked><ion-icon name="clipboard"></ion-icon> Descripcion</ion-label>
+  <ion-input type="text" [(ngModel)]="evento.descripcion"></ion-input>
+</ion-item>
 
-       <ion-item>
-        Ciudad
-        <ion-note item-end>
-          {{(perfilData | async)?.ciudad}}
-        </ion-note>
-      </ion-item>
+<ion-item class="no-left-padding">
+  <ion-label stacked><ion-icon name="calendar"></ion-icon> Fecha</ion-label>
+  <ion-input type="date" [(ngModel)]="evento.fecha"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked><ion-icon name="navigate"></ion-icon> Lugar</ion-label>
+  <ion-input type="text" [(ngModel)]="evento.lugar"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked><ion-icon name="locate"></ion-icon> Ciudad</ion-label>
+  <ion-input type="email" [(ngModel)]="evento.ciudad"></ion-input>
+</ion-item>
+ 
+<ion-item class="no-left-padding">
+  <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de inicio</ion-label>
+  <ion-input type="time" [(ngModel)]="evento.horaInicio"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+  <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de finalización</ion-label>
+  <ion-input type="time" [(ngModel)]="evento.horaFinal"></ion-input>
+</ion-item>
+
+<ion-item class="no-left-padding">
+    <ion-label>Categoria del evento</ion-label>
+    <ion-select [(ngModel)]="evento.categoria">
+      <ion-option value="deportes">Deportes</ion-option>
+      <ion-option value="fiestas">fiestas</ion-option>
+      <ion-option value="conferencias">conferencias</ion-option>
+    </ion-select>
+</ion-item>
 
 
-      <ion-item>
-        Email
-        <ion-note item-end>
-          {{(perfilData | async)?.email}}
-        </ion-note>
-      </ion-item>
+<ion-item class="no-left-padding">
+    <ion-thumbnail item-start>
+      <ion-img width="80" height="80" src="{{myPhotoURL}}"></ion-img>
+    </ion-thumbnail>
+     <button ion-button icon-left (click)="subirImagen()" color="secondary"><ion-icon name="cloud-upload"></ion-icon> Imagen del evento</button>
+  </ion-item>
 
-      <ion-item>
-        Contraseña
-        <ion-note item-end>
-          {{(perfilData | async)?.password}}
-        </ion-note>
-      </ion-item>
-           
-  </ion-list>
+<button ion-button icon-left (click)="registrarEvento(evento)" full ><ion-icon name="add-circle"></ion-icon> Crear evento</button>
+
 </ion-content>
