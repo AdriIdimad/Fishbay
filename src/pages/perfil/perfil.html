@@ -1,0 +1,56 @@
+<!--
+  Generated template for the DerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title class="center">Perfil</ion-title>
+  </ion-navbar>
+ 
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{(perfilData | async)?.imagen}}">
+        </ion-avatar>
+        <h2>{{(perfilData | async)?.nombre}}</h2>
+        <p>{{(perfilData | async)?.apellido}}</p>
+      </ion-item>
+      
+       <ion-item>
+        Edad
+        <ion-note item-end>
+          {{(perfilData | async)?.edad}}
+        </ion-note>
+      </ion-item>
+
+       <ion-item>
+        Ciudad
+        <ion-note item-end>
+          {{(perfilData | async)?.ciudad}}
+        </ion-note>
+      </ion-item>
+
+
+      <ion-item>
+        Email
+        <ion-note item-end>
+          {{(perfilData | async)?.email}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item>
+        Contraseña
+        <ion-note item-end type="password">
+          {{(perfilData | async)?.password}}
+        </ion-note>
+      </ion-item>
+           
+  </ion-list>
+</ion-content>
