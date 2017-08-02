@@ -49,7 +49,17 @@
   <ion-input type="time" [(ngModel)]="evento.horaFinal"></ion-input>
 </ion-item>
 
-<ion-item>
+<ion-item class="no-left-padding">
+    <ion-label>Categoria del evento</ion-label>
+    <ion-select >
+      <ion-option value="deportes">Deportes</ion-option>
+      <ion-option value="fiestas">fiestas</ion-option>
+      <ion-option value="conferencias">conferencias</ion-option>
+    </ion-select>
+</ion-item>
+
+
+<ion-item class="no-left-padding">
     <ion-thumbnail item-start>
       <img src="">
     </ion-thumbnail>

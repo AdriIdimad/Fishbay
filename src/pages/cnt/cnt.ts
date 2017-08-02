@@ -22,7 +22,7 @@ export class CntPage {
     console.log('ionViewDidLoad CntPage');
   }
   goprofile(){
-    this.navCtrl.push('ProfilePage');
+    this.navCtrl.setRoot('ProfilePage');
   }
 
 }
