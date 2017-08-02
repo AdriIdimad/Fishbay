@@ -7,6 +7,7 @@ import { ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth} from "angularfire2/auth";
 import { Camera } from '@ionic-native/camera';
+import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 
    
@@ -24,7 +25,7 @@ export class RegisterPage {
   public nombre: any;
 
   constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,private toastCtrl: ToastController,
-    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera) {
+    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera, private storage: Storage) {
       this.myPhotoURL="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/1467646262_522853_1467646344_noticia_normal.jpg?alt=media&token=becd877e-b16c-43fe-8a68-f1267d38cff0";
       this.myPhotosRef = firebase.storage().ref('/Imagenes/');
       
@@ -41,6 +42,8 @@ export class RegisterPage {
       console.log(result);
       user.imagen=this.myPhotoURL;
       this.ofAuth.authState.take(1).subscribe(auth =>{
+        var id_usuario =auth.uid;
+        this.storage.set('id_user', id_usuario);
         this.afDatabase.object(`Perfil/${auth.uid}`).set(this.user)
         .then(() => this.navCtrl.setRoot('HomePage'))
       })

@@ -14,6 +14,8 @@
 + ionic cordova plugin add cordova-plugin-camera
 + npm install --save @ionic-native/camera
 + ionic cordova plugin add cordova-plugin-compat@1.1.0
++ ionic cordova plugin add cordova-sqlite-storage
++ npm install --save @ionic/storage
 
 ### Version exacta de Ionic 3 ###
 
