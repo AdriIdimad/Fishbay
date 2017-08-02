@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
 
@@ -15,7 +16,7 @@ import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
 })
 export class CntPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, private storage: Storage) {
   }
 
   ionViewDidLoad() {
