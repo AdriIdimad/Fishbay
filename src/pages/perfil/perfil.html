@@ -19,10 +19,16 @@
         <ion-avatar item-start>
           <img src="{{(perfilData | async)?.imagen}}">
         </ion-avatar>
-        <h2>{{(perfilData | async)?.nombre}}
+        <h2 ng-if="fb==true">
           {{(usuario | async)?.name}}
         </h2>
-        <p>{{(perfilData | async)?.apellido}}
+        <h2 ng-if="fb!=true">
+          {{(perfilData | async)?.nombre}}
+        </h2>
+        <p ng-if="fb!=true">
+          {{(perfilData | async)?.apellido}}
+        </p>
+        <p ng-if="fb==true">
           {{(usuario | async)?.first_name}}
         </p>
       </ion-item>

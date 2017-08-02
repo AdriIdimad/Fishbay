@@ -33,6 +33,7 @@ export class PerfilPage {
       this.storage.get('fb').then((fb) =>{
       if(fb==true){
         this.getInfo();
+        this.navCtrl.push('PerfilPage');
       }
     });
     })
@@ -42,7 +43,6 @@ export class PerfilPage {
   getInfo(){
     this.Facebook.api('/me?fields=id,name,email,first_name,picture,last_name,gender',['public_profile','email'])
     .then(data=>{
-      alert(data);
       this.usuario = data;
     }) 
     .catch(error =>{
