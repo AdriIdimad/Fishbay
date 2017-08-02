@@ -7,6 +7,7 @@ export interface Evento{
     lugar: string;
     horaInicio: any;
     horaFinal: any;
-
+    categoria: string;
+    idCreador: string;
 
 }

@@ -18,7 +18,6 @@
   <ion-input type="text" [(ngModel)]="evento.nombre"></ion-input>
 </ion-item>
    
-
 <ion-item class="no-left-padding">
   <ion-label stacked><ion-icon name="clipboard"></ion-icon> Descripcion</ion-label>
   <ion-input type="text" [(ngModel)]="evento.descripcion"></ion-input>
@@ -38,7 +37,7 @@
   <ion-label stacked><ion-icon name="locate"></ion-icon> Ciudad</ion-label>
   <ion-input type="email" [(ngModel)]="evento.ciudad"></ion-input>
 </ion-item>
-
+ 
 <ion-item class="no-left-padding">
   <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de inicio</ion-label>
   <ion-input type="time" [(ngModel)]="evento.horaInicio"></ion-input>
@@ -51,7 +50,7 @@
 
 <ion-item class="no-left-padding">
     <ion-label>Categoria del evento</ion-label>
-    <ion-select >
+    <ion-select [(ngModel)]="evento.categoria">
       <ion-option value="deportes">Deportes</ion-option>
       <ion-option value="fiestas">fiestas</ion-option>
       <ion-option value="conferencias">conferencias</ion-option>
@@ -61,12 +60,11 @@
 
 <ion-item class="no-left-padding">
     <ion-thumbnail item-start>
-      <img src="">
+      <ion-img width="80" height="80" src="{{myPhotoURL}}"></ion-img>
     </ion-thumbnail>
-     <button ion-button icon-left  color="secondary"><ion-icon name="cloud-upload"></ion-icon> Imagen del evento</button>
+     <button ion-button icon-left (click)="subirImagen()" color="secondary"><ion-icon name="cloud-upload"></ion-icon> Imagen del evento</button>
   </ion-item>
 
-
-<button ion-button icon-left  full><ion-icon name="add-circle"></ion-icon> Crear evento</button>
+<button ion-button icon-left (click)="registrarEvento(evento)" full ><ion-icon name="add-circle"></ion-icon> Crear evento</button>
 
 </ion-content>
