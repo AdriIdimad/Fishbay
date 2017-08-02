@@ -22,7 +22,6 @@ import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/d
 })
 export class IzqPage {
 
- 
 
   evento = {} as Evento;
   eventos: FirebaseListObservable<any[]>;
