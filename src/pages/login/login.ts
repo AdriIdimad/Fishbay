@@ -20,7 +20,7 @@ import firebase from 'firebase';
 export class LoginPage {
 
   user = {} as User;
-
+  fb: boolean;
 
   
 
@@ -31,6 +31,7 @@ export class LoginPage {
       this.Facebook.login(['email']).then(res=>{
         const fc=firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
         firebase.auth().signInWithCredential(fc).then(fs=>{
+          this.storage.set('fb', true);
           this.navCtrl.push('HomePage');
       }).catch(err=>{
         alert("firebase erro")

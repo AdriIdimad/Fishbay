@@ -4,6 +4,7 @@ import {Facebook} from '@ionic-native/facebook';
 import { User } from './../../models/user';
 import { AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the PerfilPage page.
@@ -21,7 +22,7 @@ export class PerfilPage {
   perfilData: FirebaseObjectObservable<User>
 
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook,
-  private afDatabase: AngularFireDatabase) {
+  private afDatabase: AngularFireDatabase,private storage: Storage) {
   }
 
   ionViewWillLoad() {
@@ -29,6 +30,11 @@ export class PerfilPage {
       if(data && data.email && data.uid){   
       this.perfilData= this.afDatabase.object(`Perfil/${data.uid}`)
       }
+      this.storage.get('fb').then((fb) =>{
+      if(fb==true){
+        this.getInfo();
+      }
+    });
     })
     
   }
@@ -36,7 +42,7 @@ export class PerfilPage {
   getInfo(){
     this.Facebook.api('/me?fields=id,name,email,first_name,picture,last_name,gender',['public_profile','email'])
     .then(data=>{
-      console.log(data);
+      alert(data);
       this.usuario = data;
     }) 
     .catch(error =>{

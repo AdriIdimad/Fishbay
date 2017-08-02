@@ -19,8 +19,12 @@
         <ion-avatar item-start>
           <img src="{{(perfilData | async)?.imagen}}">
         </ion-avatar>
-        <h2>{{(perfilData | async)?.nombre}}</h2>
-        <p>{{(perfilData | async)?.apellido}}</p>
+        <h2>{{(perfilData | async)?.nombre}}
+          {{(usuario | async)?.name}}
+        </h2>
+        <p>{{(perfilData | async)?.apellido}}
+          {{(usuario | async)?.first_name}}
+        </p>
       </ion-item>
       
        <ion-item>
@@ -42,6 +46,7 @@
         Email
         <ion-note item-end>
           {{(perfilData | async)?.email}}
+          {{(usuario | async)?.email}}
         </ion-note>
       </ion-item>
 
