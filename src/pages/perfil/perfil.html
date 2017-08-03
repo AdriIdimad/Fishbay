@@ -16,9 +16,12 @@
 <ion-content padding>
   <ion-list>
       <ion-item>
-        <ion-avatar item-start>
-          <img src="{{(perfilData | async)?.imagen}}">
+        <ion-avatar item-start *ngIf="!facebook" >
+          <img  src="{{(perfilData | async)?.imagen}}">
         </ion-avatar>
+        <ion-avatar item-start *ngIf="facebook">
+          <img src="{{picture}}">
+        </ion-avatar> 
         <h2 ng-if="fb==true">
             {{name}}
         </h2>
@@ -29,35 +32,48 @@
           {{(perfilData | async)?.apellido}}
         </p>
         <p ng-if="fb==true">
-          {{last_name}}
+          {{first_name}}
         </p>
       </ion-item>
       
        <ion-item>
         Edad
-        <ion-note item-end>
+        <ion-note item-end ng-if="fb!=true">
           {{(perfilData | async)?.edad}}
         </ion-note>
+        <ion-note item-end ng-if="fb==true">
+          {{edad}}
+        </ion-note>       
       </ion-item>
 
        <ion-item>
         Ciudad
-        <ion-note item-end>
+        <ion-note item-end ng-if="fb!=true">
           {{(perfilData | async)?.ciudad}}
+        </ion-note>
+
+        <ion-note item-end ng-if="fb==true">
+          {{ciudad}}
         </ion-note>
       </ion-item>
 
       <ion-item>
         Email
-        <ion-note item-end>
+        <ion-note item-end ng-if="fb!=true">
           {{(perfilData | async)?.email}}
+        </ion-note>
+        <ion-note item-end ng-if="fb==true">
+          {{email}}
         </ion-note>
       </ion-item>
 
       <ion-item>
         Contraseña
-        <ion-note item-end type="password">
+        <ion-note ng-if="fb!=true" item-end type="password" >
           {{(perfilData | async)?.password}}
+        </ion-note>
+        <ion-note ng-if="fb==true" item-end type="password" >
+          
         </ion-note>
       </ion-item>
            
