@@ -33,21 +33,23 @@ export class PerfilPage {
       this.perfilData= this.afDatabase.object(`Perfil/${data.uid}`)
       }
       this.storage.get('fb').then((fb) =>{
-      //if(fb==true){
+      alert(fb);
+      if(fb==true){
         this.getInfo();
-      //}
+      }
     });
     })
     
   }
 
   getInfo(){
-        this.Facebook.api('/me?fields=name,email,first_name,picture,last_name,gender',['public_profile','email'])
-    .then(data=>{
-      alert(data.val());
-    }) 
-    .catch(error =>{
-      console.error( error );
-    });
+      try{
+         this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,gender",['public_profile','email'])
+         .then(response => {
+            alert(JSON.stringify(response)) 
+        }); 
+      }catch(e){
+        alert(e);
+      }
   }
 }
