@@ -59,8 +59,8 @@ export class LoginPage {
       const result = await this.ofAuth.auth.signInWithEmailAndPassword(user.email,user.password);
       var fb=false;
       this.ofAuth.authState.take(1).subscribe(auth =>{
-          var id=auth.uid;
-          this.storage.set('id_user,',id);
+          var id_usuario =auth.uid;
+          this.storage.set('id_user', id_usuario);
       })
 
       this.storage.set('fb', fb);     

@@ -48,8 +48,10 @@ export class PerfilPage {
          this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,gender",['public_profile','email'])
          .then(response => {
             this.perfilFacebook=JSON.stringify(response);
-            this.name=this.perfilFacebook['name'];
+            var name=this.perfilFacebook['name'];
             this.last_name=this.perfilFacebook['last_name'];
-        }); 
+            alert('Nombre: '+name);
+        });
+    
   }
 }

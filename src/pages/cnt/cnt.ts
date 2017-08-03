@@ -25,13 +25,23 @@ export class CntPage {
   }
 
   ionViewDidLoad() {
-     this.eventosUser = this.afDatabase.list('/Eventos', {
+    var usuario;
+    this.storage.get('id_user').then((id_user) =>{
+      console.log(id_user);
+      this.eventosUser = this.afDatabase.list('/Eventos', {
       query: {
         orderByChild: 'idCreador',
-        equalTo: 'xOvtx60PTrTPniIT8rIkYO7PFbG3' //pasar variable id local
+        equalTo: id_user //pasar variable id local
       }
     });
+    });
+    
+     
 
+  }
+  out(){
+    this.storage.remove('id_user');
+    this.app.getRootNav().setRoot('LoginPage');
   }
   goprofile(){
     this.app.getRootNav().push('PerfilPage');
