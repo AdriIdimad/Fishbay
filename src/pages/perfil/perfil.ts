@@ -45,13 +45,16 @@ export class PerfilPage {
   }
 
   getInfo(){
-         this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,gender",['public_profile','email'])
+      this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,gender",['public_profile','email'])
          .then(response => {
+            alert("sin string: "+response);
+            alert("string: "+response.toString());
+            alert(response.name);
+            alert("con corchetes: "+response['name']);
             this.perfilFacebook=JSON.stringify(response);
-            var name=this.perfilFacebook['name'];
-            this.last_name=this.perfilFacebook['last_name'];
-            alert('Nombre: '+name);
-        });
+            alert(this.perfilFacebook['name']);
+            alert(this.perfilFacebook[0]);
+        }); 
     
   }
 }
