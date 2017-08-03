@@ -22,6 +22,9 @@ export class PerfilPage {
   perfilData: FirebaseObjectObservable<User>
   nombre: string;
   apellido: string;
+  perfilFacebook: {};
+  name: string;
+  last_name:string;
 
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook,
   private afDatabase: AngularFireDatabase,private storage: Storage) {
@@ -33,7 +36,6 @@ export class PerfilPage {
       this.perfilData= this.afDatabase.object(`Perfil/${data.uid}`)
       }
       this.storage.get('fb').then((fb) =>{
-      alert(fb);
       if(fb==true){
         this.getInfo();
       }
@@ -43,13 +45,11 @@ export class PerfilPage {
   }
 
   getInfo(){
-      try{
          this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,gender",['public_profile','email'])
          .then(response => {
-            alert(JSON.stringify(response)) 
+            this.perfilFacebook=JSON.stringify(response);
+            this.name=this.perfilFacebook['name'];
+            this.last_name=this.perfilFacebook['last_name'];
         }); 
-      }catch(e){
-        alert(e);
-      }
   }
 }
