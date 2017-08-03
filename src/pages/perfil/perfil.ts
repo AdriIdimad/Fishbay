@@ -25,7 +25,7 @@ export class PerfilPage {
   perfilFacebook: {};
   name: string;
   last_name:string;
-
+  
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook,
   private afDatabase: AngularFireDatabase,private storage: Storage) {
   }
