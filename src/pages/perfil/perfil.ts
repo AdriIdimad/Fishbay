@@ -42,10 +42,9 @@ export class PerfilPage {
   }
 
   getInfo(){
-    this.Facebook.api('/me?fields=id,name,email,first_name,picture,last_name,gender',['public_profile','email'])
+        this.Facebook.api('/me?fields=name,email,first_name,picture,last_name,gender',['public_profile','email'])
     .then(data=>{
-      var nombre=data.name;
-      var apellido=data.last_name;
+      alert(data.val());
     }) 
     .catch(error =>{
       console.error( error );
