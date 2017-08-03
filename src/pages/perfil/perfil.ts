@@ -33,9 +33,9 @@ export class PerfilPage {
       this.perfilData= this.afDatabase.object(`Perfil/${data.uid}`)
       }
       this.storage.get('fb').then((fb) =>{
-      if(fb==true){
+      //if(fb==true){
         this.getInfo();
-      }
+      //}
     });
     })
     
