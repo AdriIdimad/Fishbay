@@ -43,7 +43,6 @@ export class LoginPage {
   }
 
   
-
   ionViewDidLoad() {
     var test;
     console.log('ionViewDidLoad LoginPage');
@@ -59,7 +58,12 @@ export class LoginPage {
     try{
       const result = await this.ofAuth.auth.signInWithEmailAndPassword(user.email,user.password);
       var fb=false;
-      this.storage.set('fb', fb);
+      this.ofAuth.authState.take(1).subscribe(auth =>{
+          var id=auth.uid;
+          this.storage.set('id_user,',id);
+      })
+
+      this.storage.set('fb', fb);     
       this.navCtrl.push('HomePage');
     }catch(e){
       let error: string= e.code;
@@ -81,7 +85,7 @@ export class LoginPage {
     this.navCtrl.push('RegisterPage');
   }
 
-    lostpass(){
+  lostpass(){
     this.navCtrl.push('LostpassPage');
   }
 

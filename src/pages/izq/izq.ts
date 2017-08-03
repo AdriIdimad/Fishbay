@@ -32,12 +32,10 @@ export class IzqPage {
 
   }
 
-
-
   ionViewDidLoad() {
     this.eventos = this.afDatabase.list('/Eventos', {
       query: {
-        orderByChild: 'nombre'
+        orderByChild: 'fecha'
       }
     });
   }

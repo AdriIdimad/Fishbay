@@ -1,6 +1,9 @@
+import { FirebaseListObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
+import firebase from 'firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 /**
  * Generated class for the CntPage page.
@@ -16,14 +19,23 @@ import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
 })
 export class CntPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, private storage: Storage) {
+  eventosUser: FirebaseListObservable<any[]>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, private storage: Storage,private afDatabase: AngularFireDatabase) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CntPage');
+     this.eventosUser = this.afDatabase.list('/Eventos', {
+      query: {
+        orderByChild: 'idCreador',
+        equalTo: 'xOvtx60PTrTPniIT8rIkYO7PFbG3' //pasar variable id local
+      }
+    });
+
   }
   goprofile(){
     this.app.getRootNav().push('PerfilPage');
   }
+
 
 }
