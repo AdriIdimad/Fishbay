@@ -47,5 +47,11 @@ export class CntPage {
     this.app.getRootNav().push('PerfilPage');
   }
 
+  detallesEvento(idEvento){
+    this.storage.set('id_evento',idEvento);
+    this.navCtrl.push('EventoPage');
+
+  }
+
 
 }

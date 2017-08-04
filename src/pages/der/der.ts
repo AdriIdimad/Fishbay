@@ -6,7 +6,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth} from "angularfire2/auth";
 import { Camera } from '@ionic-native/camera';
 import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
-
 /**
  * Generated class for the IzqPage page.
  *
@@ -44,6 +43,7 @@ export class DerPage {
       evento.imagen=this.myPhotoURL;
       this.ofAuth.authState.take(1).subscribe(auth =>{
         evento.idCreador=auth.uid;
+        evento.id=newKey;
         this.afDatabase.object(`Eventos/${newKey}`).set(this.evento)
         .then(() => this.navCtrl.setRoot('HomePage'))
       })
@@ -52,6 +52,9 @@ export class DerPage {
   
   subirImagen(): void {
     this.camera.getPicture({
+      targetWidth: 200,
+      targetHeight: 100,
+      allowEdit:false,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       quality: 10,
@@ -84,7 +87,6 @@ export class DerPage {
     });
     return uuid.toString();
   }
-
 
 
 }

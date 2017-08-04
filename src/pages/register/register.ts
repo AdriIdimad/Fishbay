@@ -64,6 +64,9 @@ export class RegisterPage {
 
   subirImagen(): void {
     this.camera.getPicture({
+      targetWidth: 80,
+      targetHeight: 80,
+      allowEdit:true,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       quality: 10,

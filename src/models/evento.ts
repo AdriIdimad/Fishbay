@@ -9,5 +9,5 @@ export interface Evento{
     horaFinal: any;
     categoria: string;
     idCreador: string;
-
+    id: string;
 }

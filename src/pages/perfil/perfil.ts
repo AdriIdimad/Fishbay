@@ -49,15 +49,14 @@ export class PerfilPage {
   }
 
   getInfo(){
-      this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,birthday,location",['public_profile','email'])
+      this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
          .then(response => {
-            this.name=response.name;
-            this.last_name=response.last_name;
+            this.name=response.name;;
             this.first_name=response.first_name;
             this.email=response.email;
             this.picture=response.picture;
             this.edad=response.birthday;
-            this.ciudad=response.location;
+            this.ciudad=response.hometown;
         }); 
     
   }
