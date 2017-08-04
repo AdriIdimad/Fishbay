@@ -23,9 +23,9 @@ export class PerfilPage {
   name: string;
   last_name:string;
   email:string;
-  picture:string;
+  picture:any;
   first_name:string;
-  edad:string;
+  edad:any;
   ciudad:string;
   facebook: boolean;
   
@@ -55,8 +55,11 @@ export class PerfilPage {
             this.first_name=response.first_name;
             this.email=response.email;
             this.picture=response.picture;
+            alert(this.picture);
             this.edad=response.birthday;
+            alert(this.edad);
             this.ciudad=response.hometown;
+            alert(this.ciudad);
         }); 
     
   }

@@ -52,9 +52,9 @@ export class DerPage {
   
   subirImagen(): void {
     this.camera.getPicture({
-      targetWidth: 200,
-      targetHeight: 100,
-      allowEdit:false,
+      targetWidth: 2000,
+      targetHeight: 1000,
+      allowEdit:true,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       quality: 10,

@@ -15,6 +15,7 @@ import { HttpModule } from "@angular/http";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
+import { Crop } from '@ionic-native/crop';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { IonicStorageModule } from '@ionic/storage';
     Facebook,
     Camera,
     Funciones_utilesProvider,
+    Crop,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

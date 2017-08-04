@@ -22,57 +22,57 @@
         <ion-avatar item-start *ngIf="facebook">
           <img src="{{picture}}">
         </ion-avatar> 
-        <h2 ng-if="fb==true">
+        <h2 *ngIf="facebook">
             {{name}}
         </h2>
-        <h2 ng-if="fb!=true">
+        <h2 *ngIf="!facebook">
         {{(perfilData | async)?.nombre}}
         </h2>
-        <p ng-if="fb!=true">
+        <p *ngIf="!facebook">
           {{(perfilData | async)?.apellido}}
         </p>
-        <p ng-if="fb==true">
+        <p *ngIf="facebook">
           {{first_name}}
         </p>
       </ion-item>
       
        <ion-item>
         Edad
-        <ion-note item-end ng-if="fb!=true">
+        <ion-note item-end *ngIf="!facebook">
           {{(perfilData | async)?.edad}}
         </ion-note>
-        <ion-note item-end ng-if="fb==true">
+        <ion-note item-end *ngIf="facebook">
           {{edad}}
         </ion-note>       
       </ion-item>
 
        <ion-item>
         Ciudad
-        <ion-note item-end ng-if="fb!=true">
+        <ion-note item-end *ngIf="!facebook">
           {{(perfilData | async)?.ciudad}}
         </ion-note>
 
-        <ion-note item-end ng-if="fb==true">
+        <ion-note item-end *ngIf="facebook">
           {{ciudad}}
         </ion-note>
       </ion-item>
 
       <ion-item>
         Email
-        <ion-note item-end ng-if="fb!=true">
+        <ion-note item-end *ngIf="!facebook">
           {{(perfilData | async)?.email}}
         </ion-note>
-        <ion-note item-end ng-if="fb==true">
+        <ion-note item-end *ngIf="facebook">
           {{email}}
         </ion-note>
       </ion-item>
 
       <ion-item>
         Contraseña
-        <ion-note ng-if="fb!=true" item-end type="password" >
+        <ion-note *ngIf="!facebook" item-end type="password" >
           {{(perfilData | async)?.password}}
         </ion-note>
-        <ion-note ng-if="fb==true" item-end type="password" >
+        <ion-note *ngIf="facebook" item-end type="password" >
           
         </ion-note>
       </ion-item>
