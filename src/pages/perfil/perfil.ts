@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
 import {Facebook} from '@ionic-native/facebook';
 import { User } from './../../models/user';
 import { AngularFireAuth} from "angularfire2/auth";

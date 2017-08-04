@@ -1,6 +1,6 @@
 import { Evento } from './../../models/evento';
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage,App } from 'ionic-angular';
 import firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth} from "angularfire2/auth";
@@ -17,7 +17,7 @@ import { Funciones_utilesProvider } from './../../providers/funciones_utiles/fun
 @Component({
   selector: 'page-der',
   templateUrl: 'der.html',
-})
+}) 
 export class DerPage {
 
   evento = {} as Evento;
@@ -28,7 +28,7 @@ export class DerPage {
   
 
   constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera) {
+    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera,public app: App) {
       this.myPhotoURL="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/iconos.png?alt=media&token=d77e8b7c-d044-42ac-b34d-e4a5dcb3d20d";
       this.myPhotosRef = firebase.storage().ref('/ImagenesEventos/');
   }
@@ -45,7 +45,9 @@ export class DerPage {
         evento.idCreador=auth.uid;
         evento.id=newKey;
         this.afDatabase.object(`Eventos/${newKey}`).set(this.evento)
-        .then(() => this.navCtrl.setRoot('HomePage'))
+        .then(() => {
+          this.app.getRootNav().setRoot('HomePage');
+        })
       })
   }
     
