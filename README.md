@@ -9,6 +9,11 @@
 + ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="1979552525599427" --variable APP_NAME="FISHBAY"
 + npm install --save @ionic-native/facebook
 
++ /////plugin crop///////////////
+
++ ionic cordova plugin add cordova-plugin-crop
++ npm install --save @ionic-native/crop
+
 + //////plugins camara///////
 
 + ionic cordova plugin add cordova-plugin-camera
