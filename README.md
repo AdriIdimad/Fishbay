@@ -27,6 +27,11 @@
 + cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="AIzaSyDl6myPRLYPr-PX0JCXZR43rz6HWuHULGA" --variable API_KEY_FOR_IOS="AIzaSyC3dDygyVTYUwtY_n7bEglnHofRpCN2_lg"
 + npm install --save @ionic-native/google-maps
 
+GEOLOCALIZACION
+
++ ionic cordova plugin add cordova-plugin-geolocation
++ npm install --save @ionic-native/geolocation
+
 ### Version exacta de Ionic 3 ###
 
 global packages:
