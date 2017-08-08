@@ -16,10 +16,12 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp 
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,8 @@ import { Crop } from '@ionic-native/crop';
     Camera,
     Funciones_utilesProvider,
     Crop,
+    Geolocation,
+    GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

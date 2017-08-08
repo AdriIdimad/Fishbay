@@ -18,11 +18,11 @@
 <ion-card *ngFor="let evento of infoEvento | async" class="no-left-padding">
 
   <img src="{{evento.imagen}}">
-  <ion-fab right top>
-    <button ion-fab>
-      <ion-icon name="person"></ion-icon>
+  <ion-fab right top style="background-image: url('{{(infoUsuario | async)?.imagen}}');">
+    <button ion-fab >
+      <img src="{{(infoUsuario | async)?.imagen}}" style="width: 100%;">
     </button>
-  </ion-fab>
+  </ion-fab> 
 
   <ion-item>
     <ion-icon name="calendar" item-start large></ion-icon>
@@ -49,5 +49,5 @@
   </ion-item>
 
 </ion-card>
-
+<div id="mapa" style="height:100%; width:100%;"></div>
 </ion-content>

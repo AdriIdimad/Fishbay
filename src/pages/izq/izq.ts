@@ -2,6 +2,7 @@ import { Evento } from './../../models/evento';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import firebase from 'firebase';
+import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth} from "angularfire2/auth";
 import { Camera } from '@ionic-native/camera';
@@ -22,16 +23,15 @@ import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/d
 })
 export class IzqPage {
 
-
   evento = {} as Evento;
   eventos: FirebaseListObservable<any[]>;
   
 
   constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase) {
+    public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase, private storage: Storage) {
 
   }
-
+ 
   ionViewDidLoad() {
     this.eventos = this.afDatabase.list('/Eventos', {
       query: {
@@ -40,6 +40,8 @@ export class IzqPage {
     });
   }
 
-
-
+  detallesEvento(idEvento){
+    this.storage.set('id_evento',idEvento);
+    this.navCtrl.push('EventoPage');
+  }
 }
