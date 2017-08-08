@@ -54,12 +54,9 @@ export class PerfilPage {
             this.name=response.name;;
             this.first_name=response.first_name;
             this.email=response.email;
-            this.picture=response.picture;
-            alert(this.picture);
+            this.picture=response.picture.data.url;
             this.edad=response.birthday;
-            alert(this.edad);
             this.ciudad=response.hometown;
-            alert(this.ciudad);
         }); 
     
   }
