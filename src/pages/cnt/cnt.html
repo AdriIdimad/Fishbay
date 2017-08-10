@@ -19,10 +19,22 @@
       </button>
     </ion-buttons>
 </ion-navbar>
+<div>
+  <ion-segment [(ngModel)]="tusEventos">
+    <ion-segment-button value="tu">
+      Tus eventos
+    </ion-segment-button>
+    <ion-segment-button value="Apt">
+      Eventos apuntados
+    </ion-segment-button >
+  </ion-segment>
+</div>
 </ion-header>
 
-<ion-content padding>
-<ion-list class="no-left-padding" >
+<ion-content class="no-left-padding">
+
+<div [ngSwitch]="tusEventos">
+<ion-list class="no-left-padding" *ngSwitchCase="'tu'" >
   <ion-card *ngFor="let evento of eventosUser | async" class="no-left-padding" (click)="detallesEvento(evento.id)">
     <img with="100" height="200" src="{{evento.imagen}}"/>
     <ion-card-content>
@@ -35,24 +47,30 @@
     </ion-card-content>
     <ion-row>
     <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="thumbs-up"></ion-icon>
-        <div>12 Likes</div>
+      <button icon-left ion-button color="primary" full (click)="detallesEvento(evento.id)"><ion-icon name="ios-paper-plane"></ion-icon>Apuntate!</button>
+    </ion-col>
+    <ion-col text-center>
+      <button ion-button icon-left clear small center>
+        <ion-icon name="share"></ion-icon>
+        <div>Facebook</div>
       </button>
     </ion-col>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="text"></ion-icon>
-        <div>4 Comments</div>
+    <ion-col text-center>
+      <button ion-button icon-left clear small center>
+        <ion-icon name="person"></ion-icon>
+        <div>20</div>
       </button>
-    </ion-col>
-    <ion-col center text-center>
-      <ion-note>
-       20  <ion-icon name="person"></ion-icon>
-      </ion-note>
     </ion-col>
   </ion-row>
 
   </ion-card>
 </ion-list>
+</div>
+
+<div [ngSwitch]="tusEventos">
+<ion-list class="no-left-padding" *ngSwitchCase="'Apt'" >
+<button ion-button icon-left clear small>hola</button>
+</ion-list>
+</div>
+
 </ion-content>

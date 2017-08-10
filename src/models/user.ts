@@ -6,12 +6,6 @@ export interface User{
     edad: number;
     ciudad: string;
     imagen: string;
-
-
-
-
-
-
-
+    eventosApuntados: any;
 
 }

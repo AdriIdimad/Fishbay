@@ -95,6 +95,7 @@
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyDl6myPRLYPr-PX0JCXZR43rz6HWuHULGA" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyC3dDygyVTYUwtY_n7bEglnHofRpCN2_lg" />
     </plugin>
+    <plugin name="cordova-plugin-nativestorage" spec="^2.2.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.2" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />

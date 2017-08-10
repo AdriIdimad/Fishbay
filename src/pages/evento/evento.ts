@@ -1,6 +1,6 @@
 import { FirebaseListObservable } from 'angularfire2/database';
-import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, NavParams, IonicPage, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 import { AngularFireAuth} from "angularfire2/auth";
@@ -8,6 +8,8 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 import { User } from './../../models/user';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker} from '@ionic-native/google-maps';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
+
 
 @IonicPage()
 @Component({
@@ -15,16 +17,81 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
   templateUrl: 'evento.html',
 })
 export class EventoPage {
+  map: GoogleMap;
 
   infoEvento: FirebaseListObservable<any[]>;
   infoUsuario: FirebaseObjectObservable<User>;
-  map: any;
+  public o:any;
+  public e:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, public googleMaps: GoogleMaps,
-  public geolocation: Geolocation) {
-    
+
+  constructor(public toast: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, private ofAuth: AngularFireAuth,private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private googleMaps: GoogleMaps,
+  private geolocation: Geolocation, private platform:Platform){
+
+  
   }
 
+  obtenerCoordenadas(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+        this.o=resp.coords.latitude;
+        this.e=resp.coords.longitude;
+        this.storage.set('la', this.o);
+        this.storage.set('lon', this.e);
+        alert(this.o+" 1º "+this.e);        
+    })
+      this.loadMap();
+  }
+
+  ngAfterViewInit() {
+    this.obtenerCoordenadas();
+  }
+
+  prueba(la,lo,map){
+    alert(la+" ff "+lo);
+    var myLatlng = new LatLng(la,lo);
+
+ let position: CameraPosition = {
+   target: {
+     lat: la,
+     lng: lo
+   },
+   zoom: 18,
+   tilt: 30
+ };
+
+ map.moveCamera(position);
+
+ // create new marker
+ let markerOptions: MarkerOptions = {
+   position: myLatlng,
+   title: 'Ionic'
+ };
+
+map.addMarker(markerOptions)
+   .then((marker: Marker) => {
+      marker.showInfoWindow();
+    });
+  }
+
+loadMap() {
+ let element: HTMLElement = document.getElementById('map');
+
+ let map: GoogleMap = this.googleMaps.create(element);
+
+ map.one(GoogleMapsEvent.MAP_READY).then(
+   () => {
+     console.log('Map is ready!');
+   }
+ );
+
+ this.storage.get('la').then((la) =>{
+   this.storage.get('lon').then((lo) =>{
+         this.prueba(la,lo,map);
+         });
+    });
+ }
+
+  
   ionViewDidLoad() {
     this.storage.get('id_evento').then((id_evento) =>{
       this.infoEvento = this.afDatabase.list('/Eventos', {
@@ -42,60 +109,37 @@ export class EventoPage {
       }  
     })
     })   
+    });
+      
+  }
+
+  mostrarToast(){
+      this.toast.aviso_error("Te has apuntado al evento");
+  }
+
+  async apuntarse(id){
+        
     
-    });
-      this.obtenerPosicion();
-  }
+      this.ofAuth.authState.take(1).subscribe(auth =>{
+        firebase.database().ref(`Perfil/${auth.uid}`).once('value').then(function(snapshot) {
+          var apuntados = snapshot.val().eventosApuntados;
+          //this.afDatabase.object(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
+          firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
+        .then(() => {
+          this.mostrarToast();
+          
+        })
+          
+        });
 
-
-  obtenerPosicion():any{
-    this.geolocation.getCurrentPosition().then(response => {
-      this.loadMap(response);
-    })
-    .catch(error =>{
-      alert(error);
-    })
-  }
-
-  loadMap(postion: Geoposition){
-    let latitude = postion.coords.latitude;
-    let longitud = postion.coords.longitude;
-    console.log(latitude, longitud);
-   
-    // create a new map by passing HTMLElement
-    let element: HTMLElement = document.getElementById('mapa');
-
-    let map: GoogleMap = this.googleMaps.create(element);
-
-    // create LatLng object
-    let myPosition: LatLng = new LatLng(latitude,longitud);
-
-    // create CameraPosition
-    let position: CameraPosition = {
-      target: myPosition,
-      zoom: 18,
-      tilt: 30
-    };
-
-    map.one(GoogleMapsEvent.MAP_READY).then(()=>{
-      alert('Map is ready!');
-
-      // move the map's camera to position
-      map.moveCamera(position);
-
-      // create new marker
-      let markerOptions: MarkerOptions = {
-        position: myPosition,
-        title: 'Here'
-      };
-      map.addMarker(markerOptions);
-    });
+        
+      })
+  
 
   }
 
+ }
 
-
-}
 
 
 

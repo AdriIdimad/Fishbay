@@ -18,6 +18,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
   templateUrl: 'cnt.html',
 })
 export class CntPage {
+  tusEventos: string = "tu";
 
   eventosUser: FirebaseListObservable<any[]>;
 

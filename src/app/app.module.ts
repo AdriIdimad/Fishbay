@@ -18,6 +18,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     Camera,
     Funciones_utilesProvider,
     Crop,
+    NativeStorage,
     Geolocation,
     GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
