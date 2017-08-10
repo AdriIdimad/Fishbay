@@ -32,6 +32,11 @@ GEOLOCALIZACION
 + ionic cordova plugin add cordova-plugin-geolocation
 + npm install --save @ionic-native/geolocation
 
++ ////// otra forma para guardar variables en local storage/////////
++ ionic cordova plugin add cordova-plugin-nativestorage
++ npm install --save @ionic-native/native-storage
+
+
 ### Version exacta de Ionic 3 ###
 
 global packages:
