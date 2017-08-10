@@ -33,3 +33,6 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 package-lock.json.rej
+package.json
+package-lock.json
+config.xml
