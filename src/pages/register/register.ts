@@ -11,7 +11,6 @@ import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 
    
-
 @IonicPage()
 @Component({
   selector: 'page-register',

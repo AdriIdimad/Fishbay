@@ -26,7 +26,7 @@ export class EventoPage {
 
 
   constructor(public mensaje: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, private ofAuth: AngularFireAuth,private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private googleMaps: GoogleMaps,
-  private geolocation: Geolocation, private platform:Platform){
+  public geolocation: Geolocation, private platform:Platform){
 
   
   }
@@ -125,10 +125,8 @@ loadMap() {
           var apuntados = snapshot.val().eventosApuntados;
           //this.afDatabase.object(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
           firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id});
-          this.mostrarToast();
-          
         });
-
+        this.mostrarToast();
         
       })
   

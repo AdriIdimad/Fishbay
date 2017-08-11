@@ -42,7 +42,7 @@ export class LoginPage {
         firebase.auth().signInWithCredential(fc).then(fs=>{
           var fb=true;
           this.storage.set('fb', fb);
-          this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
+          this.Facebook.api("me/?fields=id,name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
          .then(response => {
             this.user.nombre=response.name;
             this.user.apellido=response.first_name;
@@ -52,11 +52,10 @@ export class LoginPage {
             this.user.ciudad=response.hometown;
             this.user.id=response.id;            
         }); 
-        this.afDatabase.object(`Perfil/${this.user.id}`).set(this.user);
-        this.navCtrl.push('HomePage');
       }).catch(err=>{
         alert("firebase erro")
       })
+      this.afDatabase.object(`Perfil/${this.user.id}`).set(this.user).then(() => this.navCtrl.push('HomePage'));
     }).catch(err=>{
       alert(JSON.stringify(err))
     })
