@@ -29,9 +29,6 @@ export class LoginPage {
   first_name:string;
   edad:any;
   ciudad:string;
-  id:string;
-
-  
 
   constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook, private storage: Storage,private afDatabase: AngularFireDatabase) {
   }
@@ -42,21 +39,22 @@ export class LoginPage {
         firebase.auth().signInWithCredential(fc).then(fs=>{ 
           var fb=true;
           this.storage.set('fb', fb);
-          this.Facebook.api("me/?fields=id,name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
+          this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
          .then(response => {
             this.user.nombre=response.name;
             this.user.apellido=response.first_name;
             this.user.email=response.email;
             this.user.imagen=response.picture.data.url;
             this.user.edad=response.birthday;
-            this.user.ciudad=response.hometown;
-            this.user.id=response.id;            
-        }); 
+            this.user.ciudad=response.hometown;          
+        });
+       var rootRef = firebase.database().ref().child("Perfil");
+       var newKey = rootRef.push().key;
+          this.afDatabase.object(`Perfil/${newKey}`).set(this.user).then(() => this.navCtrl.push('HomePage'));
       }).catch(err=>{
         alert("firebase erro")
       })
-      alert(this.user.id);
-      this.afDatabase.object(`Perfil/${this.user.id}`).set(this.user).then(() => this.navCtrl.push('HomePage'));
+      
     }).catch(err=>{
       alert(JSON.stringify(err))
     })
@@ -97,8 +95,6 @@ export class LoginPage {
         this.fallo.aviso_error("Los campos email y contraseña estan vacios.")      }
       
     }
-    
-
   }
 
   register(){
