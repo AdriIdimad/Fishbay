@@ -7,5 +7,6 @@ export interface User{
     ciudad: string;
     imagen: string;
     eventosApuntados: any;
+    id: string;
 
 }

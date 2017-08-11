@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth} from "angularfire2/auth";
 import {Facebook} from '@ionic-native/facebook';
 import firebase from 'firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
 /**
  * Generated class for the LoginPage page.
  *
@@ -21,10 +22,18 @@ export class LoginPage {
 
   user = {} as User;
   fb: boolean;
+  name: string;
+  last_name:string;
+  email:string;
+  picture:any;
+  first_name:string;
+  edad:any;
+  ciudad:string;
+  id:string;
 
   
 
-  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook, private storage: Storage) {
+  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, public Facebook:Facebook, private storage: Storage,private afDatabase: AngularFireDatabase) {
   }
 
     fblogin(){
@@ -33,7 +42,18 @@ export class LoginPage {
         firebase.auth().signInWithCredential(fc).then(fs=>{
           var fb=true;
           this.storage.set('fb', fb);
-          this.navCtrl.push('HomePage');
+          this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
+         .then(response => {
+            this.user.nombre=response.name;
+            this.user.apellido=response.first_name;
+            this.user.email=response.email;
+            this.user.imagen=response.picture.data.url;
+            this.user.edad=response.birthday;
+            this.user.ciudad=response.hometown;
+            this.user.id=response.id;            
+        }); 
+        this.afDatabase.object(`Perfil/${this.user.id}`).set(this.user);
+        this.navCtrl.push('HomePage');
       }).catch(err=>{
         alert("firebase erro")
       })

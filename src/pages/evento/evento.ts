@@ -25,7 +25,7 @@ export class EventoPage {
   public e:any;
 
 
-  constructor(public toast: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, private ofAuth: AngularFireAuth,private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private googleMaps: GoogleMaps,
+  constructor(public mensaje: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, private ofAuth: AngularFireAuth,private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private googleMaps: GoogleMaps,
   private geolocation: Geolocation, private platform:Platform){
 
   
@@ -114,7 +114,7 @@ loadMap() {
   }
 
   mostrarToast(){
-      this.toast.aviso_error("Te has apuntado al evento");
+      this.mensaje.aviso_error("Te has apuntado al evento");
   }
 
   async apuntarse(id){
@@ -124,11 +124,8 @@ loadMap() {
         firebase.database().ref(`Perfil/${auth.uid}`).once('value').then(function(snapshot) {
           var apuntados = snapshot.val().eventosApuntados;
           //this.afDatabase.object(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
-          firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
-        .then(() => {
+          firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id});
           this.mostrarToast();
-          
-        })
           
         });
 
