@@ -45,14 +45,22 @@ export class LoginPage {
             this.user.apellido=response.first_name;
             this.user.email=response.email;
             this.user.imagen=response.picture.data.url;
-            this.user.edad=response.birthday;
-            this.user.ciudad=response.hometown;          
+            if(response.birthday==null){
+              response.birthday="";
+            }else{
+              this.user.edad=response.birthday;
+            }
+            if(response.ciudad==null){
+              response.ciudad="";
+            }else{
+              this.user.ciudad=response.hometown;
+            }         
         });
        var rootRef = firebase.database().ref().child("Perfil");
        var newKey = rootRef.push().key;
-          this.afDatabase.object(`Perfil/${newKey}`).set(this.user).then(() => this.navCtrl.push('HomePage'));
+       this.afDatabase.object(`Perfil/${newKey}`).set(this.user).then(() => this.navCtrl.push('HomePage'));
       }).catch(err=>{
-        alert("firebase erro")
+        alert(err);
       })
       
     }).catch(err=>{
