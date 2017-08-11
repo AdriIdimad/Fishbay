@@ -39,7 +39,7 @@ export class LoginPage {
     fblogin(){
       this.Facebook.login(['email']).then(res=>{
         const fc=firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
-        firebase.auth().signInWithCredential(fc).then(fs=>{
+        firebase.auth().signInWithCredential(fc).then(fs=>{ 
           var fb=true;
           this.storage.set('fb', fb);
           this.Facebook.api("me/?fields=id,name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
@@ -55,6 +55,7 @@ export class LoginPage {
       }).catch(err=>{
         alert("firebase erro")
       })
+      alert(this.user.id);
       this.afDatabase.object(`Perfil/${this.user.id}`).set(this.user).then(() => this.navCtrl.push('HomePage'));
     }).catch(err=>{
       alert(JSON.stringify(err))
