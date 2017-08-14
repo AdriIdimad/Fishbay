@@ -44,7 +44,7 @@ export class IzqPage {
       this.eventList = countries;
       this.loadedeventList = countries;
       console.log(this.eventList.length);
-} );
+    } );
 
   }
  

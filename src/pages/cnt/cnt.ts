@@ -19,8 +19,12 @@ import { AngularFireDatabase } from 'angularfire2/database';
 })
 export class CntPage {
   tusEventos: string = "tu";
-
+  public eventList:Array<any>;
   eventosUser: FirebaseListObservable<any[]>;
+  eventosApuntados: FirebaseListObservable<any[]>;
+  public cadena: string;
+  apuntados:Array<any>;
+  eventos: FirebaseListObservable<any[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, private storage: Storage,private afDatabase: AngularFireDatabase) {
   }
@@ -36,10 +40,34 @@ export class CntPage {
       }
     });
     });
-    
-     
+  
+    this.storage.get('id_user').then((id_user) =>{
 
+      this.eventosApuntados = this.afDatabase.list('/Perfil', {
+      query: {
+        orderByChild: 'id',
+        equalTo: id_user //pasar variable id local
+      }
+    });
+      this.eventosApuntados.forEach(evento => {
+          this.cadena=evento[0].eventosApuntados;
+          this.apuntados=this.cadena.split(',');
+          this.storage.set('apuntado', this.apuntados);
+      })
+
+    })
+
+    this.storage.get('apuntado').then((apuntado) =>{
+
+        this.eventos = this.afDatabase.list('/Eventos', {
+              query: {
+                orderByChild: 'id',
+                equalTo: apuntado[0],
+              }
+            });
+    })
   }
+
   out(){
     this.storage.remove('id_user');
     this.app.getRootNav().setRoot('LoginPage');

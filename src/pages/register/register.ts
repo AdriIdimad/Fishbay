@@ -40,9 +40,10 @@ export class RegisterPage {
       const result = await this.ofAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
       console.log(result);
       user.imagen=this.myPhotoURL;
-      user.eventosApuntados="";
+      user.eventosApuntados="";      
       this.ofAuth.authState.take(1).subscribe(auth =>{
         var id_usuario =auth.uid;
+        user.id=auth.uid;
         this.storage.set('id_user', id_usuario);
         this.afDatabase.object(`Perfil/${auth.uid}`).set(this.user)
         .then(() => this.navCtrl.setRoot('HomePage'))

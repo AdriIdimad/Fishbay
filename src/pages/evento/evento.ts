@@ -11,6 +11,7 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
 
 
+
 @IonicPage()
 @Component({
   selector: 'page-evento',
@@ -18,13 +19,14 @@ import { Funciones_utilesProvider } from './../../providers/funciones_utiles/fun
 })
 export class EventoPage {
   map: GoogleMap;
-
+  public deshabilitar: boolean=false;
   infoEvento: FirebaseListObservable<any[]>;
   infoUsuario: FirebaseObjectObservable<User>;
   public o:any;
   public e:any;
+  public marcador: any;
 
-
+  
   constructor(public mensaje: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, private ofAuth: AngularFireAuth,private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private googleMaps: GoogleMaps,
   public geolocation: Geolocation, private platform:Platform){
 
@@ -36,8 +38,7 @@ export class EventoPage {
         this.o=resp.coords.latitude;
         this.e=resp.coords.longitude;
         this.storage.set('la', this.o);
-        this.storage.set('lon', this.e);
-        alert(this.o+" 1º "+this.e);        
+        this.storage.set('lon', this.e);       
     })
       this.loadMap();
   }
@@ -47,7 +48,6 @@ export class EventoPage {
   }
 
   prueba(la,lo,map){
-    alert(la+" ff "+lo);
     var myLatlng = new LatLng(la,lo);
 
  let position: CameraPosition = {
@@ -64,14 +64,20 @@ export class EventoPage {
  // create new marker
  let markerOptions: MarkerOptions = {
    position: myLatlng,
-   title: 'Ionic'
+   title: 'Evento'
  };
 
 map.addMarker(markerOptions)
    .then((marker: Marker) => {
-      marker.showInfoWindow();
+     if(this.marcador!=null){
+       marker.remove();
+       this.marcador=true;
+     }else{
+       marker.showInfoWindow();
+     }      
     });
   }
+
 
 loadMap() {
  let element: HTMLElement = document.getElementById('map');
@@ -108,25 +114,34 @@ loadMap() {
         this.infoUsuario= this.afDatabase.object(`Perfil/${id}`)
       }  
     })
-    })   
-    });
-      
+    })
+
+    
+    
+    }); 
+  
+    /*this.storage.get('deshabilitar').then((desh) =>{
+          this.deshabilitar=desh;
+    });*/
+
   }
 
   mostrarToast(){
       this.mensaje.aviso_error("Te has apuntado al evento");
   }
 
-  async apuntarse(id){
-        
+  async apuntarse(id){        
     
       this.ofAuth.authState.take(1).subscribe(auth =>{
         firebase.database().ref(`Perfil/${auth.uid}`).once('value').then(function(snapshot) {
           var apuntados = snapshot.val().eventosApuntados;
           //this.afDatabase.object(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
-          firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id});
+          firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+""+id+","});
         });
         this.mostrarToast();
+        //this.deshabilitar=true;
+        //this.storage.set('deshabilitar', this.deshabilitar);
+        //this.storage.set('idEvento', id);
         
       })
   
