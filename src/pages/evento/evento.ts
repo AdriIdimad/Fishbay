@@ -24,7 +24,7 @@ export class EventoPage {
   infoUsuario: FirebaseObjectObservable<User>;
   public o:any;
   public e:any;
-  public marcador: any;
+  public event_marker:any;
 
   
   constructor(public mensaje: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, private ofAuth: AngularFireAuth,private storage: Storage,private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private googleMaps: GoogleMaps,
@@ -69,15 +69,15 @@ export class EventoPage {
 
 map.addMarker(markerOptions)
    .then((marker: Marker) => {
-     if(this.marcador!=null){
-       marker.remove();
-       this.marcador=true;
-     }else{
+
        marker.showInfoWindow();
-     }      
+       this.event_marker = marker;
+   
     });
   }
-
+  ionViewWillLeave(){
+    this.event_marker.remove();
+  }
 
 loadMap() {
  let element: HTMLElement = document.getElementById('map');
