@@ -24,8 +24,11 @@ export class CntPage {
   eventosApuntados: FirebaseListObservable<any[]>;
   public cadena: string;
   apuntados:Array<any>;
+  mostrarApuntados:Array<any>;
   eventos: FirebaseListObservable<any[]>;
-
+  public eventRef:firebase.database.Reference;
+  public loadedeventList:Array<any>;
+  final:Array<any>=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, private storage: Storage,private afDatabase: AngularFireDatabase) {
   }
 
@@ -57,16 +60,37 @@ export class CntPage {
 
     })
 
-    this.storage.get('apuntado').then((apuntado) =>{
+        this.eventRef = firebase.database().ref('/Eventos');
+        this.eventRef.on('value', eventList => {
+        let countries = [];
+          eventList.forEach( country => {
+          countries.push(country.val());
+          return false;
+        });
+        
+      this.eventList = countries;
+      this.loadedeventList = countries;
+      console.log(this.eventList.length);
+      console.log(this.eventList);
 
-        this.eventos = this.afDatabase.list('/Eventos', {
-              query: {
-                orderByChild: 'id',
-                equalTo: apuntado[0],
+      this.storage.get('apuntado').then((apuntado) =>{
+
+      for(var j=0;j<apuntado.length;j++){
+            for(var i=0;i<this.loadedeventList.length;i++){
+              if(apuntado[j]==this.loadedeventList[i]['id'] && apuntado[j]!=""){ 
+                this.final.push(this.loadedeventList[i]);
+                console.log(this.loadedeventList[i]);
               }
-            });
-    })
-  }
+               
+            }
+          
+      }
+          console.log(this.final);
+      })
+      
+    });
+   
+  } 
 
   out(){
     this.storage.remove('id_user');

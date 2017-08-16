@@ -69,7 +69,7 @@
 
 <div [ngSwitch]="tusEventos">
 <ion-list class="no-left-padding" *ngSwitchCase="'Apt'" >
-<ion-card *ngFor="let evento of eventos | async" class="no-left-padding" (click)="detallesEvento(evento.id)">
+<ion-card *ngFor="let evento of final" class="no-left-padding" (click)="detallesEvento(evento.id)">
     <img with="100" height="200" src="{{evento.imagen}}"/>
     <ion-card-content>
       <ion-card-title>
