@@ -76,19 +76,22 @@ map.addMarker(markerOptions)
     });
   }
   ionViewWillLeave(){
-    this.event_marker.remove();
+    if(this.event_marker){
+      this.event_marker.remove();
+    }
+    
   }
 
 loadMap() {
  let element: HTMLElement = document.getElementById('map');
-
+ 
  let map: GoogleMap = this.googleMaps.create(element);
 
  map.one(GoogleMapsEvent.MAP_READY).then(
    () => {
      console.log('Map is ready!');
    }
- );
+ ); 
 
  this.storage.get('la').then((la) =>{
    this.storage.get('lon').then((lo) =>{
