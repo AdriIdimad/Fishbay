@@ -14,10 +14,10 @@ import { Funciones_utilesProvider } from './../../providers/funciones_utiles/fun
 
 @IonicPage()
 @Component({
-  selector: 'page-evento',
-  templateUrl: 'evento.html',
+  selector: 'page-mapa',
+  templateUrl: 'mapa.html',
 })
-export class EventoPage {
+export class MapaPage {
   map: GoogleMap;
   public deshabilitar: boolean=false;
   infoEvento: FirebaseListObservable<any[]>;
@@ -99,69 +99,4 @@ loadMap() {
          });
     });
  }
-
-  
-  ionViewDidLoad() {
-    this.storage.get('id_evento').then((id_evento) =>{
-      this.infoEvento = this.afDatabase.list('/Eventos', {
-      query: {
-        orderByChild: 'id',
-        equalTo: id_evento 
-      }
-    });
-
-    this.infoEvento.forEach(element => {
-        var id=element[0].idCreador;
-        this.afAuth.authState.take(1).subscribe(data =>{  
-        if(data && data.email && data.uid){   
-        this.infoUsuario= this.afDatabase.object(`Perfil/${id}`)
-      }  
-    })
-    })
-
-    
-    
-    }); 
-  
-    /*this.storage.get('deshabilitar').then((desh) =>{
-          this.deshabilitar=desh;
-    });*/
-
-  }
-
-  alert(){
-    this.app.getRootNav().push('MapaPage'); 
-  }
-
-  mostrarToast(){
-      this.mensaje.aviso_error("Te has apuntado al evento");
-  }
-
-  async apuntarse(id){        
-    
-      this.ofAuth.authState.take(1).subscribe(auth =>{
-        firebase.database().ref(`Perfil/${auth.uid}`).once('value').then(function(snapshot) {
-          var apuntados = snapshot.val().eventosApuntados;
-          //this.afDatabase.object(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
-          firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+""+id+","});
-        });
-        this.mostrarToast();
-        //this.deshabilitar=true;
-        //this.storage.set('deshabilitar', this.deshabilitar);
-        //this.storage.set('idEvento', id);
-        
-      })
-  
-
-  }
-
  }
-
-
-
-
-
-  
-
-
-

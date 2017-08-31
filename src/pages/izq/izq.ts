@@ -47,6 +47,11 @@ export class IzqPage {
     } );
 
   }
+
+  loading: boolean = true
+  onLoad() {
+      this.loading = false;
+  }
  
   ionViewDidLoad() {
     /*this.eventos = this.afDatabase.list('/Eventos', {
