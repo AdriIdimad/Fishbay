@@ -25,6 +25,7 @@ export class IzqPage {
 
   evento = {} as Evento;
   eventos: FirebaseListObservable<any[]>;
+  loading: boolean = true;
 
   public eventList:Array<any>;
   public loadedeventList:Array<any>;
@@ -48,11 +49,6 @@ export class IzqPage {
 
   }
 
-  loading: boolean = true
-  onLoad() {
-      this.loading = false;
-  }
- 
   ionViewDidLoad() {
     /*this.eventos = this.afDatabase.list('/Eventos', {
       query: {

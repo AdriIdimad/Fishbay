@@ -10,4 +10,7 @@ export interface Evento{
     categoria: string;
     idCreador: string;
     id: string;
+    lat: any;
+    lng: any;
+    direccion: string;
 }

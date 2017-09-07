@@ -21,4 +21,10 @@ export class HomePage {
 
   constructor(public navCtrl: NavController) {}
 
+
+
+  hola(){
+    alert("hola"); 
+  }
+
 }

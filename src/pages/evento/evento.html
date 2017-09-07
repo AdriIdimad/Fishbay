@@ -7,46 +7,48 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
 <ion-card *ngFor="let evento of infoEvento | async" class="no-left-padding">
-
   <img src="{{evento.imagen}}">
-  <ion-fab right top style="background-image: url('{{(infoUsuario | async)?.imagen}}');">
-    <button ion-fab >
-      <img src="{{(infoUsuario | async)?.imagen}}" style="width: 100%;">
+  
+  <ion-fab right top >
+    <button ion-fab>
+      <img src="{{(infoUsuario | async)?.imagen}}" style="height:85%;border-radius:150px;">
     </button>
   </ion-fab> 
 
   <ion-item>
-    <ion-icon name="calendar" item-start large></ion-icon>
+    <ion-icon name="clipboard" item-start large></ion-icon>
     <h2>{{evento.nombre}}</h2>
-    <p>{{evento.descripcion}}</p>
-    
-  </ion-item>
-
-  <ion-item (click)="alert()">
-    <ion-icon name="pin" item-left large ></ion-icon>
-    <h2>{{evento.ciudad}}</h2>
-    <p>{{evento.lugar}}</p>   
+    <p>{{evento.descripcion}}</p>  
   </ion-item>
 
   <ion-item>
-    <span item-left>{{evento.fecha}}</span>
+    <ion-icon name="pin" item-left large ></ion-icon>
+    <h2>{{evento.ciudad}}</h2>
+    <p>{{evento.direccion}}</p>   
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="calendar" item-left large ></ion-icon>
+    <h2>{{evento.fecha}}</h2> 
+  </ion-item>
+
+  <ion-item >
+    <ion-icon name="time" item-left large ></ion-icon>
     <span item-center>{{evento.horaInicio}}</span>
     <span item-center>-</span>
-    <span item-center>{{evento.horaFinal}}</span> 
+    <span item-center>{{evento.horaFinal}}</span>
     <button ion-button icon-left clear item-end>
       <ion-icon name="person"></ion-icon>
-      usuarios
-    </button> 
+      20 usuarios
+    </button>
   </ion-item>
+    
   <ion-item>
     <button icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al evento</button>
   </ion-item>
 </ion-card>
-
-  <div id="map" style="width: 100%; height: 60%;"></div>
-
+<div #mapa id="mapa"></div>
 </ion-content>

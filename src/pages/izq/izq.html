@@ -16,8 +16,7 @@
 <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 <ion-list class="no-left-padding" >
   <ion-card *ngFor="let evento of eventList" class="no-left-padding" >
-    <ion-spinner name="circles" *ngIf=!evento.imagen></ion-spinner>
-    <img with="100" height="200" *ngIf=evento.imagen src="{{evento.imagen}}"/>
+    <img with="100" height="200" src="{{evento.imagen}}"/>
     <ion-card-content>
       <ion-card-title>
         {{evento.nombre}}

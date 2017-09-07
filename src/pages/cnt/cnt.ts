@@ -21,21 +21,32 @@ export class CntPage {
   tusEventos: string = "tu";
   public eventList:Array<any>;
   eventosUser: FirebaseListObservable<any[]>;
-  eventosApuntados: FirebaseListObservable<any[]>;
+  public eventosApuntados: FirebaseListObservable<any[]>;
   public cadena: string;
-  apuntados:Array<any>;
+  public apuntados:Array<any>;
   mostrarApuntados:Array<any>;
   eventos: FirebaseListObservable<any[]>;
   public eventRef:firebase.database.Reference;
   public loadedeventList:Array<any>;
-  final:Array<any>=[];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, private storage: Storage,private afDatabase: AngularFireDatabase) {
+  public final:Array<any>=[];
+  public infoUser:Array<any>;
+  public userRef:firebase.database.Reference;
+  public finalUser:Array<any>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public app: App, public storage: Storage,public afDatabase: AngularFireDatabase) {
+    this.tusEventos="Apt";
+  }
+
+  ionSelected() {
+    alert("Home Page has been selected");
+    // do your stuff here
   }
 
   ionViewDidLoad() {
+    //mis eventos creados
     var usuario;
     this.storage.get('id_user').then((id_user) =>{
-      console.log(id_user);
+      console.log("usuario "+id_user);
       this.eventosUser = this.afDatabase.list('/Eventos', {
       query: {
         orderByChild: 'idCreador',
@@ -43,7 +54,11 @@ export class CntPage {
       }
     });
     });
-  
+  }
+
+  cargar(){
+    this.final.length = 0;
+    //recojo los id de los eventos a los que esta apuntado
     this.storage.get('id_user').then((id_user) =>{
 
       this.eventosApuntados = this.afDatabase.list('/Perfil', {
@@ -55,11 +70,13 @@ export class CntPage {
       this.eventosApuntados.forEach(evento => {
           this.cadena=evento[0].eventosApuntados;
           this.apuntados=this.cadena.split(',');
+          console.log("Array apuntados "+this.apuntados);
           this.storage.set('apuntado', this.apuntados);
       })
+        
 
     })
-
+        //recojo toda la informacion de todos los eventos
         this.eventRef = firebase.database().ref('/Eventos');
         this.eventRef.on('value', eventList => {
         let countries = [];
@@ -70,16 +87,13 @@ export class CntPage {
         
       this.eventList = countries;
       this.loadedeventList = countries;
-      console.log(this.eventList.length);
-      console.log(this.eventList);
-
+      //console.log(this.eventList.length);
+      //comparo los id y cojo la informacion de los que esta apuntado el usuario
       this.storage.get('apuntado').then((apuntado) =>{
-
       for(var j=0;j<apuntado.length;j++){
             for(var i=0;i<this.loadedeventList.length;i++){
               if(apuntado[j]==this.loadedeventList[i]['id'] && apuntado[j]!=""){ 
                 this.final.push(this.loadedeventList[i]);
-                console.log(this.loadedeventList[i]);
               }
                
             }
@@ -88,8 +102,7 @@ export class CntPage {
           console.log(this.final);
       })
       
-    });
-   
+    }); 
   } 
 
   out(){
@@ -106,5 +119,15 @@ export class CntPage {
 
   }
 
-
+  desapuntarse(idEvento){ 
+    this.storage.get('id_user').then((id_user) =>{
+      firebase.database().ref(`Perfil/${id_user}`).once('value').then(function(snapshot) {
+            var apt = snapshot.val().eventosApuntados;
+            apt = apt.replace(idEvento+",","");
+            firebase.database().ref(`Perfil/${id_user}`).update({'eventosApuntados': apt});
+          });
+      })
+      this.cargar();
+      this.navCtrl.setRoot('CntPage');
+  }
 }
