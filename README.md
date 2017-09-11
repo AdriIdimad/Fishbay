@@ -37,7 +37,12 @@ GEOLOCALIZACION
 + npm install --save @ionic-native/native-storage
 
 + ////cloud///////
+
++ programacion@grupoidimad.com
++ Idimad2017
+
 + npm install @ionic/cloud-angular --save
+
 
 
 ### Version exacta de Ionic 3 ###
