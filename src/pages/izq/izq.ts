@@ -41,10 +41,12 @@ export class IzqPage {
           countries.push(country.val());
           return false;
         });
+      
+      countries.reverse();
 
       this.eventList = countries;
       this.loadedeventList = countries;
-      console.log(this.eventList.length);
+
     } );
 
   }

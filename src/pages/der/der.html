@@ -11,7 +11,7 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
 <ion-label stacked><ion-icon name="navigate"></ion-icon> Lugar</ion-label>  
 
@@ -26,6 +26,11 @@
   <ion-item class="no-left-padding">
     <ion-label stacked><ion-icon name="clipboard"></ion-icon> Descripcion</ion-label>
     <ion-textarea type="text" [(ngModel)]="evento.descripcion"></ion-textarea>
+  </ion-item>
+
+    <ion-item class="no-left-padding">
+    <ion-label stacked><ion-icon name="people"></ion-icon> Limite de Personas</ion-label>
+    <ion-input type="number" [(ngModel)]="evento.cupo"></ion-input>
   </ion-item>
 
   <ion-item class="no-left-padding">
@@ -43,7 +48,7 @@
     <ion-input type="time" [(ngModel)]="evento.horaFinal"></ion-input>
   </ion-item>
 
-  <ion-item class="no-left-padding">
+  <ion-item class="no-left-padding" id="lista">
       <ion-label>Categoria del evento</ion-label>
       <ion-select [(ngModel)]="evento.categoria">
         <ion-option value="deportes">Deportes</ion-option>
@@ -60,5 +65,6 @@
       <button ion-button icon-left (click)="subirImagen()" color="secondary"><ion-icon name="cloud-upload"></ion-icon> Imagen del evento</button>
     </ion-item>
     <button ion-button icon-left (click)="registrarEvento(evento)" full ><ion-icon name="add-circle"></ion-icon> Crear evento</button>
+    <br>
 </ion-content>
 

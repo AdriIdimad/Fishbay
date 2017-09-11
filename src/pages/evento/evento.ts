@@ -106,11 +106,36 @@ export class EventoPage {
     
       this.ofAuth.authState.take(1).subscribe(auth =>{
         firebase.database().ref(`Perfil/${auth.uid}`).once('value').then(function(snapshot) {
-          var apuntados = snapshot.val().eventosApuntados;
-          //this.afDatabase.object(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+","+id})
+          var apuntados = snapshot.val().eventosApuntados;          
           firebase.database().ref(`Perfil/${auth.uid}`).update({'eventosApuntados': apuntados+""+id+","});
         });
-        this.mostrarToast();
+
+        firebase.database().ref(`Eventos/${id}`).once('value').then(function(snapshot) {
+          var numPersonas = snapshot.val().numApuntadas;
+          var sumarPersona= numPersonas+1;          
+          firebase.database().ref(`Eventos/${id}`).update({'numApuntadas': sumarPersona});
+        });
+
+        var cadena="";
+
+
+        var sacarID = this.afDatabase.list('/Eventos', {
+            query: {
+              orderByChild: 'id',
+              equalTo: id 
+            }
+          });
+
+        sacarID.forEach(element => {
+            cadena=element[0].eventosApuntados;
+        })
+
+        if(cadena.indexOf(id)>= -1){
+          var d = document.getElementById("boton"); 
+          d.setAttribute("disabled", "true");
+          this.mostrarToast();
+        }
+
         //this.deshabilitar=true;
         //this.storage.set('deshabilitar', this.deshabilitar);
         //this.storage.set('idEvento', id);

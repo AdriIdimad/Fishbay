@@ -100,6 +100,7 @@ export class DerPage {
             evento.lng=this.lng;
             evento.direccion=this.direccion;
             evento.ciudad=this.ciudad; 
+            evento.numApuntadas=0;
             this.afDatabase.object(`Eventos/${newKey}`).set(this.evento)
             .then(() => {
               this.app.getRootNav().setRoot('HomePage');

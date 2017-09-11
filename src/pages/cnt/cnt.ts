@@ -124,7 +124,14 @@ export class CntPage {
             apt = apt.replace(idEvento+",","");
             firebase.database().ref(`Perfil/${id_user}`).update({'eventosApuntados': apt});
           });
-      })
+       })
+      firebase.database().ref(`Eventos/${idEvento}`).once('value').then(function(snapshot) {
+          var numPersonas = snapshot.val().numApuntadas;
+          var restarPersona= numPersonas-1;          
+          firebase.database().ref(`Eventos/${idEvento}`).update({'numApuntadas': restarPersona});
+        });
+     
+
       this.cargar();
       this.navCtrl.setRoot('CntPage');
   }

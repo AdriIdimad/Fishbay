@@ -13,4 +13,6 @@ export interface Evento{
     lat: any;
     lng: any;
     direccion: string;
+    cupo: number;
+    numApuntadas: number;
 }

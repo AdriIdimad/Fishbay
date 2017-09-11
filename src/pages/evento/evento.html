@@ -7,9 +7,9 @@
 
 </ion-header>
 
-<ion-content padding>
-
-<ion-card *ngFor="let evento of infoEvento | async" class="no-left-padding">
+<ion-content>
+<div #mapa id="mapa"></div>
+<ion-card *ngFor="let evento of infoEvento | async" class="cards">
   <img src="{{evento.imagen}}">
   
   <ion-fab right top >
@@ -42,13 +42,13 @@
     <span item-center>{{evento.horaFinal}}</span>
     <button ion-button icon-left clear item-end>
       <ion-icon name="person"></ion-icon>
-      20 usuarios
+      {{evento.numApuntadas}}
     </button>
   </ion-item>
     
   <ion-item>
-    <button icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al evento</button>
+    <button id="boton" icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al evento</button>
   </ion-item>
 </ion-card>
-<div #mapa id="mapa"></div>
-</ion-content>
+
+</ion-content> 
