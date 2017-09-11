@@ -7,13 +7,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Mis Eventos</ion-title>
+    <ion-title class="center">FISHBAY</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content class="no-left-padding"> 
-<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+<ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar"></ion-searchbar>
 <ion-list class="no-left-padding" >
   <ion-card *ngFor="let evento of eventList" class="no-left-padding" >
     <img with="100" height="200" src="{{evento.imagen}}"/>

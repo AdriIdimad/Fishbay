@@ -37,11 +37,6 @@ export class CntPage {
     this.tusEventos="Apt";
   }
 
-  ionSelected() {
-    alert("Home Page has been selected");
-    // do your stuff here
-  }
-
   ionViewDidLoad() {
     //mis eventos creados
     var usuario;
@@ -54,6 +49,10 @@ export class CntPage {
       }
     });
     });
+  }
+
+  ionViewDidEnter(){
+    this.cargar();
   }
 
   cargar(){
@@ -96,8 +95,7 @@ export class CntPage {
                 this.final.push(this.loadedeventList[i]);
               }
                
-            }
-          
+            }          
       }
           console.log(this.final);
       })
@@ -130,4 +128,10 @@ export class CntPage {
       this.cargar();
       this.navCtrl.setRoot('CntPage');
   }
+
+  eliminar(idEvento){
+    firebase.database().ref('/Eventos').child(idEvento).remove();
+    
+  }
+
 }

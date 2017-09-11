@@ -1,3 +1,4 @@
+import { CntPage } from './../cnt/cnt';
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 
@@ -20,11 +21,5 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController) {}
-
-
-
-  hola(){
-    alert("hola"); 
-  }
 
 }

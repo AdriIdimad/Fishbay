@@ -52,7 +52,7 @@
       <button icon-left ion-button color="primary" full (click)="detallesEvento(evento.id)"><ion-icon name="information-circle"></ion-icon>Ver Información</button>
     </ion-col>
     <ion-col>
-      <button icon-left ion-button color="danger" full (click)="desapuntarse(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntarse</button>
+      <button class="rojo" icon-left ion-button full (click)="desapuntarse(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntate!</button>
     </ion-col>
     <ion-col text-center>
       <button ion-button icon-left clear small center>
@@ -85,7 +85,7 @@
     <ion-row>
     <ion-col>
       <button icon-left ion-button color="primary" full (click)="detallesEvento(evento.id)"><ion-icon name="ios-paper-plane"></ion-icon>Ver tu Evento</button>
-      <button icon-left ion-button color="danger" full (click)="detallesEvento(evento.id)"><ion-icon name="trash"></ion-icon>Eliminar</button>
+      <button class="rojo" icon-left ion-button full (click)="eliminar(evento.id)"><ion-icon name="trash"></ion-icon>Eliminar</button>
     </ion-col>
     <ion-col text-center>
       <button ion-button icon-left clear small center>
