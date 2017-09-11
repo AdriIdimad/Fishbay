@@ -43,6 +43,8 @@ GEOLOCALIZACION
 
 + npm install @ionic/cloud-angular --save
 
++ ///notifiaciones//////
++ ionic cordova plugin add phonegap-plugin-push --variable SENDER_ID=944185704251
 
 
 ### Version exacta de Ionic 3 ###
