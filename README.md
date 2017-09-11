@@ -36,6 +36,9 @@ GEOLOCALIZACION
 + ionic cordova plugin add cordova-plugin-nativestorage
 + npm install --save @ionic-native/native-storage
 
++ ////cloud///////
++ npm install @ionic/cloud-angular --save
+
 
 ### Version exacta de Ionic 3 ###
 
