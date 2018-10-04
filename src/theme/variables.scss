@@ -14,16 +14,74 @@ $app-direction: ltr;
 @import "ionic.globals";
 
 button{
-  background-color: #13c1ac !important; 
+  //background-color: #13c1ac !important; 
+  color: white !important;
+}
+
+#icoConfiguracion{
+  font-size: 200% !important;
+}
+
+#ajustes{
+  margin-right: 6% !important;
+}
+
+
+.ion-item{
+  background-color: white;
+}
+
+.toolbar-title-ios{
+  color: white !important;
+}
+
+.toolbar-background-ios{
+  background-color: #7DAFB0 !important;
+}
+
+.checkbox-md .checkbox-checked{
+  background-color: #7DAFB0 !important;
+  border-color: #7DAFB0 !important;
+}
+
+.toggle-md.toggle-checked .toggle-inner{
+  background-color: #7DAFB0 !important; 
+
+}
+
+.alert-button.alert-button-md.alert-button-default.alert-button-default-md{
+  background-color: #7DAFB0 !important; 
+}
+
+.toggle{
+  color: #7DAFB0 !important; 
+}
+
+
+#guardarPaso2, #guardarPaso1{
+  background-color: #7DAFB0 !important;
+}
+
+
+.segment-button{
+  color:#7DAFB0 !important;
+}
+
+.segment-button.segment-activated{
+  color:white !important;
+  border-color: #7DAFB0 !important;
+}
+
+.searchbar-search-icon{
   color: white !important;
 }
 
 .toolbar-background.toolbar-background-md{
-  background-color: #13c1ac !important; 
+  background-color: white !important; 
 }
 
 .toolbar-title.toolbar-title-md{
-  color: white !important;
+  color: #7DAFB0 !important;
 }
 
 .rojo{
@@ -40,7 +98,7 @@ button{
 }
 
 .scroll-content{
-  background-color: #E0E0E0 !important;
+  //background-color: #E0E0E0 !important;
 }
 
 // Shared Variables

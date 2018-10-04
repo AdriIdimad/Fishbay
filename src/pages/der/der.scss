@@ -1,5 +1,28 @@
 page-der {
 
+    .gmnoprint{
+
+        display:none;
+
+    }
+
+    #crear{
+        background-color: #13c1ac !important;
+    }
+
+     #itemFoto .item-inner .input-wrapper {
+        border-bottom: 0px !important;
+    }
+
+    .scroll-content{
+        margin-left: 3px;
+    }
+
+
+}
+
+.alert-md .alert-button{
+    color: white !important;
 }
 
 #map{

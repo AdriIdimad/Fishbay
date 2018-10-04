@@ -1,0 +1,61 @@
+<!--
+  Generated template for the VerPerfilPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{(perfilData | async)?.nick}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div id="avatar" align="center">   
+        <img class="profile-image" src="{{(perfilData | async)?.imagen}}">
+        <br>
+  </div>
+<ion-list>
+    <ion-item style="text-align:center;">
+        <button style="color: blue !important;" ion-button round outline center [disabled]='deshabilitado' (click)="bloquear()"><ion-icon name="lock"></ion-icon> Bloquear usuario</button>
+    </ion-item>
+  <ion-item>
+    <ion-label floating><ion-icon name="person"></ion-icon> Nombre</ion-label>
+    <ion-input type="text" name="name" [(ngModel)]="user.nombre" value="{{(perfilData | async)?.nombre}}" required></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating><ion-icon name="person"></ion-icon> Nick</ion-label>
+    <ion-input type="text" name="name" [(ngModel)]="user.nick" value="{{(perfilData | async)?.nick}}" required></ion-input>
+  </ion-item>
+  <div *ngIf="(perfilData | async)?.publico">
+    <ion-item> 
+        <ion-label floating><ion-icon name="person"></ion-icon> Descripción corta</ion-label>
+        <ion-input type="text" name="descripcion" [(ngModel)]="user.descripcion" value="{{(perfilData | async)?.descripcion}}" required></ion-input>
+    </ion-item>
+    <ion-item> 
+      <ion-label floating><ion-icon name="person"></ion-icon> Apellidos</ion-label>
+      <ion-input type="text" name="apellido" [(ngModel)]="user.apellido" value="{{(perfilData | async)?.apellido}}" required></ion-input>
+    </ion-item>
+  <ion-item>
+    <ion-label floating><ion-icon name="person"></ion-icon> Edad</ion-label>
+    <ion-input type="text" name="nick" [(ngModel)]="user.edad" value="{{(perfilData | async)?.edad}}" required></ion-input>
+    <ion-icon item-right name="md-create"></ion-icon>
+  </ion-item>
+  <ion-item>
+    <ion-label floating><ion-icon name="person"></ion-icon> Ciudad</ion-label>
+    <ion-input type="text" name="nick" [(ngModel)]="user.ciudad" value="{{(perfilData | async)?.ciudad}}" required></ion-input>
+    <ion-icon item-right name="md-create"></ion-icon>
+  </ion-item>
+  <ion-item>
+    <ion-label floating><ion-icon name="person"></ion-icon> Profesión</ion-label>
+    <ion-input type="text" name="nick" [(ngModel)]="user.profesion" value="{{(perfilData | async)?.profesion}}" required></ion-input>
+    <ion-icon item-right name="md-create"></ion-icon>
+  </ion-item> 
+</div>
+</ion-list>
+
+</ion-content>

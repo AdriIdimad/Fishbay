@@ -1,0 +1,24 @@
+page-configuracion {
+    .filters {
+        list-style: none;
+        display: flex;
+        flex-flow: row wrap;
+  
+        li {
+           width: 12%;
+             text-align: center;
+        }
+     }
+     
+     li {
+        background: rgba(230, 230, 230,1 );
+        padding: 1em;
+          width: 31.75%;
+          margin: 0.25em;
+          text-align: center;}
+}
+
+#map{
+    margin:10px auto;
+    box-shadow:0 3px 25px black;
+}

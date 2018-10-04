@@ -1,5 +1,8 @@
 {
   "name": "Fishbay",
-  "app_id": "beb24799",
-  "type": "ionic-angular"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "beb24799"
 }

@@ -1,0 +1,42 @@
+
+<ion-header>
+
+  <ion-navbar hideBackButton="true">
+    <ion-title class="center">Configuracion</ion-title>
+    <ion-buttons right>
+        <button ion-button icon-only color="royal" (click)="guardar()">
+          Aceptar
+        </button>
+      </ion-buttons>
+  </ion-navbar>  
+
+</ion-header>
+<!--<iframe style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: none;" src="https://alcarnet.com"></iframe>-->
+
+<ion-content padding>
+
+    <ion-label>Ciudad</ion-label>
+    <ion-item >
+        <ion-label>Selecciona una ciudad</ion-label>
+        <ion-select [(ngModel)]="ciudadS" cancelText="Cancelar" okText="Ok" >
+          <ion-option *ngFor="let c of prueba" value="{{c}}">{{c}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-label>Categoría</ion-label>
+      <ion-item >
+        <ion-label>Selecciona una categoría</ion-label>
+        <ion-select [(ngModel)]="categoriaElegida" cancelText="Cancelar" okText="Ok" >
+          <ion-option value="deportes">Deportes</ion-option>
+          <ion-option value="Cultura">Cultura</ion-option>
+          <ion-option value="Gastronomia">Gastronomia</ion-option>
+          <ion-option value="Aire Libre">Aire Libre</ion-option>
+          <ion-option value="Noche/Fiesta">Noche/Fiesta</ion-option>
+          <ion-option value="Viajes">Viajes</ion-option>
+          <ion-option value="Con niños">Con niños</ion-option>
+          <ion-option value="Sólo con mujeres">Sólo con mujeres</ion-option>
+          <ion-option value="Sólo con hombres">Sólo con hombres</ion-option>
+          <ion-option value="Con animales">Con animales</ion-option>
+          <ion-option value="Gratuitos">Gratuitos</ion-option>
+        </ion-select>
+      </ion-item>
+</ion-content>

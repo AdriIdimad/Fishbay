@@ -17,7 +17,7 @@ export class Funciones_utilesProvider {
   aviso_error(msg: string){
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000,
+      duration: 1000,
       position: 'bottom'});
       toast.present();
   }

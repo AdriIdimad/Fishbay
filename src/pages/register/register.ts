@@ -1,4 +1,5 @@
 import { HomePage } from './../home/home';
+import { Cuestionario1Page } from './../cuestionario1/cuestionario1';
 import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -9,13 +10,15 @@ import { AngularFireAuth} from "angularfire2/auth";
 import { Camera } from '@ionic-native/camera';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
-
+import { MenuController} from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+import { Http,RequestOptions,Headers } from '@angular/http';
    
 @IonicPage()
 @Component({
   selector: 'page-register',
-  templateUrl: 'register.html',
-})
+  templateUrl: 'register.html', 
+}) 
 export class RegisterPage {
   user = {} as User;
   public myPhotosRef: any;
@@ -23,55 +26,112 @@ export class RegisterPage {
   public myPhotoURL: any;
   public nombre: any;
 
-  constructor(public fallo: Funciones_utilesProvider,private ofAuth: AngularFireAuth,private toastCtrl: ToastController,
+  constructor(private http: Http,private alertCtrl: AlertController, public menuCtrl: MenuController,public fallo: Funciones_utilesProvider,public ofAuth: AngularFireAuth,private toastCtrl: ToastController,
     public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera, private storage: Storage) {
       this.myPhotoURL="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/1467646262_522853_1467646344_noticia_normal.jpg?alt=media&token=becd877e-b16c-43fe-8a68-f1267d38cff0";
-      this.myPhotosRef = firebase.storage().ref('/Imagenes/');
-      
+      this.myPhotosRef = firebase.storage().ref('/Imagenes/');     
+  }
+ 
+  ionViewDidEnter() {
+    this.menuCtrl.swipeEnable(false);
+
+    // If you have more than one side menu, use the id like below
+    // this.menu.swipeEnable(false, 'menu1');
+  }
+
+  ionViewWillLeave() {
+    // Don't forget to return the swipe to normal, otherwise 
+    // the rest of the pages won't be able to swipe to open menu
+    this.menuCtrl.swipeEnable(true);
+
+    // If you have more than one side menu, use the id like below
+    // this.menu.swipeEnable(true, 'menu1');
+   }
+
+
+
+   sendPostRequest(email,nombre) {
+    var headers = new Headers();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded' );
+    const requestOptions = new RequestOptions({ headers: headers });
+
+    let postData = {
+            "name": nombre,
+            "email": email
+    }
+    var senderBody = JSON.stringify(postData);
+
+    console.log(postData);
+
+    this.http.post("https://fishbayandfun.com/enviaremail.php", senderBody, requestOptions)
+      .subscribe(data => {
+        console.log(data['_body']);
+       }, error => {
+        console.log(error);
+      });
+
   }
 
   
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+  async register(user: User){
+
+
+    if(user.nombre==undefined || user.nick==undefined || user.descripcion==undefined || user.ciudad==undefined || user.email==undefined || user.password==undefined){
+        let alert = this.alertCtrl.create({
+          title: 'Hay campos vacíos',
+          subTitle: 'Completa todos los campos',
+          buttons: ['Ok']
+        });
+        alert.present();
+    }else{
+   
+      try{
+        const result = await this.ofAuth.auth.createUserWithEmailAndPassword(user.email,user.password);  
+        this.sendPostRequest(user.email,user.nombre);   
+        console.log(result);
+        user.imagen=this.myPhotoURL;   
+        this.ofAuth.authState.take(1).subscribe(auth =>{
+          var id_usuario =auth.uid;
+          user.id=auth.uid;
+          user.publico=true;
+          user.notificaciones=true;
+          user.puntuacion=0;
+          user.nVotos=0;
+          this.storage.set('id_user', id_usuario);
+          this.storage.set('notificaciones', true);
+          this.afDatabase.object(`Perfil/${auth.uid}`).set(this.user)
+          .then(() => this.navCtrl.setRoot('Cuestionario1Page'))
+        })
+      }catch(e){
+        let error: string= e.code;
+        console.log(e.code);
+        if(error == "auth/invalid-email"){
+          this.fallo.aviso_error("El formato del email es incorrecto.");
+        }else if(error=="auth/user-not-found"){
+          this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
+        }else if(error=="auth/wrong-password"){
+          this.fallo.aviso_error("Contraseña incorrecta");
+        }else if(error=="auth/argument-error"){
+          this.fallo.aviso_error("Los campos email y contraseña estan vacios.")
+        }else if(error=="auth/weak-password"){
+          this.fallo.aviso_error("Contraseña demasiado corta");
+        }
+        
+      }  
   }
 
-  async register(user: User){
-    try{
-      const result = await this.ofAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
-      console.log(result);
-      user.imagen=this.myPhotoURL;
-      user.eventosApuntados="";      
-      this.ofAuth.authState.take(1).subscribe(auth =>{
-        var id_usuario =auth.uid;
-        user.id=auth.uid;
-        this.storage.set('id_user', id_usuario);
-        this.afDatabase.object(`Perfil/${auth.uid}`).set(this.user)
-        .then(() => this.navCtrl.setRoot('HomePage'))
-      })
-    }catch(e){
-      let error: string= e.code;
-      if(error == "auth/invalid-email"){
-        this.fallo.aviso_error("El formato del email es incorrecto.");
-      }else if(error=="auth/user-not-found"){
-        this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
-      }else if(error=="auth/wrong-password"){
-        this.fallo.aviso_error("Contraseña incorrecta");
-      }else if(error=="auth/argument-error"){
-        this.fallo.aviso_error("Los campos email y contraseña estan vacios.")
-      }
-      
-    }
-  } 
+} 
 
   subirImagen(): void {
     this.camera.getPicture({
-      targetWidth: 80,
-      targetHeight: 80,
+      targetWidth: 500,
+      targetHeight: 500,
       allowEdit:true,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      quality: 10,
-      encodingType: this.camera.EncodingType.PNG,
+      quality: 100,
+      encodingType: this.camera.EncodingType.JPEG,
     }).then(imageData => {
       this.myPhoto = imageData;
       this.uploadPhoto();
@@ -80,12 +140,14 @@ export class RegisterPage {
     });
   }
  
-  private uploadPhoto(): void {
+  public uploadPhoto(): void {
     this.nombre = this.generateUUID();
-    this.myPhotosRef.child(this.nombre+'.png')
-      .putString(this.myPhoto, 'base64', { contentType: 'image/png' })
+    firebase.storage().ref('/Imagenes/').child(this.nombre+'.jpeg')
+      .putString(this.myPhoto, 'base64', { contentType: 'image/jpeg' })
       .then((savedPicture) => {
         this.myPhotoURL = savedPicture.downloadURL;
+      }, error => {
+        console.log("ERROR -> " + JSON.stringify(error));
       });
   }
 

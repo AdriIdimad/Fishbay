@@ -1,24 +1,33 @@
 page-home {
-
-} 
-
-.tabbar.show-tabbar{
-    background-color: #13c1ac !important; 
-}
-
-.tab-button.has-title.has-icon{
-    color: white !important;
-}
-
-.tab-button-icon.icon.icon-md.ion-md-search{
-    color: white !important;
-}
-
-.tab-button-icon.icon.icon-md.ion-md-calendar{
-    color: white !important;
-}
-
-.tab-button-icon.icon.icon-md.ion-md-add{
-    color: white !important;
-}
-
+    
+        .tabs-md .tab-button-icon{
+            color: white !important;
+        }
+    
+    } 
+    
+    .tabbar.show-tabbar{
+        background-color: #7DAFB0 !important; 
+    }
+    
+    .tab-button.has-title.has-icon{
+        color: white !important;
+    }
+    
+    .tab-button-icon.icon.icon-md.ion-md-search{
+        color: white !important;
+    }
+    
+    .tab-button-icon.icon.icon-md.ion-md-calendar{
+        color: white !important;
+    }
+    
+    .tab-button-icon.icon.icon-md.ion-md-add{
+        color: white !important;
+    }
+    
+    .tabs-ios .tab-button[aria-selected="true"] .tab-button-icon{
+        color: white !important;
+    }
+    
+    

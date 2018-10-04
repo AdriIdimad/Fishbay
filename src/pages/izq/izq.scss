@@ -1,3 +1,374 @@
 page-izq {
+    
+        #avatar{
+            min-width: 100% !important;
+            min-height: 100% !important;
+            margin: 0 auto;
+        }
 
-}
+        .bar-buttons-md[right]{
+            margin-right: 6% !important;
+        }
+
+        #descripcion{
+            margin-right: 9% !important;
+        }
+
+        #infor{
+            //margin-top: 5% !important;
+            height: 100% !important;
+        }
+
+        .rating{
+            margin-top: 1% !important;            
+        }
+
+        .fab{
+            width: 70px !important;
+            height: 70px !important;
+        }
+
+        .fab ion-icon{
+            font-size: 5.4rem !important;
+        }
+
+        #circulo{
+            left: 43.5% !important;
+        }
+     
+        .avatars img{
+            margin: auto;
+        }
+        #divAvatar{
+            padding-bottom: 0px !important;
+            padding-top: 10% !important;
+        }
+    
+    
+        .cols {
+            display: flex;
+            margin-top: -1%;
+          }
+          
+          /*.cols div { 
+            flex: 1;
+          }*/
+          
+          .col1 {
+            border-right: 1px solid gainsboro;
+          }
+          
+          .col2 {
+            /*background-color: skyblue;*/
+          }
+          
+        ion-label{
+            width: 100%;
+            height: 100%;
+        }
+    
+        .button-large-md {
+            height: 100% !important;
+            padding: 0 7% !important;
+          }
+    
+    
+    
+          #busqueda{
+            
+            margin-top: -4% !important;
+          }
+          
+          .busqueda{
+            color: #7DAFB0 !important;
+            font-size: 100% !important;
+          }
+     
+        ul {
+            padding: 0px;
+            &.rating li {
+              padding: 2px 1px !important;
+              background: none;
+              color: #E5AC39 ;
+              ion-icon {
+                font-size: 18px;
+              }
+            }
+          }
+    
+        .label-md{
+            margin-bottom: 1px !important; 
+            margin-top: 0px !important; 
+            margin: 0px;
+        }
+     
+        .full-image {
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+          }
+    
+        #botonVer{
+            color: #7DAFB0 !important;
+            font-size: 10px !important;
+            width: 20px !important;
+            height: 20px !important;
+            background-color: white;
+        } 
+        #botonVer1{
+            right: 0% !important;
+        } 
+
+        ion-icon {
+            font-size: 200%; //Preferred size here
+        }
+    
+        .loading{
+            margin-top: 40% !important;
+            text-align: center !important;
+        }
+    
+        #loaderImg{
+            margin-top: 20%;
+    
+        }
+    
+        #spinner{
+            width: 100%;
+            height: 200px;
+            padding-left: 35%;
+        }
+        .item-md.item-block .item-inner{
+            border-bottom: 0px solid;
+        }
+    
+        #card-stack {
+            width: 95%;
+            height: 95%;
+            margin: 0 auto ;
+            margin-top: 0%;
+            position: relative;
+            z-index: 10000;
+          }
+    
+          .user_img {
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 5px;
+            background-size: cover;
+        }
+        #mycards1{
+            z-index:100 !important;
+        }
+        
+        div#card-stack{
+            z-index:100 !important;
+        }
+    
+        .item-md.item-block .item-inner {
+            padding-right: 0px !important;
+        }
+    
+        .item-ios.item-block .item-inner{
+            padding-right: 0px !important;
+        }
+    
+    
+          #myswing1{
+              margin: 0 auto !important;
+              align-content: center;
+              z-index: 100;
+          }
+            
+          #card-stack ion-card {
+            border-radius: 5px;
+            position: absolute;
+            text-align: center;
+            top: 0%;
+            height: 95%;
+          }
+    
+        #imagenEvento{
+            border-bottom: 1px solid #7DAFB0;
+        }
+    
+        #info{
+            font-size: 2.4rem !important;
+            color: #7DAFB0 !important;
+        }
+    
+        #busqueda{
+            color: #7DAFB0 !important;
+            font-size: 10px; //Preferred size here
+        }
+    
+        .voteNo{
+            color: #E5AC39 !important;
+            font-size: 160%; //Preferred size here
+            background-color: #9c9c9c;
+            opacity: 0.5;
+        }
+    
+        .fechaDiseno{
+            color: white !important;
+            font-size: 100%; //Preferred size here
+            background-color: #7DAFB0;
+            width: 100px !important;
+            height: 100px !important;
+        }
+    
+        .vote{
+            color: #E5AC39 !important;
+            font-size: 160%; //Preferred size here
+            background-color: #9c9c9c;
+            opacity: 0.5;
+        }
+            
+        .centrar{
+            margin: 0 auto !important;
+        }
+    
+    
+        #usuario{
+            border: 1px solid #7DAFB0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        button{
+            //background-color: #13c1ac !important; 
+            color: white !important;
+          }
+    
+        .titulo{
+            color: #7DAFB0 !important;
+            font-size:18px;
+        }
+    
+        .col{
+            padding-bottom: 1px !important;
+            padding-top: 1px !important;  
+        }
+    
+        .texto-card{
+            margin-left: 10px !important;
+            margin-top: 4px !important;
+            margin-right: 10px !important;
+    
+        }
+        
+    
+        .padding-pers{
+            padding-left: 5px !important;
+        }
+    
+        .card-content-md{
+            padding-bottom: 1px !important;
+            padding-top: 1px !important;        
+        } 
+        .card-content-ios{
+            padding-bottom: 1px !important;
+            padding-top: 1px !important;
+        }
+    
+        .card-md{
+            margin: 8px !important;
+            box-shadow: 1px 1px 10px 0px #9c9c9c;
+        }
+        .card-ios{
+            margin:8px !important;
+            box-shadow: 1px 1px 10px 0px #9c9c9c;
+        }
+    
+        .label-ios {
+            margin-bottom: 1px !important;
+            margin-top: 0px !important;
+            margin: 0px;
+        }
+    
+        .medio{
+            padding-left: 20% !important;
+            padding-right: 9% !important;
+            margin: 0px !important;
+            padding-bottom: 1%;
+        }
+    
+        #tarjeta{
+            border-radius: 5px;  
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
+        }
+    
+    
+        #tarjeta:hover {
+            box-shadow: 0 3px 5px , 0 3px 3px #7DAFB0;
+          }
+      
+    }
+    
+    .eventos{
+        background-color: #7DAFB0 !important;   
+    }
+    
+    .sobre {
+        position:absolute;
+        top:0px;
+        left:0px;
+        border:none;
+       }
+    
+    .compartir{
+        color: #7DAFB0 !important; 
+    }
+    
+    .derecha{
+        color: #7DAFB0 !important;  
+        padding-left: 75%;
+        margin-top: -30%;
+        width: 20%; 
+    }
+    
+    .fecha{
+            color: #7DAFB0 !important;  
+            padding-left: 75%;
+            margin-top: -20%;
+            width: 20%; 
+        
+    }
+    
+    #personas{
+        font-size: 22px !important;
+    }
+    
+    ion-card{
+     border: 0.4px solid #b3b4b4 !important;
+     border-block-end: 1px solid #b3b4b4 !important;
+    }
+    
+    #chat{
+        font-size: 2em !important;
+        color: white;
+        padding-top: 1%;
+        padding-right: 3%;
+        float: right;
+    }
+    
+    #botonSi{
+        background-color: #7DAFB0 !important;
+        z-index: 1;
+    }
+    
+    #barraArriba{
+        background-image: none !important;
+    
+    }
+    .header-md::after{
+        background-image: none !important;
+    
+    }
+    
+    
+    
+    

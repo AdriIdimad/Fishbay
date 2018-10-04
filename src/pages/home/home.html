@@ -1,6 +1,11 @@
-<ion-tabs >
-    <ion-tab id="tabss" [root]="izqRoot"  tabTitle="Buscar eventos" tabIcon="search" ></ion-tab>
-    <ion-tab [root]="cntRoot"  tabTitle="Mis eventos" tabIcon="calendar"></ion-tab>
-    <ion-tab [root]="derRoot" tabTitle="Publicar" tabIcon="md-add"></ion-tab>
+
+<ion-tabs > 
+    <div style="position:absolute; visibility:visible; width: 100%; height: 100%; bottom:0;" >
+        <img src="assets/img/ondas3.png" style="background-size: cover; width: 100%; height: 9px; margin-bottom: 56px;background-color: transparent !important;" class="tabbar show-tabbar" />
+    </div>
+    <ion-tab id="tabss" [root]="izqRoot"  tabTitle="{{ 'VPLANES' | translate }}" tabIcon="search" ></ion-tab>
+    <ion-tab [root]="derRoot" tabTitle="{{ 'PUBLICAR' | translate }}" tabIcon="md-add"></ion-tab>
+    <ion-tab [root]="cntRoot"  tabTitle="{{ 'PLANES' | translate }}" tabIcon="calendar"></ion-tab> 
+    <ion-tab [root]="perfilRoot"  tabTitle="{{ 'PERFIL' | translate }}" tabIcon="person"></ion-tab>   
 </ion-tabs>
    

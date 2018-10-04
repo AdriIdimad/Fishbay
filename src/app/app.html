@@ -1,1 +1,42 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" id="menu1">
+
+        <ion-header>
+                <ion-toolbar color="secondary">
+                  <ion-title>FishBay</ion-title>
+                  <ion-buttons id="ajustes" class="hola" right>
+                        <button ion-button icon-only menuClose detail-none name="close" color="royal">
+                          <ion-icon id="icoConfiguracion" name="close"></ion-icon>
+                        </button>
+                      </ion-buttons> 
+                </ion-toolbar>
+                              
+              </ion-header>
+            
+              <ion-content class="no-left-padding">
+                <ion-list class="no-left-padding">
+                  <button class="negro" ion-item menuClose menu="menu1" icon-right detail-none (click)="ajustes()">
+                    <ion-icon name="settings"></ion-icon> Configuración                      
+                  </button>
+                  <button class="negro" ion-item menuClose menu="menu1" icon-right detail-none (click)="cuestionario()">
+                      Editar / Completar cuestionario               
+                  </button>
+                  <button class="negro" ion-item menuClose menu="menu1" icon-right detail-none (click)="premium()">
+                        <ion-icon name="medal"></ion-icon> Versión Premium
+                   </button>
+                   <button class="negro" ion-item menuClose menu="menu1" icon-right detail-none (click)="conducta()">
+                            Código de conducta                 
+                   </button>
+                   <button class="negro" ion-item menuClose full menu="menu1" icon-right detail-none (click)="terminos()">
+                            Términos y condiciones                   
+                   </button>
+                   <button class="negro" ion-item menuClose menu="menu1" icon-right detail-none (click)="politica()">
+                            Política de seguridad                 
+                   </button>
+                   <button class="negro" style="color: red !important;" ion-item menuClose menu="menu1" icon-right detail-none (click)="cerrarSesion()">
+                            Cerrar Sesión                 
+                  </button>
+                </ion-list>
+              </ion-content>
+</ion-menu>
+
+<ion-nav #content [root]="rootPage"></ion-nav>

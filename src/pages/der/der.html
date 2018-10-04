@@ -5,18 +5,26 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
   <ion-navbar>
-    <ion-title class="center">Publica tu evento</ion-title>
+      <button ion-button [menuToggle]="menu1"> 
+          <ion-icon name="menu"></ion-icon>
+        </button>   
+        <ion-buttons right>
+            <button ion-button icon-only color="royal" (click)="out()">
+              <ion-icon name="log-out"></ion-icon>
+            </button>
+          </ion-buttons>
+    <ion-title class="center">Publica tu plan</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content>
+<ion-content class="left-padding">
+<ion-label stacked><ion-icon name="navigate"></ion-icon> Lugar</ion-label>
 
-<ion-label stacked><ion-icon name="navigate"></ion-icon> Lugar</ion-label>  
-
-<div #mapa id="map" style="width: 100%; height: 50%;"></div>
-
+<input id="pac-input" class="controls" type="text" placeholder="Indica la dirección de tu plan">
+<div #mapa id="map-canvas"></div>
 
   <ion-item class="no-left-padding"> 
     <ion-label stacked><ion-icon name="calendar"></ion-icon> Titulo</ion-label>
@@ -30,41 +38,50 @@
 
     <ion-item class="no-left-padding">
     <ion-label stacked><ion-icon name="people"></ion-icon> Limite de Personas</ion-label>
-    <ion-input type="number" [(ngModel)]="evento.cupo"></ion-input>
+    <ion-input type="number" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.cupo"></ion-input>
   </ion-item>
-
+  
   <ion-item class="no-left-padding">
     <ion-label stacked><ion-icon name="calendar"></ion-icon> Fecha</ion-label>
-    <ion-input type="date" [(ngModel)]="evento.fecha"></ion-input>
-  </ion-item>
- 
-  <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de inicio</ion-label>
-    <ion-input type="time" [(ngModel)]="evento.horaInicio"></ion-input>
+    <ion-datetime displayFormat="DD/MM/YYYY" cancelText="Cancelar" [min]="fecha" doneText="Hecho" [(ngModel)]="evento.fecha"></ion-datetime>
   </ion-item>
 
   <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de finalización</ion-label>
-    <ion-input type="time" [(ngModel)]="evento.horaFinal"></ion-input>
+    <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de inicio</ion-label>
+    <ion-datetime displayFormat="HH:mm" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.horaInicio"></ion-datetime>
+  </ion-item>
+
+  <ion-item class="no-left-padding">
+    <ion-label stacked><ion-icon name="lock"></ion-icon> Duración</ion-label>
+    <ion-datetime displayFormat="HH:mm" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.horaFinal"></ion-datetime>
   </ion-item>
 
   <ion-item class="no-left-padding" id="lista">
       <ion-label>Categoria del evento</ion-label>
-      <ion-select [(ngModel)]="evento.categoria">
+      <ion-select #C (ionChange)="onChange(C.value)" [(ngModel)]="evento.categoria" cancelText="Cancelar" okText="Ok">
         <ion-option value="deportes">Deportes</ion-option>
-        <ion-option value="fiestas">fiestas</ion-option>
-        <ion-option value="conferencias">conferencias</ion-option>
+        <ion-option value="cultura">Cultura</ion-option>
+        <ion-option value="Gastronomía">Gastronomía</ion-option>
+        <ion-option value="Aire libre">Aire Libre</ion-option>
+        <ion-option value="Noche/Fiesta">Noche/Fiesta</ion-option>
+        <ion-option value="Viajes">Viajes</ion-option>
+        <ion-option value="Con niños">Con niños</ion-option>
+        <ion-option value="Sólo con mujeres">Sólo con mujeres</ion-option>
+        <ion-option value="Sólo con hombres">Sólo con hombres</ion-option>
+        <ion-option value="Con animales">Con animales</ion-option>
+        <ion-option value="Gratuito">Gratuito</ion-option>
+        <ion-option value="Solidario">Solidario</ion-option>
+        <ion-option value="Otro">Otro</ion-option>
       </ion-select>
   </ion-item>
 
-
-  <ion-item class="no-left-padding">
+  <ion-item class="no-left-padding" id="itemFoto">
       <ion-thumbnail item-start>
         <ion-img width="80" height="80" src="{{myPhotoURL}}"></ion-img>
       </ion-thumbnail>
       <button ion-button icon-left (click)="subirImagen()" color="secondary"><ion-icon name="cloud-upload"></ion-icon> Imagen del evento</button>
     </ion-item>
-    <button ion-button icon-left (click)="registrarEvento(evento)" full ><ion-icon name="add-circle"></ion-icon> Crear evento</button>
+    <button id="crear" ion-button icon-left (click)="registrarEvento(evento)" full ><ion-icon name="add-circle"></ion-icon> Crear evento</button>
     <br>
 </ion-content>
 

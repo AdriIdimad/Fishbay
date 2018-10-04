@@ -1,3 +1,39 @@
 page-login {
+    .ion-content{
+        vertical-align: middle;
+    }
+
+    .item-md{
+            padding-left: 0px !important;
+    }
+
+    .vertical-align-content > *
+    {
+         display: flex!important;
+         align-content: center!important;
+         align-items: center!important;
+    }
+
+    .profile-image{
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+    }
+
+    #recuperar{
+        color: red !important;
+    }
+    #facebook{
+        background-color: #3b5998 !important;
+    }
+
+    ion-select{
+        max-width: 100% !important;
+    }
+
+    .lista{
+        background-color: #13c1ac !important;
+        color: white !important;
+    }
 
 }

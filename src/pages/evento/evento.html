@@ -1,38 +1,45 @@
 
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Evento</ion-title>
+    <ion-title>Plan</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="denunciar()">
+          <ion-icon name="megaphone"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
+
 <ion-content>
-<div #mapa id="mapa"></div>
 <ion-card *ngFor="let evento of infoEvento | async" class="cards">
   <img src="{{evento.imagen}}">
   
-  <ion-fab right top >
-    <button ion-fab>
-      <img src="{{(infoUsuario | async)?.imagen}}" style="height:85%;border-radius:150px;">
-    </button>
-  </ion-fab> 
-
+  <ion-fab right top (click)="verPerfil(evento.idCreador)">
+      <div id="avatar" align="center" *ngIf="!facebook">   
+          <a><img class="profile-image" src="{{(infoUsuario | async)?.imagen}}"></a>
+    </div>
+  </ion-fab>
   <ion-item>
     <ion-icon name="clipboard" item-start large></ion-icon>
-    <h2>{{evento.nombre}}</h2>
-    <p>{{evento.descripcion}}</p>  
+    <h2 class="titulos">{{evento.nombre}}</h2>
+    <ion-item text-wrap>{{evento.descripcion}}</ion-item>
+    <ion-fab right middle >
+        <button id="botonChat" disabled='true' ion-button icon-only color="royal" (click)="goChat(evento.id)">
+            <ion-icon name="chatboxes"></ion-icon>
+        </button>
+    </ion-fab>   
   </ion-item>
 
   <ion-item>
     <ion-icon name="pin" item-left large ></ion-icon>
-    <h2>{{evento.ciudad}}</h2>
-    <p>{{evento.direccion}}</p>   
-  </ion-item>
+    <h2 class="titulos">{{evento.ciudad}}</h2>
+    <a href="{{navegador}}"><ion-item text-wrap >{{evento.direccion}}</ion-item></a>
+  </ion-item> 
 
   <ion-item>
     <ion-icon name="calendar" item-left large ></ion-icon>
-    <h2>{{evento.fecha}}</h2> 
+    <h2>{{evento.fecha| date: 'dd/MM/yyyy'}}</h2> 
   </ion-item>
 
   <ion-item >
@@ -40,15 +47,52 @@
     <span item-center>{{evento.horaInicio}}</span>
     <span item-center>-</span>
     <span item-center>{{evento.horaFinal}}</span>
-    <button ion-button icon-left clear item-end>
+    <button class="eventos" ion-button icon-left clear item-end>
       <ion-icon name="person"></ion-icon>
-      {{evento.numApuntadas}}
+      {{contar(evento.id)}}/{{evento.cupo}}
     </button>
-  </ion-item>
-    
-  <ion-item>
-    <button id="boton" icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al evento</button>
-  </ion-item>
+
+  </ion-item> 
+<!--<button id="apuntarse" class="eventos" icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al plan</button>
+<rating class="rating" [(ngModel)]="rate" max="5" emptyStarIconName="star-outline"  halfStarIconName="star-half" starIconName="star"  nullable="false"  (ngModelChange)="onModelChange($event)"></rating>-->
+<button id="apuntarse" class="eventos"  icon-left ion-button color="primary" full (click)="permitirVotar(evento.id,evento.idCreador)"><ion-icon name="add-person"></ion-icon>vota este plan !</button>       
 </ion-card>
+<div #mapa id="mapa"></div>
+<!--<ion-item>
+  <button [disabled]='deshabilitado' icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al evento</button>
+</ion-item>-->
+<div *ngIf="mostrarFooter" style="height: 11%;">
+
+</div>
 
 </ion-content> 
+
+<ion-footer *ngIf="mostrarFooter">
+        <ion-toolbar id="footer" *ngIf="!calendario" >
+            <ion-grid>
+                <ion-row no-padding no-margin>
+                    <ion-col col-6 no-padding center>
+                        <button class="voteNo" ion-button full clear icon-center  color="primary" (click)="accionDescartar()">
+                            <ion-icon name="close-circle"></ion-icon>              
+                        </button>
+                    </ion-col>
+                    <ion-col col-6 no-padding center> 
+                        <button class="vote" ion-button icon-center clear  full color="primary" (click)="accionVotar()" >
+                            <ion-icon name="heart"></ion-icon> 
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-toolbar>
+        <ion-toolbar id="footer" *ngIf="calendario" >
+          <ion-grid>
+              <ion-row no-padding no-margin>
+                  <ion-col col-12 no-padding center> 
+                      <button class="vote" ion-button icon-center clear  full color="primary" (click)="accionVotar2()" >
+                          <ion-icon name="heart"></ion-icon> 
+                      </button>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </ion-toolbar>
+</ion-footer>

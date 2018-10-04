@@ -1,0 +1,13 @@
+{
+    "HELLO": "Hello",
+    "PASSWORD": "password",
+    "GREETING": "Hi, {{ value }}",
+    "REGISTRO": "Sign Up",
+    "RECUPERAR": "Forgot password",
+    "PREFERENCIAS": "Set search preferences",
+    "PUBLICAR": "To post",
+    "VPLANES": "See plans",
+    "PLANES": "My plans",
+    "PERFIL": "My profile"
+     
+  }

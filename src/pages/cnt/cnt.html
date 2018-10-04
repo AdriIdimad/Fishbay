@@ -4,100 +4,89 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<template class="no-left-padding" #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+    <ion-list class="event-detail-container no-left-padding" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
+      <!--<ion-item class="no-left-padding" *ngFor="let event of selectedDate?.events" >  (click)="eventSelected(event)"-->
+          <ion-card id="tarjeta" *ngFor="let evento of info; let last = last" class="no-left-padding">
+              <ion-item>
+                  <ion-avatar item-start>
+                    <img src="{{evento.imagen}}">
+                  </ion-avatar>
+                  <h2>{{evento.nombre}}</h2>
+                  <p>{{evento.horaInicio}} - {{evento.horaFinal}}</p>
+                  <button id="informacion" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)"><ion-icon name="information-circle"></ion-icon>Ver</button>
+                  <button id="{{evento.id}}" [disabled]="comprobarApuntado(evento.id)" class="rojo" icon-left ion-button  (click)="permitirDesapuntar(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntate</button>
+                </ion-item>  
+            </ion-card>
+        <!-- </ion-item>-->
+      <ion-item *ngIf="info?.length==0">
+        <div class="no-events-label">No hay eventos</div>
+      </ion-item>
+    </ion-list>
+  </template>
+
 <ion-header>
  
   <ion-navbar>
-   <ion-buttons left>
-      <button ion-button icon-only color="royal" (click)="goprofile()">
-        <ion-icon name="md-person" ></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title class class="center">Mis eventos</ion-title>
+      <button ion-button [menuToggle]="menu1">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title class class="center">Mis Planes</ion-title>
   <ion-buttons right>
       <button ion-button icon-only color="royal" (click)="out()">
-        <ion-icon name="md-cog"></ion-icon>
+        <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
 </ion-navbar>
 <div>
 
   <ion-segment [(ngModel)]="tusEventos">
-    <ion-segment-button value="Apt" (click)="cargar()">
-      Eventos apuntados
+    <ion-segment-button (click)="cargar()" value="Apt">
+      Planes apuntados
     </ion-segment-button >
     <ion-segment-button value="tu">
-      Tus eventos
+      Tus planes
     </ion-segment-button>   
   </ion-segment>
 </div>
 </ion-header>
 
 <ion-content class="no-left-padding">
-
-<div [ngSwitch]="tusEventos">
-<ion-list class="no-left-padding" *ngSwitchCase="'Apt'" >
-<ion-card *ngFor="let evento of final" class="no-left-padding" >
-    <img with="100" height="200" src="{{evento.imagen}}"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{evento.nombre}}
-        </ion-card-title>
-
-      <p>
-        {{evento.descripcion}}
-      </p>
-    </ion-card-content>
-    <ion-row>
-    <ion-col>
-      <button icon-left ion-button color="primary" full (click)="detallesEvento(evento.id)"><ion-icon name="information-circle"></ion-icon>Ver Información</button>
-    </ion-col>
-    <ion-col>
-      <button class="rojo" icon-left ion-button full (click)="desapuntarse(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntate!</button>
-    </ion-col>
-    <ion-col text-center>
-      <button ion-button icon-left clear small center>
-        <ion-icon name="share"></ion-icon>
-        <div>Facebook</div>
-      </button>
-      <button ion-button icon-left clear small >
-        <ion-icon name="person"></ion-icon>
-        <div>{{evento.numApuntadas}}</div>
-      </button>
-    </ion-col>
-  </ion-row>
-  </ion-card> 
-
-</ion-list>
-</div>
+<div [ngSwitch]="tusEventos" >
+  <div *ngSwitchCase="'Apt'" style="height: 75%;">
+      <div class="loading" *ngIf="!finalizado">
+          <img src="assets/img/Loading.gif">
+      </div>
+    <ion-row ion-content >
+        <ion-col col-9>
+            <ion-label>{{viewTitle}}</ion-label>
+        </ion-col>
+       <!-- <ion-col col-3>
+          <ion-select [(ngModel)]="calendar.mode" style="max-width: 100%">
+            <ion-option (ionSelect)="onOptionSelected($event)" *ngFor="let mode of calendarModes" [value]="mode.key">{{mode.value}}
+            </ion-option>
+          </ion-select>
+        </ion-col>-->
+      </ion-row>
+      <calendar *ngIf="listo" [locale]="es-ES"  [monthviewEventDetailTemplate]="template" [eventSource]="eventSource" [markDisabled]="markDisabled" [calendarMode]="calendar.mode"
+       [currentDate]="calendar.currentDate" (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
+       (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" step="30">
+      </calendar> 
+      </div>
+</div> 
 
 <div [ngSwitch]="tusEventos">
 <ion-list class="no-left-padding" *ngSwitchCase="'tu'" >
   <ion-card *ngFor="let evento of eventosUser | async" class="no-left-padding">
-    <img with="100" height="200" src="{{evento.imagen}}"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{evento.nombre}}
-        </ion-card-title>
-      <p>
-        {{evento.descripcion}}
-      </p>
-    </ion-card-content>
-    <ion-row>
-    <ion-col>
-      <button icon-left ion-button color="primary" full (click)="detallesEvento(evento.id)"><ion-icon name="ios-paper-plane"></ion-icon>Ver tu Evento</button>
-      <button class="rojo" icon-left ion-button full (click)="eliminar(evento.id)"><ion-icon name="trash"></ion-icon>Eliminar</button>
-    </ion-col>
-    <ion-col text-center>
-      <button ion-button icon-left clear small center>
-        <ion-icon name="share"></ion-icon>
-        <div>Facebook</div>
-      </button>
-      <button ion-button icon-left clear small center>
-        <ion-icon name="person"></ion-icon>
-        <div>{{evento.numApuntadas}}</div>
-      </button>
-    </ion-col>
-  </ion-row>
+      <ion-item>
+          <ion-avatar item-start>
+            <img src="{{evento.imagen}}">
+          </ion-avatar>
+          <h2>{{evento.nombre}}</h2>
+          <p>{{evento.descripcion}}</p>
+          <button id="ver" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)"><ion-icon name="ios-paper-plane"></ion-icon>Ver</button>
+          <button class="rojo" icon-left ion-button (click)="permitirEliminar(evento.id)" ><ion-icon name="trash" ></ion-icon>Eliminar</button>
+        </ion-item>  
   </ion-card>
 </ion-list>
 </div>

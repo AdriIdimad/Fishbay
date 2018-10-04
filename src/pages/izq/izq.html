@@ -4,47 +4,92 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header id="barraArriba">
 
-  <ion-navbar>
-    <ion-title class="center">FISHBAY</ion-title>
+  <ion-navbar class="center">
+    <button style="color: #7DAFB0 !important;" ion-button [menuToggle]="menu1">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons right>
+      <button style="color: #7DAFB0 !important;" ion-button icon-center clear large color="primary" (click)="busqueda()">
+        <ion-icon name="settings" large></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content class="no-left-padding"> 
-<ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar"></ion-searchbar>
-<ion-list class="no-left-padding" >
-  <ion-card *ngFor="let evento of eventList" class="no-left-padding" >
-    <img with="100" height="200" src="{{evento.imagen}}"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{evento.nombre}}
-        </ion-card-title>
+<ion-content style="height:100%;width:100%;">
+  <!-- <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar"></ion-searchbar>-->
+  <div style="z-index:10000;width: 360px;height: 440px;" swing-stack #myswing1 [stackConfig]="stackConfig"
+    (throwoutleft)="pasar()" (throwoutright)="voteSwipe()" id="card-stack">
+    <div class="loading" *ngIf="!finalizado">
+      <img src="assets/img/Loading.gif">
+    </div>
 
-      <p>
-        {{evento.descripcion}}
-      </p>
-    </ion-card-content>
-    <ion-row>
-    <ion-col>
-      <button icon-left ion-button color="primary" full (click)="detallesEvento(evento.id)"><ion-icon name="ios-paper-plane"></ion-icon>Apuntate!</button>
-    </ion-col>
-    <ion-col text-center>
-      <button ion-button icon-left clear small center>
-        <ion-icon name="share"></ion-icon>
-        <div>Facebook</div>
-      </button>
-    </ion-col>
-    <ion-col text-center>
-      <button ion-button icon-left clear small center>
-        <ion-icon name="person"></ion-icon>
-        <div>{{evento.numApuntadas}}</div>
-      </button>
-    </ion-col>
-  </ion-row>
+    <ion-card #mycards1 swing-card *ngFor="let c of loadedeventList; let last = last" style="height:100%;width:94%;">
 
-  </ion-card>
-</ion-list>
+      <span *ngIf="last">{{cargado()}}</span>
+      <ion-item class="no-left-padding" *ngIf="c.imagen" style="height:73%;width:100%;">
 
+        <p id="spinner" [hidden]="loaded"><img id="loaderImg" src="assets/img/Loading.gif" style="width: 80px; height: 80px;"
+            [hidden]="loaded"></p>
+        <div style="position:absolute; visibility:visible; z-index:2; width: 100%; height: 100%;"><img src="assets/img/marco.png"
+            style="background-size: cover; width: 100%; height: 100%;" /></div>
+        <ion-fab id="circulo" top center>
+          <div ion-fab class="fechaDiseno"></div>
+        </ion-fab>
+        <div style="margin-top: 35px;color: white;text-align: center;position: absolute;width: 100%;z-index: 1000;">
+          <p style="font-weight: bold;font-size:150%;color:white;">{{c.fecha| date: 'dd' }}</p>
+          <p style="color:white;">{{ c.fecha | date: 'MMMM' | translate}}</p>
+        </div>
+        <ion-fab middle left>
+          <button ion-fab color="light" class="voteNo" large clear icon-center (click)="pasar()">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-fab>
+
+        <ion-fab middle right>
+          <button ion-fab color="light" class="vote" icon-center clear large color="primary" (click)="voteUp(c.id)">
+            <ion-icon name="heart" large></ion-icon>
+          </button>
+        </ion-fab>
+        <img class="full-image" *ngIf="c.imagen" [src]="c.imagen" (load)="loaded = true" [hidden]="!loaded" style="background-size: cover; width: 99%; height: 100%;" />
+
+      </ion-item>
+      <ion-card-content style="width:100%;height: 27%;">
+        <div class="cols" style="width:100%;height: 100%;background-color:white;">
+          <div class="col1" style="width:35%;height: 100%;">
+            <ion-item padding id="divAvatar">
+              <ion-avatar class="avatars" id="avatar" item-start (click)="verPerfil(c.idCreador)" style="cursor:pointer;">
+                <img id="usuario" *ngIf="c.idCreador" [src]="cogerImagen(c.idCreador)">
+              </ion-avatar>
+            </ion-item>
+            <rating [(ngModel)]="c.ptnOrganizador" readOnly="true" max="5" emptyStarIconName="star-outline"
+              halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)">
+            </rating>
+
+
+          </div>
+          <div class="col2" style="width:65%;margin-top:3%;">
+            <ion-item center id="infor">
+              <p style="color:#7DAFB0;">
+                <ion-icon id="personas" name="time"></ion-icon> {{c.fecha| date: 'H:mm'}} <span>
+                  <ion-icon id="personas" name="person"></ion-icon> {{contar(c.id)}}
+                </span>
+              </p>
+              <p class="titulo">{{c.nombre}}</p>
+              <p>{{c.ciudad}} </p>
+              <p id="descripcion">{{c.descripcion}}</p>
+              <ion-fab id="botonVer1" bottom right>
+                <button id="botonVer" ion-fab clear color="royal" large (click)="detallesEvento(c.id)">
+                  <ion-icon id="info" name="information-circle" large></ion-icon>
+                </button>
+              </ion-fab>
+            </ion-item>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

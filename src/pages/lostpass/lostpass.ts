@@ -3,7 +3,7 @@ import { User } from './../../models/user';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
-
+import { MenuController} from 'ionic-angular';
 /**
  * Generated class for the LostpassPage page.
  *
@@ -20,7 +20,7 @@ export class LostpassPage {
 
   user = {} as User;
 
-  constructor(public fallo: Funciones_utilesProvider,public alertCtrl: AlertController,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public menuCtrl: MenuController,public fallo: Funciones_utilesProvider,public alertCtrl: AlertController,private ofAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams) {
   }
   
   doAlert() {
@@ -33,11 +33,21 @@ export class LostpassPage {
     this.navCtrl.push('LoginPage');
   }
 
+  ionViewDidEnter() {
+    this.menuCtrl.swipeEnable(false);
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LostpassPage');
+    // If you have more than one side menu, use the id like below
+    // this.menu.swipeEnable(false, 'menu1');
   }
 
+  ionViewWillLeave() {
+    // Don't forget to return the swipe to normal, otherwise 
+    // the rest of the pages won't be able to swipe to open menu
+    this.menuCtrl.swipeEnable(true);
+
+    // If you have more than one side menu, use the id like below
+    // this.menu.swipeEnable(true, 'menu1');
+   }
   async recuperar(user: User){
     try{
       const result = await this.ofAuth.auth.sendPasswordResetEmail(user.email);

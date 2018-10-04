@@ -2,10 +2,15 @@ export interface User{
     email: string;
     password: string;
     nombre: string;
-    apellido: string;
-    edad: number;
+    nick: string;
     ciudad: string;
     imagen: string;
-    eventosApuntados: any;
     id: string;
+    edad:number;
+    publico:boolean;
+    notificaciones:boolean;
+    puntuacion:number
+    nVotos:number;
+    descripcion:String;
+    token:string;
 }

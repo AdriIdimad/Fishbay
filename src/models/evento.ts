@@ -15,4 +15,5 @@ export interface Evento{
     direccion: string;
     cupo: number;
     numApuntadas: number;
+    ptnOrganizador:number;
 }
