@@ -15,7 +15,7 @@
                 <h2>{{evento.nombre}}</h2>
                 <p>{{evento.horaInicio}} - {{evento.horaFinal}}</p>
                 <button id="informacion" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)"><ion-icon name="information-circle"></ion-icon>Ver</button>
-                <button id="{{evento.id}}" [disabled]="comprobarApuntado(evento.id)" class="rojo" icon-left ion-button  (click)="permitirDesapuntar(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntate</button>
+                <button id="{{evento.id}}" [disabled]="comprobarApuntado(evento.id)" *ngIf="!comprobarApuntado(evento.id)" class="rojo" icon-left ion-button  (click)="permitirDesapuntar(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntate</button>
               </ion-item>  
           </ion-card>
       <!-- </ion-item>-->
