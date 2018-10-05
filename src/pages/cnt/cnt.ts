@@ -13,7 +13,7 @@ import { AlertController } from 'ionic-angular';
 import { Headers,RequestOptions } from '@angular/http';
 
 
-/**
+/** 
  * Generated class for the CntPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info

@@ -1,80 +1,93 @@
 page-cnt {
-
-  .item-md ion-avatar ion-img,
-  .item-md ion-avatar img {
-    border-radius: 50%;
-    overflow: hidden;
-    width: 53px !important;
-    height: 53px !important;
+  
+    .item-md ion-avatar ion-img,
+    .item-md ion-avatar img {
+      border-radius: 50%;
+      overflow: hidden;
+      width: 53px !important;
+      height: 53px !important;
+    }
+    .table-bordered[_ngcontent-c2] > thead[_ngcontent-c2] > tr[_ngcontent-c2] > th[_ngcontent-c2]{
+      border: 1px solid white !important;
+    }
+  
+    .table-bordered[_ngcontent-c2]{
+      border: 1px solid white !important;
+    }
+  
+    thead{
+      background-color: transparent !important;
+      color: #E5AC39 !important;
+    }
+  
+    .loading{
+      margin-top: 40% !important;
+      text-align: center !important;
+      
   }
-
-  .loading{
-    margin-top: 40% !important;
-    text-align: center !important;
-    
-}
-
-  thead{
-    background-color: orange;
+  
+  
+  
+      #tarjeta{
+        border-radius: 5px;  
+        box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
+      }
+  
+      #tarjeta:hover {
+        box-shadow: 0 3px 5px #13c1ac, 0 3px 3px #13c1ac;
+      }
+      
+      button{
+        //background-color: #13c1ac !important; 
+        color: white !important;
+      }
+   
+  
+      .platform-ios .segment-ios .segment-button.segment-activated{
+        background: #7DAFB0 !important;
+      }
+      
+      .segment-ios .segment-button.segment-activated{
+        background: #7DAFB0 !important;
+      }
+  
+      .segment-ios .segment-button{
+        border-color:#7DAFB0 !important;
+      }
+  
+      .tabs-ios .tab-button[aria-selected="true"] .tab-button-icon{
+        color: white !important;
+      }
+  
+      #informacion{
+        background-color: #7DAFB0 !important;
+      }
+  
+      button{
+        color: #7DAFB0 !important;
+      }
+  
+      #ver{
+        background-color: #7DAFB0 !important;
+      }
+  
+      .bar-button-ios[icon-only]{
+        background-color: #7DAFB0 !important;
+      }
+  
+      .back-button.show-back-button{
+        background-color: #7DAFB0 !important;
+      }
+  
+      ion-segment-button{
+        margin-top:2px;
+  
+      }
+  
+      ion-segment{
+        border-top: 1px solid #9c9c9c;
+      }
+      
+  
   }
-
-    #tarjeta{
-      border-radius: 5px;  
-      box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
-    }
-
-    #tarjeta:hover {
-      box-shadow: 0 3px 5px #13c1ac, 0 3px 3px #13c1ac;
-    }
-    
-    button{
-      //background-color: #13c1ac !important; 
-      color: white !important;
-    }
-
-
-    .platform-ios .segment-ios .segment-button.segment-activated{
-      background: #13c1ac !important;
-    }
-    
-    .segment-ios .segment-button.segment-activated{
-      background: #13c1ac !important;
-      color:white;
-    }
-
-    .segment-ios .segment-button{
-      border-color:#13c1ac !important;
-    }
-
-    .segment-ios .segment-button.segment-activated{
-      color:white !important;
-
-    }
-
-    .tabs-ios .tab-button[aria-selected="true"] .tab-button-icon{
-      color: white !important;
-    }
-
-    #informacion{
-      background-color: #13c1ac !important;
-    }
-
-    #ver{
-      background-color: #13c1ac !important;
-    }
-
-    .bar-button-ios[icon-only]{
-      background-color: #13c1ac !important;
-    }
-
-    .back-button.show-back-button{
-      background-color: #13c1ac !important;
-    }
-
-    ion-segment-button{
-      margin-top:2px;
-
-    }
-    
-
-}
+  
