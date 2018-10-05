@@ -65,7 +65,7 @@ export class MyApp {
               console.log(data.registrationId.toString());
             });
       */
-
+      statusBar.overlaysWebView(false);
       statusBar.hide();
       splashScreen.hide();
     });
