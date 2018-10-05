@@ -103,8 +103,13 @@
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
-    <engine name="android" spec="~6.3.0" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.15" />
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <plugin name="cordova-plugin-admob-free" spec="^0.17.3" />
+    <plugin name="cordova-plugin-googlemaps" spec="dummy">
+        <variable name="API_KEY_FOR_ANDROID" value="(API_KEY_FOR_ANDROID)" />
+        <variable name="API_KEY_FOR_IOS" value="(API_KEY_FOR_IOS)" />
+    </plugin>
+    <plugin name="cordova-plugin-screen-orientation" spec="~3.0.1" />
+    <engine name="android" spec="6.3.0" />
 </widget>
