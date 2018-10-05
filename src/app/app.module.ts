@@ -1,13 +1,13 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule,NavController } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, NavController } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AngularFireAuthModule } from "angularfire2/auth";
-import {Facebook} from '@ionic-native/facebook';
+import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
 import { MyApp } from './app.component';
 import { Funciones_utilesProvider } from '../providers/funciones_utiles/funciones_utiles';
@@ -20,17 +20,18 @@ import { Crop } from '@ionic-native/crop';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeStorage } from '@ionic-native/native-storage';
-import { SocialSharing } from '@ionic-native/social-sharing'; 
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { AjustesPage } from '../pages/ajustes/ajustes';
 import { SwingModule } from 'angular2-swing';
-import { NgCalendarModule  } from 'ionic2-calendar';
+import { NgCalendarModule } from 'ionic2-calendar';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdMobFree } from '@ionic-native/admob-free';
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,9 +39,9 @@ export function createTranslateLoader(http: Http) {
 
 @NgModule({
   declarations: [
-    MyApp 
+    MyApp
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     HttpModule,
     IonicStorageModule.forRoot(),
@@ -76,8 +77,9 @@ export function createTranslateLoader(http: Http) {
     NativeStorage,
     Geolocation,
     GoogleMaps,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ScreenOrientation
   ]
 })
-export class AppModule {}
+export class AppModule { }
 

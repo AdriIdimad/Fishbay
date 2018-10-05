@@ -15,6 +15,7 @@ import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AlertController } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { LoadingController } from 'ionic-angular';
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 @Component({
   templateUrl: 'app.html'
 })
@@ -26,13 +27,14 @@ export class MyApp {
   public rootPage: any;
   @ViewChild(Nav) nav: Nav;
 
-  constructor(public app: App, public loading: LoadingController, public Facebook: Facebook, private alertCtrl: AlertController, private ofAuth: AngularFireAuth, private translateService: TranslateService, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage, public menuCtrl: MenuController) {
+  constructor(private screenOrientation: ScreenOrientation, public app: App, public loading: LoadingController, public Facebook: Facebook, private alertCtrl: AlertController, private ofAuth: AngularFireAuth, private translateService: TranslateService, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage, public menuCtrl: MenuController) {
 
     platform.ready().then(() => {
       this.translateService.setDefaultLang('es');
       this.translateService.use('es');
       this.storage.get('id_user').then(loggedIn => {
         this.rootPage = loggedIn ? 'HomePage' : 'LoginPage';
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
       });
 
 
@@ -65,6 +67,7 @@ export class MyApp {
               console.log(data.registrationId.toString());
             });
       */
+
       statusBar.overlaysWebView(false);
       statusBar.hide();
       splashScreen.hide();

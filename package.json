@@ -123,7 +123,8 @@
       "cordova-plugin-file": {},
       "cordova-plugin-email-composer": {},
       "cordova-plugin-fcm": {},
-      "cordova-plugin-admob-free": {}
+      "cordova-plugin-admob-free": {},
+      "cordova-plugin-screen-orientation": {}
     },
     "platforms": [
       "android"
