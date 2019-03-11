@@ -1,13 +1,74 @@
 page-der {
 
+   /* ion-header{
+        border-bottom: 2px solid #7DAFB0 !important;
+    }*/
+
+
+    #map-canvas{
+
+    border-bottom: 2px solid #7DAFB0 !important;
+    border-top: 2px solid #7DAFB0 !important;
+    }
+
+    .select-text{
+        color: #7DAFB0 !important;
+    } 
+
     .gmnoprint{
 
         display:none;
 
     }
 
+    .item-md [item-left]{
+        margin: 0px !important;
+    }
+
+    ion-icon{
+    vertical-align: sub;
+        
+    }
+
+    ion-col .col{
+        background: #7DAFB0 !important;
+        color: #E5AC39 !important
+    }
+
+    .datepicker-header{
+        background: #7DAFB0 !important;
+    }
+
+    body > ion-app > ion-modal > div > ionic2-datepicker > div > div.datepicker-header{
+        background: #7DAFB0 !important;
+    }
+
+    datepicker-calendar button{
+        color:white !important;
+    }
+
+
+    .calendar-button[_ngcontent-c1] {
+        font-weight: bold;
+    }
+    
+
     #crear{
-        background-color: #13c1ac !important;
+        background-color: #7DAFB0 !important;
+        width: 99% !important;
+    }
+
+    .datepicker-footer button{
+        color: white !important;
+    }
+
+    ionic-calendar-date-picker{
+        border-top: 1px solid #7DAFB0;
+    }
+
+    ionic-calendar-date-picker > div{
+        border-top: 1px solid #7DAFB0 !important;
+        border-bottom: 1px solid #7DAFB0 !important;
     }
 
      #itemFoto .item-inner .input-wrapper {
@@ -18,14 +79,91 @@ page-der {
         margin-left: 3px;
     }
 
+    /*ion-item {
+        padding-left: 2% !important;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        border: 1px solid transparent;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+        padding-top: 5px !important;
+    }
+
+    input{
+        border: 1px solid #f4f4f4 !important;
+        border-radius: 10px !important;
+        box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 25px !important;
+        padding-left: 3% !important;
+    }
+
+    ion-datetime {
+        border: 1px solid #f4f4f4 !important;
+        border-radius: 10px !important;
+        box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 25px !important;
+        margin-left: 0;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding-top: 3px !important;
+        padding-left: 3px !important;
+        width: calc(100% - 8px) !important;
+        margin-left: -5px;
+    }*/
+
+    .botones{
+        //border: 1px solid #f4f4f4 !important;
+        border-radius: 10px !important;
+        //box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 30px !important;
+        color: white !important;
+        padding-left: 3% !important;
+        background-color: #E5AC39 !important;
+    }
+
+    .profile-image{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid #7DAFB0;
+    }
+
+    .item-md.item-block .item-inner{
+        border-bottom: 1px solid #dedede;
+    }
+
+    .item-md.item-input.item-input-has-focus .item-inner,
+    .item-md.item-input.input-has-focus .item-inner {
+      border-bottom-color: #7DAFB0 !important;
+      -webkit-box-shadow: inset 0 -1px 0 0 #7DAFB0 !important;
+      box-shadow: inset 0 -1px 0 0 #7DAFB0 !important;
+    }
+
+     /*#lista{
+
+        border-radius: 10px !important;
+        box-shadow: 3px 3px 7px 0px #9c9c9c !important;
+        height: 20px !important;
+        width: 94% !important;
+        color: white !important;
+        margin-left: 2%;
+        }
+
+        #itemFoto{
+            margin-top: 2%;
+        }*/
+
+        #lista{
+            font-size: 1.2rem;
+        }
 
 }
+
+
 
 .alert-md .alert-button{
     color: white !important;
 }
 
-#map{
-    margin:10px auto;
-    z-index: 1;
-}

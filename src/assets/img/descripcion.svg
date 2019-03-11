@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Capa_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15.3 15.3"
+	 enable-background="new 0 0 15.3 15.3" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  height="15.3" width="15.3" x="363.8" y="-530.5" bottomLeftOrigin="true"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<switch>
+	<foreignObject requiredExtensions="&ns_ai;" x="0" y="0" width="1" height="1">
+		<i:pgfRef  xlink:href="#adobe_illustrator_pgf">
+		</i:pgfRef>
+	</foreignObject>
+	<g i:extraneous="self">
+		<g id="XMLID_5_">
+			<g id="XMLID_5359_">
+				<g id="XMLID_5360_">
+					<path id="XMLID_26_" fill="#9B9B9B" d="M7.6,0C3.4,0,0,3.4,0,7.6s3.4,7.6,7.6,7.6s7.6-3.4,7.6-7.6S11.8,0,7.6,0z M7.6,14.6
+						c-3.8,0-7-3.1-7-7s3.1-7,7-7h0.1c3.8,0,6.9,3.1,6.9,6.9v0.1C14.6,11.5,11.5,14.6,7.6,14.6z"/>
+				</g>
+			</g>
+			<g id="XMLID_4445_">
+				<g id="XMLID_4482_">
+					<rect id="XMLID_27_" x="3.3" y="4.3" fill="#9B9B9B" width="8.6" height="2.1"/>
+				</g>
+				<g id="XMLID_4459_">
+					<rect id="XMLID_28_" x="3.3" y="6.8" fill="#9B9B9B" width="8.6" height="2.1"/>
+				</g>
+				<g id="XMLID_4447_">
+					<rect id="XMLID_29_" x="3.3" y="9.4" fill="#9B9B9B" width="5.6" height="2.1"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</switch>
+</svg>

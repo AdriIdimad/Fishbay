@@ -3,8 +3,16 @@ page-login {
         vertical-align: middle;
     }
 
+    body > ion-app > ion-alert > div > div.alert-button-group > button:nth-child(1){
+        display: none;
+      }
+
     .item-md{
             padding-left: 0px !important;
+    }
+
+    .list-md{
+        margin: 0px 0 0px !important;
     }
 
     .vertical-align-content > *
@@ -14,14 +22,62 @@ page-login {
          align-items: center!important;
     }
 
+    .item-md.item-block .item-inner{
+        padding-right: 0px !important;
+    }
+
     .profile-image{
         width: 200px;
         height: 200px;
         border-radius: 50%;
     }
 
+    input{
+        border: 1px solid #f4f4f4 !important;
+        border-radius: 15px !important;
+        box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 30px !important;
+        padding-left: 3% !important;
+    }
+
+    .item-md.item-block .item-inner{
+        border-bottom: 0px solid #dedede !important; 
+    }
+
+    ion-label{
+        margin-right: 0px !important;
+    }
+    .label-md{
+        margin: 0px !important;
+    }
+
+    ion-item {
+        padding-left: 30px !important;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        border: 1px solid transparent;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+        padding-top: 5px !important;
+    }
+
+    .alert-md .alert-radio-label{
+        padding-top: 0px !important;
+    }  
+
+    #btnEntrar{
+        border: 1px solid #7DAFB0 !important;
+        border-radius: 15px !important;
+        height: 30px !important;
+        width: 98% !important;
+        color: white !important;
+    }
+
     #recuperar{
-        color: red !important;
+        color: #9c9c9c !important;
+        border-bottom: 1px solid #9c9c9c !important; 
     }
     #facebook{
         background-color: #3b5998 !important;
@@ -32,8 +88,24 @@ page-login {
     }
 
     .lista{
-        background-color: #13c1ac !important;
-        color: white !important;
+        background-color: transparent !important;
+        color: #7DAFB0 !important;
+        margin: 0 auto;
+        padding: 13px 8px 12px 11px !important;
     }
 
+
+
+    .select-md .select-icon .select-icon-inner{
+        color: #7DAFB0 !important;
+        
+    }
+
+    .alert-wp .alert-radio-label {
+        white-space: normal !important;
+      }
+
+    .alert-md .alert-wrapper{
+        border-radius: 14px !important;
+    }
 }

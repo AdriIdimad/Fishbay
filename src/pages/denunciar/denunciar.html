@@ -7,31 +7,40 @@
 <ion-content class="main-view">
   <div class="overlay" (click)="dismiss()"></div>
   <div class="modal_content">
-      <ion-buttons end>
-          <button id="cerrar" ion-button icon-only clear (click)="dismiss()">
-            <ion-icon name="close"></ion-icon>
-          </button>
-        </ion-buttons>
-        <h2 class="titulo">Contácta con nuestro equipo de seguridad</h2>
-    <ion-item>
-      <ion-label>Categoría</ion-label>
+    <ion-buttons end>
+      <button id="cerrar" ion-button icon-only clear (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <div class="cols" style="width:95%;">
+      <div style="width:30%; text-align:right;margin-left:5% !important;" class="titulo">
+          <ion-icon style="margin-top: 15%;font-size: 250%;margin-right: 15px;" name="fishbay-campana"></ion-icon>
+      </div>
+      <div style="width:65%; text-align:center;" class="titulo">
+          <h3 style="text-align: left;font-size:130% !important;font-weight:bold !important;margin-top: 10% !important;">{{ 'DENUNCIAR_TITULO' | translate}}</h3>
+      </div>
+    </div>
+    <ion-item id="lista">
+      <ion-label><ion-icon class="separar" name="fishbay-categoria"></ion-icon>{{'DENUNCIAR_CATEGORIA' | translate}}</ion-label>
       <ion-select [(ngModel)]="tipo">
-        <ion-option value="Quiero denunciar una actividad delictiva" >Quiero denunciar una actividad delictiva</ion-option>
-        <ion-option value="Quiero denunciar contenido ilegal o abusivo" >Quiero denunciar contenido ilegal o abusivo</ion-option>
-        <ion-option value="Me he sentido incómodo/a" >Me he sentido incómodo/a</ion-option>
-        <ion-option value="Quiero denunciar actividades o conductas contrarias a la filosofía FISHBAY" >Quiero denunciar actividades o conductas contrarias a la filosofía FISHBAY</ion-option>
+        <ion-option text-wrap value="Quiero denunciar una actividad delictiva">{{'DENUNCIAR_ACTIVIDAD_DELICTIVA' | translate}}</ion-option>
+        <ion-option text-wrap value="Quiero denunciar contenido ilegal o abusivo">{{'DENUNCIAR_CONTENIDO_ILEGALABUSIVO' |
+          translate}}'</ion-option>
+        <ion-option text-wrap value="Me he sentido incómodo/a">{{'DENUNCIAR_INCOMODO' | translate}}</ion-option>
+        <ion-option text-wrap value="Quiero denunciar actividades o conductas contrarias a la filosofía FISHBAY">{{'DENUNCIAR_CONDUCTAS_CONTRARIAS_FISHBAY'
+          | translate}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
-        <ion-label stacked>Introduce tu email</ion-label>
-        <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
+      <ion-label stacked><ion-icon class="separar" name="fishbay-emailPerfil"></ion-icon>{{'DENUNCIAR_INTRODUCE_MAIL' | translate}}</ion-label>
+      <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label stacked>Descripción</ion-label>
-        <ion-textarea placeholder="descripción" [(ngModel)]="descripcion"></ion-textarea>
+      <ion-label stacked><ion-icon class="separar" name="fishbay-descripcion"></ion-icon>{{'DENUNCIAR_DESCRIPCION' | translate}}</ion-label>
+      <ion-textarea placeholder="{{'DENUNCIAR_DESCRIPCION' | translate}}" [(ngModel)]="descripcion"></ion-textarea>
     </ion-item>
-    <div padding>
-        <button id="enviar" ion-button block type="submit" (click)="reportar()">Enviar</button>
+    <div id="boton" padding>
+      <button id="enviar" ion-button block type="submit" (click)="reportar()">{{'DENUNCIAR_ENVIAR' | translate}}</button>
     </div>
-  </div>  
+  </div>
 </ion-content>

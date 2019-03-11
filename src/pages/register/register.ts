@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import { MenuController} from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Http,RequestOptions,Headers } from '@angular/http';
+import { TranslateService } from '@ngx-translate/core';
    
 @IonicPage()
 @Component({
@@ -26,12 +27,12 @@ export class RegisterPage {
   public myPhotoURL: any;
   public nombre: any;
 
-  constructor(private http: Http,private alertCtrl: AlertController, public menuCtrl: MenuController,public fallo: Funciones_utilesProvider,public ofAuth: AngularFireAuth,private toastCtrl: ToastController,
+  constructor(private http: Http,private alertCtrl: AlertController,public translateService:TranslateService, public menuCtrl: MenuController,public fallo: Funciones_utilesProvider,public ofAuth: AngularFireAuth,private toastCtrl: ToastController,
     public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,private camera: Camera, private storage: Storage) {
       this.myPhotoURL="https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/1467646262_522853_1467646344_noticia_normal.jpg?alt=media&token=becd877e-b16c-43fe-8a68-f1267d38cff0";
       this.myPhotosRef = firebase.storage().ref('/Imagenes/');     
   }
- 
+  
   ionViewDidEnter() {
     this.menuCtrl.swipeEnable(false);
 
@@ -64,7 +65,7 @@ export class RegisterPage {
 
     console.log(postData);
 
-    this.http.post("https://fishbayandfun.com/enviaremail.php", senderBody, requestOptions)
+    this.http.post("http://gofishbay.com/enviaremail.php", senderBody, requestOptions)
       .subscribe(data => {
         console.log(data['_body']);
        }, error => {
@@ -79,17 +80,21 @@ export class RegisterPage {
 
     if(user.nombre==undefined || user.nick==undefined || user.descripcion==undefined || user.ciudad==undefined || user.email==undefined || user.password==undefined){
         let alert = this.alertCtrl.create({
-          title: 'Hay campos vacíos',
-          subTitle: 'Completa todos los campos',
-          buttons: ['Ok']
+          title: this.translateService.instant("CAMPOS_VACIOS"),
+          subTitle: this.translateService.instant("CAMPOS_VACIOS2"),
+          buttons: ['OK']
         });
         alert.present();
     }else{
    
       try{
+
         const result = await this.ofAuth.auth.createUserWithEmailAndPassword(user.email,user.password);  
+        firebase.auth().onAuthStateChanged(function(user) {
+          user.sendEmailVerification();  
+        });
         this.sendPostRequest(user.email,user.nombre);   
-        console.log(result);
+        console.log(result); 
         user.imagen=this.myPhotoURL;   
         this.ofAuth.authState.take(1).subscribe(auth =>{
           var id_usuario =auth.uid;
@@ -104,18 +109,17 @@ export class RegisterPage {
           .then(() => this.navCtrl.setRoot('Cuestionario1Page'))
         })
       }catch(e){
-        let error: string= e.code;
-        console.log(e.code);
-        if(error == "auth/invalid-email"){
-          this.fallo.aviso_error("El formato del email es incorrecto.");
-        }else if(error=="auth/user-not-found"){
-          this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
-        }else if(error=="auth/wrong-password"){
-          this.fallo.aviso_error("Contraseña incorrecta");
-        }else if(error=="auth/argument-error"){
-          this.fallo.aviso_error("Los campos email y contraseña estan vacios.")
-        }else if(error=="auth/weak-password"){
-          this.fallo.aviso_error("Contraseña demasiado corta");
+        let error: string = e.code;
+        if (error == "auth/invalid-email") {
+          this.fallo.aviso_error(this.translateService.instant("FORMATO_MAIL"));
+        } else if (error == "auth/user-not-found") {
+          this.fallo.aviso_error(this.translateService.instant("EMAIL_NOVALIDO"));
+        } else if (error == "auth/wrong-password") {
+          this.fallo.aviso_error(this.translateService.instant("PASSWORD_NO"));
+        } else if (error == "auth/argument-error") {
+          this.fallo.aviso_error(this.translateService.instant("EMPTLY_FIELDS"));
+        } else if (error == "auth/email-already-in-use") {
+          this.fallo.aviso_error(this.translateService.instant("EMAIL_NO"));
         }
         
       }  

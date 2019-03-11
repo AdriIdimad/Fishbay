@@ -1,5 +1,27 @@
 page-denunciar {
 
+  ion-icon{
+    vertical-align: sub;
+    }
+
+    #lista{
+      font-size: 1.2rem;
+  }
+
+  .separar{
+    margin-right: 5px !important;
+  }
+
+  .item-md {
+    padding-left: 48px !important;
+    padding-right: 40px !important;
+  }
+
+  #boton {
+    padding-left: 48px !important;
+    padding-right: 40px !important;
+  }
+
     .main-view{
         background: transparent;
       }
@@ -10,19 +32,19 @@ page-denunciar {
         height: 100%;
         z-index: 1;
         opacity: .5;
-        background-color: #333;
+        background-color: #575757;
       }
       .modal_content {
         position: absolute;
-        //top: calc(50% - (60%/2));
+        top: calc(50% - (80%/2));
         left: 0;
         right: 0;
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        height: 80%;
         z-index: 100;
         margin: 0 auto;
-        color: #333;
-        background: #e8e8e8;
+        color: #575757;
+        background: white !important;
         background: -moz-linear-gradient(top, #fff 0%, #e8e8e8 100%);
         background: -webkit-linear-gradient(top, #fff 0%, #e8e8e8 100%);
         background: linear-gradient(to bottom, #fff 0%, #e8e8e8 100%);
@@ -35,15 +57,13 @@ page-denunciar {
       }
 
       .rating{
-        color: #13c1ac !important;
+        color: #7DAFB0 !important;
         padding: 1%;
         font-size: 150% !important;
     }
 
     .titulo{
-      color: #ffae34  !important;
-      text-align: center !important;
-      margin-top: 5% !important;
+      color: #7DAFB0  !important;
     }
 
     button{
@@ -51,15 +71,26 @@ page-denunciar {
     }
 
     #cerrar{
-      color: #13c1ac !important;
+      color: #7DAFB0 !important;
+    }
+
+    .cols {
+      display: flex;
+      margin-top: -1%;
     }
 
     #enviar{
-      background-color: #13c1ac !important;
+      background-color: #7DAFB0 !important;
+              //border: 1px solid #f4f4f4 !important;
+              border-radius: 15px !important;
+              //box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+              height: 30px !important;
+              color: white !important;
+              padding-left: 3% !important;
+              text-align: center !important;
     }
 
 
+
 }
-.alert-ios .alert-radio-label{ white-space: pre-line !important;}
-.alert-md .alert-radio-label{ white-space: pre-line !important;}
-.alert-wp .alert-radio-label{ white-space: pre-line !important;}
+

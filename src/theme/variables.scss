@@ -68,7 +68,6 @@ button{
 }
 
 .segment-button.segment-activated{
-  color:white !important;
   border-color: #7DAFB0 !important;
 }
 
@@ -82,10 +81,6 @@ button{
 
 .toolbar-title.toolbar-title-md{
   color: #7DAFB0 !important;
-}
-
-.rojo{
-  background-color: #f53d3d !important;
 }
 
 .cards.card.card-md{
@@ -109,8 +104,6 @@ button{
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
 
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -120,7 +113,7 @@ button{
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #7DAFB0,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
@@ -170,5 +163,18 @@ $colors: (
 // Fonts
 // --------------------------------------------------
 
-@import "roboto";
-@import "noto-sans";
+//@import "roboto";
+//@import "noto-sans";
+
+@font-face {
+  font-family: 'Hind';
+  src: url('../assets/fonts/Hind/Hind-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$font-family-base: "Hind";
+body,h1,p,h2,h3,h4,h4,ion-item,button,ion-input,ion-title{
+  font-family: "Hind" !important;
+  font-weight: normal;
+}

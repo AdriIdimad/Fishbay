@@ -4,6 +4,14 @@ page-bloqueados {
         box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
       }
       #tarjeta:hover {
-        box-shadow: 0 3px 5px #13c1ac, 0 3px 3px #13c1ac;
+        box-shadow: 0 3px 5px #7DAFB0, 0 3px 3px #7DAFB0;
+      }
+
+      ion-icon{
+        margin-right: 5px;
+      }
+
+      ion-label{
+        padding: 5px !important;
       }
 }

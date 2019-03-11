@@ -7,175 +7,177 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Preferencias</ion-title>
+    <ion-title>{{'SIDE_MENU_EDITAR_PREFERENCIAS_TITULO' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>       
-      <ion-label>Me gusta hacer deporte: </ion-label>
-            <ion-item>           
-              <ion-label>Al aire libre</ion-label>
-              <ion-checkbox [(ngModel)]="airelibre"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>Soy mas de GYM</ion-label>
-              <ion-checkbox [(ngModel)]="gym"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>De riesgo</ion-label>
-              <ion-checkbox [(ngModel)]="riesgo"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>Todo tipo de deporte</ion-label>
-              <ion-checkbox [(ngModel)]="todo"></ion-checkbox>
-            </ion-item>
+  <ion-list>
+    <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_DEPORTE' | translate}}</ion-label>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_DEPORTE_AIRE_LIBRE' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="airelibre"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_DEPORTE_GYM' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="gym"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_DEPORTE_RIESGO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="riesgo"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_DEPORTE_TODO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="todo"></ion-checkbox>
+    </ion-item>
 
-      <ion-label>Me gusta el cine: </ion-label>
-            <ion-item>           
-              <ion-label>Me gusta mucho el cine independiente</ion-label>
-              <ion-checkbox [(ngModel)]="independiente"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>Cualquier tipo de películas</ion-label>
-              <ion-checkbox [(ngModel)]="cualquiera"></ion-checkbox>
-            </ion-item>
+    <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_CINE' | translate}}</ion-label>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_CINE_INDEPENDIENTE' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="independiente"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_CINE_TODO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="cualquiera"></ion-checkbox>
+    </ion-item>
 
-      <ion-label>Voy mucho a actividades culturales: </ion-label>
-            <ion-item>           
-              <ion-label>Disfruto de museos y exposiciones</ion-label>
-              <ion-checkbox [(ngModel)]="museos"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>Me gusta ir al teatro </ion-label>
-              <ion-checkbox [(ngModel)]="teatro"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>Me encanta la música e ir a conciertos </ion-label>
-                <ion-checkbox [(ngModel)]="musica"></ion-checkbox>
-            </ion-item>   
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_CULTURALES' | translate}}
+    </ion-label>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_CULTURALES_MUSEOS' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="museos"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_CULTURALES_TEATRO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="teatro"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_CULTURALES_MUSICA' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="musica"></ion-checkbox>
+    </ion-item>
 
-      <ion-label>Leer es una de mis pasiones</ion-label>
-      <ion-toggle  class="toggle" value="leer" checked="false"></ion-toggle>  
-      <ion-label>Suelo acudir a actividades gratuitas de varios tipos.</ion-label>
-      <ion-toggle  class="toggle" value="leer" checked="false"></ion-toggle>
-      
-      <ion-label>Soy un manitas y disfruto mucho con ello: </ion-label>
-      <ion-item>           
-        <ion-label>DIY</ion-label>
-        <ion-checkbox [(ngModel)]="diy"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>Cocina</ion-label>
-        <ion-checkbox [(ngModel)]="cocina"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Manualidades</ion-label>
-          <ion-checkbox [(ngModel)]="manualidades"></ion-checkbox>
-      </ion-item>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_LEER' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="leer" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ACTIVIDADES_GRATUITAS' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="leer" checked="false"></ion-toggle>
 
-      <ion-label>Me gusta mucho vailar</ion-label>
-      <ion-toggle  class="toggle" value="bailar" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_MANITAS' | translate}}
+    </ion-label>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_MANITAS_DIY' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="diy"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_MANITAS_COCINA' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="cocina"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_MANITAS_MANUALIDADES' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="manualidades"></ion-checkbox>
+    </ion-item>
 
-      <ion-label>Me apunto a actividades pintorescas y curiosas donde las haya</ion-label>
-      <ion-toggle  class="toggle" value="pintorestas" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_BAILAR' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="bailar" checked="false"></ion-toggle>
 
-      <ion-label>Soy muy de meterme en labores artísticas </ion-label>
-      <ion-toggle  class="toggle" value="artisticas" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_PINTORESCAS' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="pintorestas" checked="false"></ion-toggle>
 
-      <ion-label>Ocupo mi tiempo de ocio con animales porque los adoro</ion-label>
-      <ion-toggle  class="toggle" value="animales" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ARTISTICAS' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="artisticas" checked="false"></ion-toggle>
 
-      <ion-label>Me gusta disfrutar de experiencias gastronómicas </ion-label>
-      <ion-toggle  class="toggle" value="gastronomica" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ANIMALES' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="animales" checked="false"></ion-toggle>
 
-      <ion-label>Adoro viajar, soy un cosmopolita</ion-label>
-      <ion-toggle  class="toggle" value="cosmopolita" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_EXPERIENCIAS_GASTRONOMICAS' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="gastronomica" checked="false"></ion-toggle>
 
-      <ion-label>Me considero una persona espiritual</ion-label>
-      <ion-toggle  class="toggle" value="espiritual" checked="false"></ion-toggle>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_COSMOPOLITA' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="cosmopolita" checked="false"></ion-toggle>
+
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESPIRITUAL' | translate}}</ion-label>
+    <ion-toggle class="toggle" value="espiritual" checked="false"></ion-toggle>
 
 
-      <ion-label>Me gusta disfrutar de mi ocio con los demás: </ion-label>
-      <ion-item>           
-        <ion-label>Con mi familia y amigos.</ion-label>
-        <ion-checkbox [(ngModel)]="familiayamigos"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>Solo con amigos.</ion-label>
-        <ion-checkbox [(ngModel)]="amigos"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Con gente de mi mismo sexo.</ion-label>
-          <ion-checkbox [(ngModel)]="mismosexo"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Con gente de cualquier sexo.</ion-label>
-          <ion-checkbox [(ngModel)]="cualquiersexo"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Con grupos de más de 3 personas.</ion-label>
-          <ion-checkbox [(ngModel)]="grupos"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Con poquita gente, de 3 personas o menos.</ion-label>
-          <ion-checkbox [(ngModel)]="pocagente"></ion-checkbox>
-      </ion-item>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON' | translate}}</ion-label>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON_FAMILIA_AMIGOS' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="familiayamigos"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON_SOLO_AMIGOS' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="amigos"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON_MISMO_SEXO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="mismosexo"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON_CUALQUIER_SEXO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="cualquiersexo"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON_GRUPOS_MASDE3' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="grupos"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_OCIO_CON_GRUPOS_MENOS3' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="pocagente"></ion-checkbox>
+    </ion-item>
 
-      <ion-label>Qué estilo de vida me define: </ion-label>
-      <ion-item>           
-        <ion-label>Aventurero y entusiasta, me gusta probar cosas nuevas</ion-label>
-        <ion-checkbox [(ngModel)]="aventurero"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>Tranquilo, disfruto mucho de hacer planes en casa </ion-label>
-        <ion-checkbox [(ngModel)]="tranquilo"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Fiestero, me gusta salir a disfrutar de mi tiempo libre rodeado de gente</ion-label>
-          <ion-checkbox [(ngModel)]="fiestero"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Intelectual, me interesan el cambo de las ciencias y/o las letras, la política, el arte.</ion-label>
-          <ion-checkbox [(ngModel)]="intelectual"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Comprometido con las causas que yo considero justas.</ion-label>
-          <ion-checkbox [(ngModel)]="comprometido"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Adicto al trabajo, mi trabajo es muy importante para mí y mi ocio va vinculado a él</ion-label>
-          <ion-checkbox [(ngModel)]="trabajo"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Artista, busco estimular mi faceta artística cuando tengo oportunidad.</ion-label>
-          <ion-checkbox [(ngModel)]="artista"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Saludable, la salud y el deporte rigen mi forma de disfrutar de mi tiempo libre</ion-label>
-          <ion-checkbox [(ngModel)]="saludable"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Sociable, me encanta conocer gente nueva</ion-label>
-          <ion-checkbox [(ngModel)]="sociable"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Urbanita, disfruto de cualquier plan en la ciudad</ion-label>
-          <ion-checkbox [(ngModel)]="urbanita"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Campestre, me encantan todo tipo de actividades en la naturaleza, salir, respirar y gozar.</ion-label>
-          <ion-checkbox [(ngModel)]="campestre"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-          <ion-label>Bohemio y algo indie, busco cosas diferentes.</ion-label>
-          <ion-checkbox [(ngModel)]="bohemio"></ion-checkbox>
-      </ion-item>
+    <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA' | translate}}</ion-label>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_AVENTURERO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="aventurero"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_TRANQUILO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="tranquilo"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap justify>{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_FIESTERO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="fiestero"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_INTELECTUAL' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="intelectual"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_COMPROMETIDO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="comprometido"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_ADICTO_AL_TRABAJO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="trabajo"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_ARTISTA' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="artista"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_SALUDABLE' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="saludable"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_SOCIABLE' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="sociable"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_URBANITA' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="urbanita"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_CAMPESTRE' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="campestre"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap style="text-align:justify;">{{'SIDE_MENU_EDITAR_PREFERENCIAS_ESTILO_DE_VIDA_BOHEMIO' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="bohemio"></ion-checkbox>
+    </ion-item>
 
-    </ion-list>
-        <div padding>
-          <button id="guardarPaso2" ion-button block (click)="saveData()">Guardar</button>
-        </div>
+  </ion-list>
+  <div padding>
+    <button style="color:white !important;" id="guardarPaso2" ion-button block (click)="saveData()">{{'SIDE_MENU_EDITAR_PREFERENCIAS_BOTON_GUARDAR' | translate}}</button>
+  </div>
 </ion-content>

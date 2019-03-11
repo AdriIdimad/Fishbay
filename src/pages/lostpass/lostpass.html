@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="center">Recuperar contraseña</ion-title>
+    <ion-title class="center">{{"LOSTPASS_TITULO" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,12 +15,15 @@
 
 <ion-content padding>
 
-<ion-item class="no-left-padding">
-  <ion-label stacked><ion-icon name="mail"></ion-icon> Email</ion-label>
-  <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+  <ion-item class="no-left-padding">
+    <ion-label stacked>
+      <ion-icon name="mail"></ion-icon> Email
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+  </ion-item>
+
+  <ion-item class="no-left-padding">
+  <button id="btnEntrar" ion-button (click)="recuperar(user)" full>{{ "LOSTPASS_BOTON" | translate}}</button>
 </ion-item>
-
-
-<button ion-button (click)="recuperar(user)" color="danger" full>Recuperar contraseña</button>
 
 </ion-content>

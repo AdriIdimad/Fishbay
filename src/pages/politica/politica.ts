@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams ,IonicPage} from 'ionic-angular';
-
 /**
  * Generated class for the PoliticaPage page.
  *

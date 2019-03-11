@@ -7,30 +7,29 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ajustes</ion-title>
+    <ion-title>{{ "SIDE_MENU_CONFIGURACION_TITULO" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <ion-item>
-        <ion-label>Notificaciones</ion-label>
-        <ion-toggle checked="{{(perfilData | async)?.notificaciones}}" (ionChange)="actualizarNotificacion()" [(ngModel)]="notificaciones" ></ion-toggle>
+  <ion-item>
+    <ion-label>{{ "SIDE_MENU_CONFIGURACION_NOTIFICACIONES" | translate }}</ion-label>
+    <ion-toggle checked="{{(perfilData | async)?.notificaciones}}" (ionChange)="actualizarNotificacion()" [(ngModel)]="notificaciones"></ion-toggle>
+  </ion-item>
+  <ion-item id="perfil">
+    <ion-label>{{ "SIDE_MENU_CONFIGURACION_PERFILPUBLICO" | translate }} </ion-label>
+    <ion-toggle checked="{{(perfilData | async)?.publico}}" (ionChange)="actualizar()" [(ngModel)]="publico"></ion-toggle>
+  </ion-item>
+  <ion-list class="lista">
+    <ion-item id="idiomas">
+      <ion-label>{{ "SIDE_MENU_CONFIGURACION_SELECT_CAMBIARIDIOMA_TITLE" | translate}}</ion-label>
+      <ion-select (ionChange)="choose($event)">
+        <ion-option *ngFor="let item of idioms" [value]="item.value" [selected]="item.selected">
+          {{ item.label }}
+        </ion-option>
+      </ion-select>
     </ion-item>
-    <ion-item>
-          <ion-label>Perfil Público </ion-label>         
-          <ion-toggle checked="{{(perfilData | async)?.publico}}" (ionChange)="actualizar()" [(ngModel)]="publico" ></ion-toggle>
-    </ion-item>
-    <ion-item></ion-item>
-        <ion-list class="lista" >
-            <ion-item class="lista">
-                <ion-label>Cambiar Idioma</ion-label>
-              <ion-select class="lista" (ionChange)="choose($event)">
-                <ion-option *ngFor="let item of idioms" [value]="item.value" [selected]="item.selected">
-                  {{ item.label }}
-                </ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-list>
+  </ion-list>
 </ion-content>

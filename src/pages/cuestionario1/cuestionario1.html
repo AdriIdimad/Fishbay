@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Cuentanos un poco sobre ti</ion-title>
+    <ion-title>{{'CUESTIONARIO_REGISTRO_TITULO' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,50 +16,49 @@
     <form [formGroup]="myForm" (ngSubmit)="saveData()">
         <ion-list>
           <ion-item>
-            <ion-icon name="person" item-start></ion-icon>
-            <ion-label stacked>Edad: </ion-label>
-            <ion-input formControlName="edad" type="number" placeholder="Edad"></ion-input>
+            <ion-icon name="fishbay-nombre" item-start></ion-icon>
+            <ion-label stacked>{{'CUESTIONARIO_REGISTRO_EDAD' | translate}}</ion-label>
+            <ion-input formControlName="edad" type="number" placeholder="{{'CUESTIONARIO_REGISTRO_EDAD' | translate}}"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-icon name="hammer" item-start></ion-icon>
-            <ion-label stacked>Profesión: </ion-label>
-            <ion-input formControlName="profesion" type="text" placeholder="Profesión"></ion-input>
+            <ion-icon name="fishbay-profesionPerfil" item-start></ion-icon>
+            <ion-label stacked>{{'CUESTIONARIO_REGISTRO_PROFESION' | translate}}</ion-label>
+            <ion-input formControlName="profesion" type="text" placeholder="{{'CUESTIONARIO_REGISTRO_PROFESION' | translate}}"></ion-input>
           </ion-item>
           <ion-row radio-group formControlName="gender">
             <ion-col>
               <ion-item>
-                  <ion-icon name="man" item-start></ion-icon>
-                  <ion-label>Hombre</ion-label>
+                  <ion-icon name="fishbay-hombre" style="margin-left: -5px;" item-start></ion-icon>
+                  <ion-label>{{'CUESTIONARIO_REGISTRO_HOMBRE' | translate}}</ion-label>
                   <ion-radio value="1"></ion-radio>
                 </ion-item>
-            </ion-col>           
+            </ion-col>            
             <ion-col>
                 <ion-item>
-                    <ion-icon name="woman" item-start></ion-icon>
-                    <ion-label>Mujer</ion-label>
+                    <ion-icon name="fishbay-mujer" style="margin-left: -5px;" item-start></ion-icon>
+                    <ion-label>{{'CUESTIONARIO_REGISTRO_MUJER' | translate}}</ion-label>
                     <ion-radio value="2"></ion-radio>
                   </ion-item>
             </ion-col>
           </ion-row>
           <ion-item >
-              <ion-icon name="people" item-start></ion-icon>
-              <ion-label>Hijos: </ion-label>
+              <ion-icon name="fishbay-hijos" item-start></ion-icon>
+              <ion-label>{{'CUESTIONARIO_REGISTRO_HIJOS' | translate}} </ion-label>
               <ion-toggle class="toggle" [checked]="hijos" (ionChange)="toggleHijos()"></ion-toggle>
           </ion-item>
           <ion-item >
-              <ion-icon name="paw" item-start></ion-icon>
-              <ion-label>Mascota: </ion-label>
+              <ion-icon name="fishbay-mascota" item-start></ion-icon>
+              <ion-label>{{'CUESTIONARIO_REGISTRO_MASCOTA' | translate}} </ion-label>
               <ion-toggle class="toggle" [checked]="mascota" (ionChange)="toggleMascota()"></ion-toggle>
           </ion-item>
           <ion-item>
-              <ion-icon name="flag" item-start></ion-icon>
-              <ion-label stacked>Nacionalidad: </ion-label>
-              <ion-input formControlName="nacionalidad" type="text" placeholder="nacionalidad" ></ion-input>
+              <ion-icon name="fishbay-nacionalidad" item-start></ion-icon>
+              <ion-label stacked>{{'CUESTIONARIO_REGISTRO_NACIONALIDAD' | translate}} </ion-label>
+              <ion-input formControlName="nacionalidad" type="text" placeholder="{{'CUESTIONARIO_REGISTRO_NACIONALIDAD' | translate}}" ></ion-input>
           </ion-item>            
         </ion-list>
         <div padding>
-          <button id="guardarPaso1" ion-button block type="submit" [disabled]="!myForm.valid">Guardar</button>
+          <button id="guardarPaso1" ion-button block type="submit" [disabled]="!myForm.valid">{{'CUESTIONARIO_REGISTRO_BOTON_GUARDAR' | translate}}</button>
         </div>
       </form>
 </ion-content>
-

@@ -7,150 +7,105 @@
 <ion-header>
 
   <ion-navbar>
-      <button ion-button [menuToggle]="menu1">
-          <ion-icon name="menu"></ion-icon>
-        </button>  
-    <ion-title class="center">Perfil</ion-title>
+    <button ion-button [menuToggle]="menu1">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <!--<ion-title class="center">{{"PERFIL_TITULO" | translate }}</ion-title>-->
     <ion-buttons right>
       <button ion-button icon-only color="royal" (click)="ajustes()">
-        <ion-icon name="md-cog"></ion-icon>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
- 
+
 </ion-header>
 <ion-content padding>
-
-  <div id="avatar" align="center" *ngIf="!facebook">   
-        <img class="profile-image" src="{{(perfilData | async)?.imagen}}">
-        <br>
-        <button><a (click)="subirImagen(user)">Cambiar imagen de perfil</a></button>
+  <div *ngFor="let perfil of perfilData | async">
+  <div id="avatar" align="center">
+    <img class="profile-image" src="{{perfil.imagen}}" style="object-fit: cover;">
+    <ion-fab style="margin-top: 150px;margin-left: -70px;">
+      <button ion-fab clear icon-center style="background-color: white !important;color: #9c9c9c !important;border: 3px solid #9c9c9c;" (click)="subirImagen(user)"><ion-icon name="fishbay-camara" large></ion-icon></button>
+    </ion-fab>
   </div>
-  <div align="center" *ngIf="facebook">   
-    <img class="profile-image" src="{{picture}}">
-    <br>
-  </div>
-<ion-list>
-  <ion-item >
-    <ion-label floating><ion-icon name="person"></ion-icon> Nombre</ion-label>
-    <ion-input type="text" name="name" [(ngModel)]="user.nombre" value="{{(perfilData | async)?.nombre}}" required></ion-input>
-    <ion-icon item-right name="md-create"></ion-icon>  
-  </ion-item>
-  <ion-item>
-    <ion-label floating><ion-icon name="person"></ion-icon> nick</ion-label>
-    <ion-input type="text" name="nick" [(ngModel)]="user.nick" value="{{(perfilData | async)?.nick}}" required></ion-input>
-    <ion-icon item-right name="md-create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label floating><ion-icon name="person"></ion-icon> Descripción corta</ion-label>
-    <ion-input type="text" name="nick" [(ngModel)]="user.descripcion" value="{{(perfilData | async)?.descripcion}}" required></ion-input>
-    <ion-icon item-right name="md-create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label floating><ion-icon name="person"></ion-icon> Edad</ion-label>
-    <ion-input type="text" name="nick" [(ngModel)]="user.edad" value="{{(perfilData | async)?.edad}}" required></ion-input>
-    <ion-icon item-right name="md-create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label floating><ion-icon name="person"></ion-icon> Ciudad</ion-label>
-    <ion-input type="text" name="nick" [(ngModel)]="user.ciudad" value="{{(perfilData | async)?.ciudad}}" required></ion-input>
-    <ion-icon item-right name="md-create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label floating><ion-icon name="person"></ion-icon> Profesión</ion-label>
-    <ion-input type="text" name="nick" [(ngModel)]="user.profesion" value="{{(perfilData | async)?.profesion}}" required></ion-input>
-    <ion-icon item-right name="md-create"></ion-icon>
-  </ion-item>  
-  <ion-item>
-    <ion-label stacked><ion-icon name="mail"></ion-icon> Email</ion-label>
-    <ion-input type="email" [(ngModel)]="user.email" [disabled]=true value="{{(perfilData | async)?.email}}"></ion-input>
-</ion-item>
-<ion-item hidden="true">
-  <ion-label floating><ion-icon name="lock"></ion-icon> Contraseña</ion-label>
-  <ion-input type="password" [(ngModel)]="user.password" name="contraseña" value="{{(perfilData | async)?.password}}" required ></ion-input>
-  <ion-icon item-right name="md-create"></ion-icon>
-</ion-item>
-<ion-item style="text-align:center;" *ngIf="!facebook">
-  <button style="color: black !important;border-color: black !important" ion-button round outline center (click)="cambiarpassword(user.email,user.password)">Cambiar contraseña</button>
-</ion-item>
-<ion-item style="text-align:center;">
-    <button style="color: blue !important;" ion-button round outline center (click)="listaBloqueados()">Usuarios bloqueados</button>
-</ion-item>
-<ion-item style="text-align:center;">
-  <button style="color: red !important;border-color: red !important" ion-button round outline center (click)="cancelarCuenta(user.email,user.password)">Eliminar Cuenta</button>
-</ion-item>
-</ion-list>
-
-<button icon-left ion-button class="eventos" color="primary" (click)="actualizar(user)"><ion-icon name="add-person"></ion-icon>Guardar cambios</button> 
- 
-</ion-content>
-
-<!--
-<<ion-content padding>
+  <rating syle="text-align:center;" [(ngModel)]="perfil.puntuacion" readOnly="true" max="5" emptyStarIconName="fishbay-estrella"
+  halfStarIconName="fishbay-estrella2" starIconName="fishbay-estrella2" nullable="false" (ngModelChange)="onModelChange($event)">
+  </rating>
   <ion-list>
-      <ion-item>
-        <ion-avatar item-start *ngIf="!facebook" >
-          <img  src="{{(perfilData | async)?.imagen}}">
-        </ion-avatar>
-        <ion-avatar item-start *ngIf="facebook">
-          <img src="{{picture}}">
-        </ion-avatar> 
-        <h2 *ngIf="facebook">
-            {{name}}
-        </h2>
-        <h2 *ngIf="!facebook">
-        {{(perfilData | async)?.nombre}}
-        </h2>
-        <p *ngIf="!facebook">
-          {{(perfilData | async)?.apellido}}
-        </p>
-        <p *ngIf="facebook">
-          {{first_name}}
-        </p>
-      </ion-item>
+    <ion-item> 
+      <ion-label floating>
+        <ion-icon name="fishbay-nombre"></ion-icon> {{"PERFIL_NOMBRE" | translate}}
+      </ion-label>
+      <ion-input type="text" name="fishbay-nombre" [(ngModel)]="user.nombre" value="{{perfil.nombre}}" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="fishbay-nick"></ion-icon> {{"PERFIL_NICK" | translate}}
+      </ion-label>
+      <ion-input type="text" name="fishbay-nick" [(ngModel)]="user.nick" value="{{perfil.nick}}" required></ion-input>    
+    </ion-item>
+    
+    <ion-item>
+      <ion-label stacked>
+        <ion-icon name="fishbay-emailPerfil"></ion-icon> {{"PERFIL_EMAIL" | translate}}
+      </ion-label>
+      <ion-input type="email" [(ngModel)]="user.email" [disabled]=true value="{{perfil.email}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="fishbay-descripcionPerfil"></ion-icon> {{"PERFIL_DESCRIPCIONCORTA" | translate}}
+      </ion-label>
+      <ion-input type="text" name="fishbay-descripcionPerfil" [(ngModel)]="user.descripcion" value="{{perfil.descripcion}}"
+        required></ion-input>
       
-       <ion-item>
-        Edad
-        <ion-note item-end *ngIf="!facebook">
-          {{(perfilData | async)?.edad}}
-        </ion-note>
-        <ion-note item-end *ngIf="facebook">
-          {{edad}}
-        </ion-note>       
-      </ion-item>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="fishbay-ciudadPerfil"></ion-icon> {{"PERFIL_CIUDAD" | translate}}
+      </ion-label>
+      <ion-input type="text" name="fishbay-ciudadPerfil" [(ngModel)]="user.ciudad" value="{{perfil.ciudad}}" required></ion-input>
+      
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="fishbay-edadPerfil"></ion-icon> {{"PERFIL_EDAD" | translate}}
+      </ion-label>
+      <ion-input type="text" name="fishbay-edadPerfil" [(ngModel)]="user.edad" value="{{perfil.edad}}" required></ion-input>
+      
+    </ion-item>
 
-       <ion-item>
-        Ciudad
-        <ion-note item-end *ngIf="!facebook">
-          {{(perfilData | async)?.ciudad}}
-        </ion-note>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="fishbay-profesionPerfil"></ion-icon> {{ "PERFIL_PROFESION" | translate}}
+      </ion-label>
+      <ion-input type="text" name="fishbay-profesionPerfil" [(ngModel)]="user.profesion" value="{{perfil.profesion}}"
+        required></ion-input>
+      
+    </ion-item>
 
-        <ion-note item-end *ngIf="facebook">
-          {{ciudad}}
-        </ion-note>
-      </ion-item>
+    <ion-item hidden="true">
+      <ion-label floating>
+        <ion-icon name="fishbay-cambiarContraseña"></ion-icon> {{"PERFIL_PASSWORD" | translate}}
+      </ion-label>
+      <ion-input type="password" [(ngModel)]="user.password" name="contraseña" value="{{perfil.password}}"
+        required></ion-input>      
+    </ion-item>
+    <ion-item id="noBorde2">
+    <button icon-left ion-button full class="eventos" color="primary" (click)="actualizar(user)">
+      {{"PERFIL_BOTON_GUARDARCAMBIOS" | translate}}
+    </button>
+  </ion-item> 
 
-      <ion-item>
-        Email
-        <ion-note item-end *ngIf="!facebook">
-          {{(perfilData | async)?.email}}
-        </ion-note>
-        <ion-note item-end *ngIf="facebook">
-          {{email}}
-        </ion-note>
-      </ion-item>
-
-      <ion-item>
-        Contraseña
-        <ion-note *ngIf="!facebook" item-end type="password" >
-          {{(perfilData | async)?.password}}
-        </ion-note>
-        <ion-note *ngIf="facebook" item-end type="password" >
-          
-        </ion-note>
-      </ion-item>
-           
+    <ion-item id="noBorde" *ngIf="!facebook">
+      <button  icon-left ion-button (click)="cambiarpassword(user.email,user.password)" full clear><ion-icon style="margin-right: 10px;" name="fishbay-cambiarContraseña" ></ion-icon> {{"PERFIL_BOTON_CAMBIARPASSWORD" |
+        translate}}</button>
+    </ion-item>
+    <ion-item >
+      <button icon-left ion-button (click)="listaBloqueados()" full clear><ion-icon style="margin-right: 10px;" name="fishbay-usuariosBloqueados"></ion-icon> {{"PERFIL_BOTON_USUARIOSBLOQUEADOS"
+        | translate}}</button>
+    </ion-item>
+    <ion-item id="noBorde" style="text-align:left;">
+      <button icon-left ion-button (click)="cancelarCuenta(user.email,user.password)" full clear><ion-icon style="margin-right: 10px;" name="fishbay-eliminarPerfil"></ion-icon> {{"PERFIL_BOTON_ELIMINARCUENTA" | translate}}</button>
+    </ion-item>
   </ion-list>
+</div>
 </ion-content>
-
--->

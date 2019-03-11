@@ -4,77 +4,65 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<<<<<<< HEAD
 <template class="no-left-padding" #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate"
   let-noEventsLabel="noEventsLabel">
   <ion-list class="event-detail-container no-left-padding" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
     <!--<ion-item class="no-left-padding" *ngFor="let event of selectedDate?.events" >  (click)="eventSelected(event)"-->
     <ion-card id="tarjeta" *ngFor="let evento of info; let last = last" class="no-left-padding">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="{{evento.imagen}}">
+      <ion-item [style.background-color]="getStyle(evento.id)">
+        <ion-avatar item-start> 
+          <img src="{{evento.imagen}}" style="object-fit: cover;">
         </ion-avatar>
-        <h2>{{evento.nombre}}</h2>
-        <p>{{evento.horaInicio}} - {{evento.horaFinal}}</p>
-        <button id="informacion" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)">
-          <ion-icon name="information-circle"></ion-icon>Ver
+        <ion-fab id="circulo" bottom left>
+          <div ion-fab class="fechaDiseno">{{contar(evento.id)}}</div>
+        </ion-fab>
+        <p style="color: #7DAFB0;font-weight:bold;font-size:120%;">{{evento.nombre}}</p>
+        <p>{{evento.descripcion}}</p>
+        <p>{{evento.horaInicio}}H. <span style="text-align:right;"></span> {{evento.fecha| date: 'dd/MM/yyyy'}}</p>
+        <button id="informacion" icon-left ion-button clear color="primary" (click)="detallesEvento(evento.id)">
+          <ion-icon class="separar" name="fishbay-ver"></ion-icon>{{'CNT_VER' | translate}}
         </button>
-        <button id="{{evento.id}}" [disabled]="comprobarApuntado(evento.id)" class="rojo" icon-left ion-button *ngIf="!comprobarApuntado(evento.id)"
-          (click)="permitirDesapuntar(evento.id)">
-          <ion-icon name="trash"></ion-icon>Desapuntate
+        <button id="{{evento.id}}" [hidden]="comprobarCreador(evento.id)" clear class="rojo" icon-left ion-button *ngIf="!comprobarApuntado(evento.id)"
+        (click)="permitirDesapuntar(evento.id)">
+        <ion-icon class="separar" name="fishbay-borrar"></ion-icon>{{'CNT_DESAPUNTATE' | translate}}
         </button>
+        <button id="informacion" [hidden]="!comprobarCreador(evento.id)" con-left ion-button clear color="primary" (click)="permitirEliminar(evento.id)">
+          <ion-icon class="separar" name="fishbay-borrar"></ion-icon>{{'CNT_ELIMINAR_PLAN' | translate}}
+        </button>
+
       </ion-item>
     </ion-card>
     <!-- </ion-item>-->
-=======
-<template class="no-left-padding" #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-  <ion-list class="event-detail-container no-left-padding" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
-    <!--<ion-item class="no-left-padding" *ngFor="let event of selectedDate?.events" >  (click)="eventSelected(event)"-->
-        <ion-card id="tarjeta" *ngFor="let evento of info; let last = last" class="no-left-padding">
-            <ion-item>
-                <ion-avatar item-start>
-                  <img src="{{evento.imagen}}">
-                </ion-avatar>
-                <h2>{{evento.nombre}}</h2>
-                <p>{{evento.horaInicio}} - {{evento.horaFinal}}</p>
-                <button id="informacion" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)"><ion-icon name="information-circle"></ion-icon>Ver</button>
-                <button id="{{evento.id}}" [disabled]="comprobarApuntado(evento.id)" *ngIf="!comprobarApuntado(evento.id)" class="rojo" icon-left ion-button  (click)="permitirDesapuntar(evento.id)"><ion-icon name="trash"></ion-icon>Desapuntate</button>
-              </ion-item>  
-          </ion-card>
-      <!-- </ion-item>-->
->>>>>>> 0540310946bf206da9c239ac1718131a19633c34
     <ion-item *ngIf="info?.length==0">
-      <div class="no-events-label">No hay eventos</div>
+      <div style="text-transform: uppercase;font-weight: bold;color: #7DAFB0;">{{'CNT_NO_HAY_PLANES' | translate}}</div>
     </ion-item>
   </ion-list>
-<<<<<<< HEAD
 </template>
 
 <ion-header>
 
   <ion-navbar>
-    <button ion-button [menuToggle]="menu1">
+    <button class="botonesBarra" ion-button [menuToggle]="menu1">
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title class class="center">Mis Planes</ion-title>
     <ion-buttons right>
-      <button ion-button icon-only color="royal" (click)="out()">
-        <ion-icon name="log-out"></ion-icon>
+      <button class="botonesBarra" ion-button icon-only color="royal" (click)="ajustes()">
+        <ion-icon name="fishbay-configuracion"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> 
   </ion-navbar>
   <div>
 
     <ion-segment [(ngModel)]="tusEventos">
-      <ion-segment-button (click)="cargar()" value="Apt">
-        Planes apuntados
+      <ion-segment-button (ionselect)="loadEvents()" value="Apt">
+        {{'CNT_PLANESAPUNTADOS' | translate}}
       </ion-segment-button>
       <ion-segment-button value="tu">
-        Tus planes
+        {{'CNT_TUSPLANES' | translate}}
       </ion-segment-button>
     </ion-segment>
   </div>
-</ion-header>
+</ion-header> 
 
 <ion-content class="no-left-padding">
   <div [ngSwitch]="tusEventos">
@@ -82,106 +70,50 @@
       <div class="loading" *ngIf="!finalizado">
         <img src="assets/img/Loading.gif">
       </div>
-      <ion-row ion-content>
-        <ion-col col-9>
-          <ion-label>{{viewTitle}}</ion-label>
+      <br>
+      <ion-row *ngIf="finalizado" >
+        <ion-col col-3 center style="text-align: center; color:#7DAFB0; font-weight: bold;">
+          <ion-icon name="fishbay-flechaIz"></ion-icon>
         </ion-col>
-        <!-- <ion-col col-3>
-          <ion-select [(ngModel)]="calendar.mode" style="max-width: 100%">
-            <ion-option (ionSelect)="onOptionSelected($event)" *ngFor="let mode of calendarModes" [value]="mode.key">{{mode.value}}
-            </ion-option>
-          </ion-select>
-        </ion-col>-->
+        <ion-col col-6 center style="text-align: center; color:#7DAFB0; font-weight: bold; text-transform: uppercase;font-size:large;">{{viewTitle}}</ion-col>
+        <ion-col col-3 center style="text-align: center; color:#7DAFB0; font-weight: bold;">
+          <ion-icon name="fishbay-flecha"></ion-icon>
+        </ion-col>
       </ion-row>
-      <calendar *ngIf="listo" [locale]="es-ES" [monthviewEventDetailTemplate]="template" [eventSource]="eventSource"
+      <calendar *ngIf="listo" [autoSelect]="false" [locale]="'CALENDARIO' | translate" [monthviewEventDetailTemplate]="template" [eventSource]="eventSource"
         [markDisabled]="markDisabled" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
         (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
         (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" step="30">
       </calendar>
-    </div>
+    </div> 
   </div>
 
   <div [ngSwitch]="tusEventos">
     <ion-list class="no-left-padding" *ngSwitchCase="'tu'">
-      <ion-card *ngFor="let evento of eventosUser | async" class="no-left-padding">
+      <ion-card id="tarjeta" *ngFor="let evento of eventosUser | async" class="no-left-padding">
         <ion-item>
-          <ion-avatar item-start>
-            <img src="{{evento.imagen}}">
+          <ion-avatar item-start> 
+            <img src="{{evento.imagen}}" style="object-fit: cover;">
           </ion-avatar>
-          <h2>{{evento.nombre}}</h2>
+          <ion-fab id="circulo" bottom left>
+            <div ion-fab class="fechaDiseno">{{contar(evento.id)}}</div>
+          </ion-fab>
+          <p style="color: #7DAFB0;font-weight:bold;font-size:120%;">{{evento.nombre}}</p>
           <p>{{evento.descripcion}}</p>
-          <button id="ver" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)">
-            <ion-icon name="ios-paper-plane"></ion-icon>Ver
+          <p>{{evento.horaInicio}}H. <span style="text-align:right;"></span> {{evento.fecha| date: 'dd/MM/yyyy'}}</p>
+          <button id="informacion" icon-left ion-button clear color="primary" (click)="detallesEvento(evento.id)">
+            <ion-icon class="separar" name="fishbay-ver"></ion-icon>{{'CNT_VER' | translate}}
           </button>
-          <button class="rojo" icon-left ion-button (click)="permitirEliminar(evento.id)">
-            <ion-icon name="trash"></ion-icon>Eliminar
+          <button id="{{evento.id}}" [hidden]="comprobarCreador(evento.id)" clear class="rojo" icon-left ion-button *ngIf="!comprobarApuntado(evento.id)"
+          (click)="permitirDesapuntar(evento.id)">
+          <ion-icon class="separar" name="fishbay-borrar"></ion-icon>{{'CNT_DESAPUNTATE' | translate}}
+          </button>
+          <button id="informacion" [hidden]="!comprobarCreador(evento.id)" con-left ion-button clear color="primary" (click)="permitirEliminar(evento.id)">
+            <ion-icon class="separar" name="fishbay-borrar"></ion-icon>{{'CNT_ELIMINAR_PLAN' | translate}}
           </button>
         </ion-item>
       </ion-card>
     </ion-list>
   </div>
-=======
-</template> 
-
-<ion-header>
-
-<ion-navbar>
-    <button ion-button [menuToggle]="menu1">
-        <ion-icon name="menu"></ion-icon>
-      </button>
-  <ion-title class class="center">Mis Planes</ion-title>
-  <ion-buttons right>
-    <button style="color: #7DAFB0 !important;" ion-button icon-center clear large color="primary" (click)="ajsutes()">
-        <ion-icon name="settings" large></ion-icon>
-      </button> 
-  </ion-buttons>
-</ion-navbar>
-<div>
-
-<ion-segment [(ngModel)]="tusEventos">
-  <ion-segment-button (click)="cargar()" value="Apt">
-    Planes apuntados
-  </ion-segment-button >
-  <ion-segment-button value="tu">
-    Tus planes
-  </ion-segment-button>   
-</ion-segment>
-</div>
-</ion-header>
-
-<ion-content class="no-left-padding">
-<div [ngSwitch]="tusEventos" >
-<div *ngSwitchCase="'Apt'" style="height: 75%;">
-    <div class="loading" *ngIf="!finalizado">
-        <img src="assets/img/Loading.gif">
-    </div>
-  <ion-row ion-content >
-        <ion-col col-4 center (click)="goToLastMonth()"><ion-icon name="arrow-back"></ion-icon></ion-col>
-        <ion-col col-4 center>{{viewTitle}}</ion-col>
-        <ion-col col-4 center (click)="goToNextMonth()"><ion-icon name="arrow-forward"></ion-icon></ion-col>
-    </ion-row>
-    <calendar *ngIf="listo" [locale]="es-ES"  [monthviewEventDetailTemplate]="template" [eventSource]="eventSource" [markDisabled]="markDisabled" [calendarMode]="calendar.mode"
-     [currentDate]="calendar.currentDate" (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
-     (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" step="30">
-    </calendar> 
-    </div>
-</div> 
-
-<div [ngSwitch]="tusEventos">
-<ion-list class="no-left-padding" *ngSwitchCase="'tu'" >
-<ion-card *ngFor="let evento of eventosUser | async" class="no-left-padding">
-    <ion-item>
-        <ion-avatar item-start>
-          <img src="{{evento.imagen}}">
-        </ion-avatar>
-        <h2>{{evento.nombre}}</h2>
-        <p>{{evento.descripcion}}</p>
-        <button id="ver" icon-left ion-button color="primary" (click)="detallesEvento(evento.id)"><ion-icon name="ios-paper-plane"></ion-icon>Ver</button>
-        <button class="rojo" icon-left ion-button (click)="permitirEliminar(evento.id)" ><ion-icon name="trash" ></ion-icon>Eliminar</button>
-      </ion-item>  
-</ion-card>
-</ion-list>
-</div>
->>>>>>> 0540310946bf206da9c239ac1718131a19633c34
 
 </ion-content>

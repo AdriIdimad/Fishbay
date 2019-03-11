@@ -10,6 +10,7 @@ import { Funciones_utilesProvider } from './../../providers/funciones_utiles/fun
 import { HomePage } from './../home/home';
 import { IzqPage } from './../izq/izq';
 import { AlertController } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @IonicPage()
 @Component({
@@ -29,7 +30,7 @@ export class configuracionPage {
   public eventRef:firebase.database.Reference= firebase.database().ref('/Eventos');
   public cont:number;
 
-  constructor(private alertCtrl: AlertController, public mensaje: Funciones_utilesProvider, public fallo: Funciones_utilesProvider, private ofAuth: AngularFireAuth,
+  constructor(private alertCtrl: AlertController, public translateService: TranslateService, public mensaje: Funciones_utilesProvider, public fallo: Funciones_utilesProvider, private ofAuth: AngularFireAuth,
     public navCtrl: NavController, public navParams: NavParams,public app: App, private afDatabase: AngularFireDatabase, private storage: Storage,) {
       this.cont=0;
       this.todos=false;
@@ -66,11 +67,11 @@ export class configuracionPage {
         }); 
       });
   
-      var ref = firebase.database().ref("Eventos/");
+      /*var ref = firebase.database().ref("Eventos/");
       ref.on("child_added", function(snapshot) {
           b.push(snapshot.val());
   
-      });
+      });*/
 
       var ref = firebase.database().ref("Eventos/");
       ref.on("child_added", function(snapshot) {
@@ -78,11 +79,11 @@ export class configuracionPage {
   
       });
   
-      var ref = firebase.database().ref("Eventos/");
+      /*var ref = firebase.database().ref("Eventos/");
       ref.on("child_added", function(snapshot) {
           e.push(snapshot.val());
   
-      });
+      });*/
 
       var playersRef = firebase.database().ref("bloqueados/"); 
       playersRef.orderByChild("idUsuario").equalTo(id_user).on("value", function(snapshot) {
@@ -98,19 +99,22 @@ export class configuracionPage {
         var index = c.findIndex(function(el) {
           return el.id == a[i]['idEvento'];
         });
-        c.splice(index,1);
+        if(index!=-1){
+          c.splice(index,1);
+          }
       }  
 
-      for(var i=0;i<c.length;i++){
-        for(var j=0;j<d.length;j++){
-          var index = c.findIndex(function(el) {
-          return el.idCreador==d[j]['idBloqueado'];
-          });
-          c.splice(index,1);
-        }
-      } 
+      var array = [];
+      for (var i = 0; i < c.length; i++) {
+          var igual=false;
+          for (var j = 0; j < d.length && !igual; j++) {
+              if(c[i]['idCreador'] == d[j]['idBloqueado']) 
+                      igual=true;
+          }
+          if(!igual)array.push(c[i]);
+      }
 
-      this.carga=c;
+      this.carga=array;
   }, 800);
   
   });
@@ -128,17 +132,17 @@ export class configuracionPage {
   }
 
   onFilter() : void{
-    
-        console.log(this.carga);
+    setTimeout(() => {
+        //console.log(this.carga);
         
           this.final = this.carga.filter((item) =>{
 
-            console.log("categoria"+this.categoriaElegida);
-            console.log("ciudadS"+this.ciudadS);
+            console.log("categoria: "+this.categoriaElegida);
+            console.log("ciudad: "+this.ciudadS);
             
             if(this.ciudadS=="" && this.categoriaElegida==""){
               this.todos=true;         
-              console.log("dasd");   
+              console.log("todos los planes");   
             }
             if(this.categoriaElegida!=""){
                 if(this.ciudadS!=""){  
@@ -160,9 +164,9 @@ export class configuracionPage {
           })
 
           if(this.todos){
-            this.final=this.carga;
+            this.final=this.carga.reverse();
           }
-        
+        }, 500);
   }
 
   guardar(){
@@ -175,8 +179,8 @@ export class configuracionPage {
       if(this.final.length==0){
       console.log("entra");
       let alert = this.alertCtrl.create({
-        title: 'No hay eventos',
-        subTitle: 'No hay eventos con estas preferencias de búsqueda',
+        title: this.translateService.instant("NO_HAY_EVENTOS"),
+        subTitle: this.translateService.instant("NO_HAY_EVENTOS2"),
         buttons: ['Ok']
       });
       alert.present();

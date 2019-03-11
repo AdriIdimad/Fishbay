@@ -1,0 +1,23 @@
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>{{ 'USER_APUNTADOS' | translate}}</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+      <ion-list class="no-left-padding">
+          <ion-card  id="tarjeta" *ngFor="let user of loadedeventList" class="no-left-padding">
+              <ion-item (click)="verUsuario(user.id)">
+                <ion-avatar item-start>
+                  <img src="{{user.imagen}}" style="object-fit: cover;">
+                </ion-avatar>
+                <p style="color: #7DAFB0;font-weight:bold;font-size:120%;">{{user.nick}}</p>
+              </ion-item>
+            </ion-card> 
+
+        </ion-list>
+  
+  </ion-content>

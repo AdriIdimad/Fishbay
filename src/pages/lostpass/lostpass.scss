@@ -1,3 +1,37 @@
 page-lostpass {
+    ion-item {
+        padding-left: 30px !important;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        border: 1px solid transparent;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+        padding-top: 5px !important;
+    }
 
+    label .md{
+        padding-bottom: 5px !important;
+    }
+
+    input{
+        border: 1px solid #f4f4f4 !important;
+        border-radius: 15px !important;
+        box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 30px !important;
+    }
+
+    #btnEntrar{
+        border: 1px solid #7DAFB0 !important;
+        border-radius: 15px !important;
+        box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 30px !important;
+        width: 99% !important;
+        color: white !important;
+    }
+
+    .item-md.item-block .item-inner{
+        border-bottom: 0px solid #dedede !important; 
+    }
 }

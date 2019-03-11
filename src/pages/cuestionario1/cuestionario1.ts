@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { MenuController} from 'ionic-angular';
 import { isCheckedProperty } from 'ionic-angular/util/util';
+import { TranslateService } from '@ngx-translate/core';
 /**
  * Generated class for the Cuestionario1Page page.
  *
@@ -66,7 +67,7 @@ export class Cuestionario1Page {
         var id_usuario =auth.uid;
         this.storage.set('id_user', id_usuario);
         this.afDatabase.object(`Perfil/${auth.uid}`).update(this.informacionUser)
-        .then(() => this.navCtrl.setRoot('HomePage'))
+        .then(() => this.navCtrl.setRoot('LoginPage'))
       });
 
 

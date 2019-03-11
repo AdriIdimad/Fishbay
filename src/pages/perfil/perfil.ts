@@ -6,10 +6,12 @@ import { AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
+import { FirebaseListObservable } from 'angularfire2/database';
 import { Camera } from '@ionic-native/camera';
 import { LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
+import { TranslateService } from '@ngx-translate/core';
 /**
  * Generated class for the PerfilPage page.
  *
@@ -21,10 +23,10 @@ import { Funciones_utilesProvider } from './../../providers/funciones_utiles/fun
   selector: 'page-perfil',
   templateUrl: 'perfil.html',  
 })
-export class PerfilPage {
+export class PerfilPage { 
   user = {} as User;
   usuario: {};
-  perfilData: FirebaseObjectObservable<User>
+  perfilData: FirebaseListObservable<any[]>;
   name: string;
   last_name:string;
   email:string;
@@ -33,23 +35,32 @@ export class PerfilPage {
   edad:any;
   ciudad:string;
   facebook: boolean;
-  public myPhotosRef: any;
+  public puntuacion:number;
+  public myPhotosRef: any; 
   public myPhoto: any;
   public myPhotoURL: any;
   public nombre: any;
-  public error1:any;
+  public error1:any; 
   public error2:any;
   
-  constructor(public fallo: Funciones_utilesProvider,private alertCtrl: AlertController,private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook,
+  constructor(public mensaje: Funciones_utilesProvider, public translateService:TranslateService, private alertCtrl: AlertController,private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,public Facebook:Facebook,
   private afDatabase: AngularFireDatabase,private storage: Storage,private camera: Camera,public app: App,public loading: LoadingController) {
     this.myPhotosRef = firebase.storage().ref('/Imagenes/');
-  }
+  }  
  
   ionViewWillLoad() {
     this.afAuth.authState.take(1).subscribe(data =>{  
       if(data && data.email && data.uid){   
-      this.perfilData= this.afDatabase.object(`Perfil/${data.uid}`)
+        this.perfilData = this.afDatabase.list('/Perfil', {
+          query: {
+            orderByChild: 'id',
+            equalTo: data.uid 
+          }
+        }); 
+
       }
+
+
       this.storage.get('fb').then((fb) =>{
         this.facebook=fb;
       if(fb==true){
@@ -62,36 +73,31 @@ export class PerfilPage {
 
   cargar(){
     this.afAuth.authState.take(1).subscribe(data =>{  
-      if(data && data.email && data.uid){   
-      this.perfilData= this.afDatabase.object(`Perfil/${data.uid}`)
-      }
+      if(data && data.email && data.uid){  
+        this.perfilData = this.afDatabase.list('/Perfil', {
+          query: {
+            orderByChild: 'id',
+            equalTo: data.uid 
+          }
+        }); 
+      } 
       this.storage.get('fb').then((fb) =>{
         this.facebook=fb;
       if(fb==true){
         this.getInfo();
-      }
+      } 
     });
     })
-  }
+  } 
 
   actualizar(user: User){
-    let alert2 = this.alertCtrl.create({
-      title: 'Los cambios se han guardado',
-      message: 'Actualización realizada con éxito',
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            
-          }
-        }
-      ]
-    });
-    this.afAuth.authState.take(1).subscribe(data =>{ 
-      firebase.database().ref('Perfil/').child(data.uid).update({ nombre: user.nombre, nick: user.nick, email: user.email , edad: user.edad, ciudad: user.ciudad}).then(() => alert2.present());
-    });
+    var id=firebase.auth().currentUser.uid;
+      firebase.database().ref('Perfil/').child(id).update(user).then(() => this.mensaje.mostrarMensaje(this.translateService.instant("PERFIL_ACTUALIZADO"),"")).catch(error => {
+        console.log('Error - ' + error.message);
+      });
+    
   }
-
+ 
   ajustes(){
     this.navCtrl.push('AjustesPage');
   }
@@ -105,7 +111,7 @@ export class PerfilPage {
             this.picture=response.picture.data.url;
             this.edad=response.birthday;
             this.ciudad=response.hometown;
-        }); 
+        });  
             
   }
 
@@ -174,8 +180,8 @@ export class PerfilPage {
     var that=this;
 
     let alert = this.alertCtrl.create({
-      title: '¿Estas seguro de que deseeas eliminar tu cuenta?',
-      message: 'Se eliminaran todos los datos relacionados con esta cuenta',
+      title: this.translateService.instant("DELETE_ACCOUNT"),
+      message: this.translateService.instant("DELETE_ACCOUNT2"),
       buttons: [
         {
           text: 'Cancelar',
@@ -217,11 +223,9 @@ export class PerfilPage {
               setTimeout(() => {
                 
                       that.storage.remove('id_user');
-                      that.Facebook.logout();
-                      that.Facebook=null;
                       firebase.auth().signOut();
                       that.app.getRootNav().setRoot('LoginPage'); 
-                    }, firebase.auth().signOut(),that.Facebook.logout());
+                    }, firebase.auth().signOut());
 
                 
               }).catch(function(error) {
@@ -268,7 +272,7 @@ export class PerfilPage {
                         }
           
                         firebase.database().ref('/Perfil').child(auth.uid).remove();
-                        setTimeout(() => {
+                        setTimeout(() => { 
                           
                                 that.storage.remove('id_user');
                                 that.Facebook.logout();
@@ -291,17 +295,17 @@ export class PerfilPage {
             }
 
         }  
-       }
+       } 
       ]
     });
 
     if(cant>0){
       let alert2 = this.alertCtrl.create({
-        title: 'Elimina tus eventos',
-        message: 'Elimina todos tus eventos antes de eliminar tu cuenta',
+        title: this.translateService.instant("DELETE_PLANS"),
+        message: this.translateService.instant("DELETE_PLANS2"),
         buttons: [
           {
-            text: 'Aceptar',
+            text: 'OK',
             handler: () => {
               
             }
@@ -314,7 +318,7 @@ export class PerfilPage {
       
     }
 
-  }
+  } 
 
   cambiarpassword(email,password){
     var auth = firebase.auth();
@@ -326,11 +330,11 @@ export class PerfilPage {
     var credential=firebase.auth.EmailAuthProvider.credential(email, password);
     user.reauthenticateWithCredential(credential).then(function() {
         let alert = that.alertCtrl.create({
-          title: 'Introduce nueva contraseña',
+          title: this.translateService.instant("NEW_PASSWORD"),
           inputs: [
             {
               name: 'password',
-              placeholder: 'Introduce nueva contraseña',
+              placeholder: this.translateService.instant("NEW_PASSWORD"),
               type: 'password'
             }
           ],
@@ -339,20 +343,20 @@ export class PerfilPage {
               text: 'Cancelar',
               role: 'cancel',
               handler: data => {
-                console.log('Cancel clicked');
+                console.log('Cancel clicked'); 
               }
             },
             {
-              text: 'Aceptar',
+              text: 'OK',
               handler: data => {
                 user.updatePassword(data.password).then(function() {
-                  firebase.database().ref('Perfil/').child(id).update({ password: data.password}).then(() => that.fallo.aviso_error("Contraseña cambiada correctamente") );
+                  firebase.database().ref('Perfil/').child(id).update({ password: data.password}).then(() => this.mensaje.mostrarMensaje(this.translateService.instant("PASSWORD_UPDATE"),"") );
                 }).catch(function(error) {
                  console.log(error);
                 });
                 
               }
-            }
+            } 
           ]
         });
         alert.present();

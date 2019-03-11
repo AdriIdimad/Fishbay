@@ -5,6 +5,10 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 import { AlertController } from 'ionic-angular';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
+import { Ionic2RatingModule } from 'ionic2-rating';
+import { FirebaseListObservable } from 'angularfire2/database';
+
 /**
  * Generated class for the VerPerfilPage page.
  *
@@ -20,27 +24,38 @@ import { Storage } from '@ionic/storage';
 export class VerPerfilPage {
 
   user = {} as User;
-  usuario: {};
-  name: string;
+  usuario: {}; 
+  name: string; 
   last_name:string;
   email:string;
+  puntuacion:number;
   picture:any;
-  first_name:string; 
+  first_name:string;
   edad:any;
   ciudad:string;
   public idUsuario="";
-  perfilData: FirebaseObjectObservable<User>
+  currentUser:string;
+  perfilData: FirebaseListObservable<any[]>;
   public deshabilitado:boolean=false;
-
-  constructor(private storage: Storage,public navCtrl: NavController, public navParams: NavParams,private afDatabase: AngularFireDatabase,private alertCtrl: AlertController) {
+ocultarBloqueo: boolean = false;
+  constructor(private storage: Storage,public navCtrl: NavController,public translateService:TranslateService, public navParams: NavParams,private afDatabase: AngularFireDatabase,private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
     this.idUsuario = this.navParams.get("id");
-    this.perfilData= this.afDatabase.object(`Perfil/${this.idUsuario}`)
+    this.currentUser = firebase.auth().currentUser.uid;
+    this.perfilData = this.afDatabase.list('/Perfil', {
+      query: {
+        orderByChild: 'id',
+        equalTo: this.idUsuario 
+      }
+    }); 
+    console.log(this.perfilData);
     this.comprobarBloqueado();
-  }
+    this.ocultarBotonBloqueo();
 
+  }
+ 
 
   bloquear(){
     var rootRef = firebase.database().ref().child("bloqueados");
@@ -51,27 +66,33 @@ export class VerPerfilPage {
         idBloqueado: this.idUsuario
       }).then(() => {
         let alert = this.alertCtrl.create({
-          title: 'Bloquear usuario',
-          subTitle: 'Has bloqueado a este usuario',
+          title: this.translateService.instant("BLOCK_USER"),
+          subTitle: this.translateService.instant("BLOCK_USER2"),
           buttons: ['OK']
         });
         alert.present();
       });
       this.comprobarBloqueado();
   }
-
+ocultarBotonBloqueo(){
+  if(this.currentUser == this.idUsuario){
+    this.ocultarBloqueo = true;
+  }else{
+    this.ocultarBloqueo = false;
+  }
+}
   comprobarBloqueado(){
     var elim=[];
 
     this.storage.get('id_user').then((id_user) =>{
 
       var ref = firebase.database().ref("bloqueados");
-        ref.orderByChild('idUsuario').equalTo(id_user).on('value', function(snapshot) { 
+        ref.orderByChild('idUsuario').equalTo(id_user).on('value', function(snapshot) {
           console.log(snapshot.val());
           snapshot.forEach( item => {
             elim.push(item.val());
             return false;
-          }); 
+          });
       });
 
       for(var i=0;i<elim.length;i++){

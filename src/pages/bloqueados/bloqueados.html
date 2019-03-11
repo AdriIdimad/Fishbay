@@ -20,8 +20,8 @@
                 <ion-avatar item-start>
                   <img src="{{user.imagen}}">
                 </ion-avatar>
-                <h2>{{user.nick}}</h2>
-                <button id="ver" icon-left ion-button color="primary" (click)="desbloquear(user.id)"><ion-icon name="unlock"></ion-icon>Desbloquear</button>
+                <h2 style="color:#9c9c9c;">{{user.nick}}</h2>
+                <button id="ver" icon-left clear ion-button (click)="desbloquear(user.id)"><ion-icon name="fishbay-usuariosBloqueados"></ion-icon>Desbloquear</button>
               </ion-item>  
         </ion-card>
       </ion-list>

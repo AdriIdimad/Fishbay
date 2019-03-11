@@ -11,8 +11,10 @@ import { LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AlertController } from 'ionic-angular';
 import { Headers,RequestOptions } from '@angular/http';
-
-
+import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
+import { DatePipe } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+ 
 /** 
  * Generated class for the CntPage page.
  *
@@ -20,10 +22,11 @@ import { Headers,RequestOptions } from '@angular/http';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage()  
 @Component({
   selector: 'page-cnt',
   templateUrl: 'cnt.html',
+  providers: [DatePipe] 
 })
 export class CntPage {
   tusEventos: string = "tu";
@@ -62,13 +65,16 @@ export class CntPage {
   public usuario:string;
   public finalizado:boolean;
   public apuntado:boolean=false;
+  public creador:boolean=false;
+  public creador2:boolean=false;
 
-  constructor(public nav: Nav,public alertCtrl: AlertController,public loading: LoadingController,private http: Http,platform: Platform,public navCtrl: NavController,private actionSheetCtrl: ActionSheetController, public navParams: NavParams, public app: App, public storage: Storage,public afDatabase: AngularFireDatabase) {
+  constructor(public nav: Nav,public alertCtrl: AlertController,public translateService:TranslateService ,public datepipe: DatePipe,public loading: LoadingController,public mensaje: Funciones_utilesProvider,private http: Http,platform: Platform,public navCtrl: NavController,private actionSheetCtrl: ActionSheetController, public navParams: NavParams, public app: App, public storage: Storage,public afDatabase: AngularFireDatabase) {
     this.tusEventos="Apt"; 
     this.finalizado=false;
-  }
+    
+  } 
 
-
+ 
   ionViewWillEnter() {
       //mis eventos creados
       var usuario;
@@ -77,7 +83,7 @@ export class CntPage {
 
         this.usuario=id_user;
         this.eventosUser = this.afDatabase.list('/Eventos', {
-        query: {
+        query: { 
           orderByChild: 'idCreador',
           equalTo: id_user //pasar variable id local
         }
@@ -88,12 +94,45 @@ export class CntPage {
     this.loadEvents();
   }
 
-  comprobarApuntado(id){
+
+  comprobarCreador(id){
+    let comprobarCre=[];
+
+    var ref = firebase.database().ref("Eventos");
+    ref.orderByChild('id').equalTo(id).on('value', function(snapshot) { 
+      //console.log(snapshot.val());
+      snapshot.forEach( item => {
+        comprobarCre.push(item.val());
+        return false;
+      }); 
+    }); 
+
+    for(var i=0;i<comprobarCre.length;i++){
+      //console.log("recorremos");
+      if(comprobarCre[i]['idCreador']==this.usuario){
+        //console.log("apuntado");
+         this.creador=true;
+         break;
+      }else{
+        this.creador=false;
+        //console.log("no apuntado");
+      } 
+    } 
+
+    if(this.creador){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+ 
+  getStyle(id){
     let comprobar=[];
     
       var ref = firebase.database().ref("Apuntados");
       ref.orderByChild('idUsuario').equalTo(this.usuario).on('value', function(snapshot) { 
-        console.log(snapshot.val());
+        //console.log(snapshot.val());
         snapshot.forEach( item => {
           comprobar.push(item.val());
           return false;
@@ -101,16 +140,74 @@ export class CntPage {
       });
 
         for(var i=0;i<comprobar.length;i++){
-          console.log("recorremos");
+          //console.log("recorremos");
           if(comprobar[i]['idEvento']==id){
-            console.log("apuntado");
+            //console.log("apuntado");
              this.apuntado=true;
              break;
           }else{
             this.apuntado=false;
-            console.log("no apuntado");
-          }
+            //console.log("no apuntado");
+          } 
+        } 
+  
+        if(this.apuntado){
+            let comprobarCre=[];
+            
+                var ref = firebase.database().ref("Eventos");
+                ref.orderByChild('id').equalTo(id).on('value', function(snapshot) { 
+                  //console.log(snapshot.val());
+                  snapshot.forEach( item => {
+                    comprobarCre.push(item.val());
+                    return false;
+                  });  
+                });
+            
+                for(var i=0;i<comprobarCre.length;i++){
+                  //console.log("recorremos");
+                  if(comprobarCre[i]['idCreador']==this.usuario){
+                    //console.log("apuntado");
+                    this.creador2=true;
+                    break;
+                  }else{
+                    this.creador2=false;
+                    //console.log("no apuntado");
+                  } 
+                } 
+                
+                if(this.creador2){
+                  return "rgba(189, 120, 49, 0.35)";
+                }else{
+                  return "rgba(206, 222, 221, 1)";
+                }   
+        }else{
+          return ""
         }
+  }
+
+  comprobarApuntado(id){
+    let comprobar=[];
+    
+      var ref = firebase.database().ref("Apuntados");
+      ref.orderByChild('idUsuario').equalTo(this.usuario).on('value', function(snapshot) { 
+        //console.log(snapshot.val());
+        snapshot.forEach( item => {
+          comprobar.push(item.val());
+          return false;
+        }); 
+      });
+
+        for(var i=0;i<comprobar.length;i++){
+          //console.log("recorremos");
+          if(comprobar[i]['idEvento']==id){
+            //console.log("apuntado");
+             this.apuntado=true;
+             break;
+          }else{
+            this.apuntado=false;
+            //console.log("no apuntado");
+          } 
+        } 
   
         if(this.apuntado){
           return false;
@@ -126,50 +223,60 @@ export class CntPage {
 
     this.storage.get('id_user').then((id_user) =>{
 
-      //mostrar solo los apuntados de la fecha seleccionada en el calendario.
-      /*var playersRef = firebase.database().ref("Apuntados/");
-      playersRef.orderByChild("idUsuario").equalTo(id_user).on("child_added", function(data) {
-         //console.log(data.val().idEvento);
-         a.push(data.val().idEvento);
-
-        var aRef = firebase.database().ref("Eventos/");
-        aRef.orderByChild("id").equalTo(data.val().idEvento).on("child_added", function(data) {
-             var valor = data.val();
-             if (valor.fecha==fecha) {
-                 //console.log(valor);
-                 b.push(data.val());
-             }
-        
-          b.reverse();
-          
-        });  
-        
-      });*/ 
-
-      var aRef = firebase.database().ref("Eventos/");
-      aRef.orderByChild("id").on("child_added", function(data) {
-           var valor = data.val();
-           if (valor.fecha==fecha) {
-               //console.log(valor);
-               b.push(data.val());
-           }
       
-        b.reverse();
-        
-      }); 
+               var aRef = firebase.database().ref("Eventos/");
+               aRef.orderByChild("id").on("child_added", function(data) {
+                    var valor = data.val();
+                    //alert("fecha del evento "+valor.fecha+" fecha calendario"+fecha)
+                    if (valor.fecha==fecha) {
+                        //console.log(valor);
+                        b.push(data.val());
+                    }
 
+                  function sort(a,c){
+                    a = a.horaInicio;
+                    c = c.horaInicio;
+                    if(a < c) {
+                      return 1;
+                    } else if (a > c) {
+                      return -1;
+                    }
+                    return 0;
+                  }
+                  b.sort(sort);
+                  b.reverse();
+               });  
      });
      this.info=[];
      console.log(b);
      this.info=b;
 
-  } 
+  }  
+
+  contar(id_evento){
+    var cant=0;
+    var snap; 
+
+      var ref = firebase.database().ref("Apuntados");
+      ref.orderByChild("idEvento").equalTo(id_evento).on("value", function(snapshot) {
+          snap=snapshot.val();
+          for(let index in snap){ 
+            cant++;
+          }
+      });
+    return cant;
+  }  
 
   out(){ 
     this.storage.remove('id_user');
     
     this.app.getRootNav().setRoot('LoginPage');
   }
+
+  ajustes() {
+    this.nav.push('AjustesPage');
+  }
+
   goprofile(){
     this.app.getRootNav().push('PerfilPage');
    
@@ -188,15 +295,15 @@ export class CntPage {
     this.storage.get('id_user').then((id_user) =>{
       var ref = firebase.database().ref("Apuntados");
         ref.orderByChild('idUsuario').equalTo(id_user).on('value', function(snapshot) { 
-          console.log(snapshot.val());
+          //console.log(snapshot.val());
           snapshot.forEach( item => {
             elim.push(item.val());
             return false;
           }); 
 
       });
-      console.log(elim);
-      console.log(elim.length);
+      //console.log(elim);
+      //console.log(elim.length);
 
       for(var i=0;i<elim.length;i++){
           if(elim[i]['idEvento']==idEvento){
@@ -206,7 +313,7 @@ export class CntPage {
  
   });
       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-         
+      this.mensaje.mostrarMensaje(this.translateService.instant("DESAPUNTAR_PLAN3"),this.translateService.instant("DESAPUNTAR_PLAN4")); 
        //this.cargar();
       // this.navCtrl.push('CntPage');
        //this.navCtrl.setRoot('CntPage');
@@ -217,7 +324,8 @@ export class CntPage {
     var ap=[];
     var apt=[];
     var cont=0;
-         
+	var nombreNotificacion;
+          
           var ref = firebase.database().ref("Apuntados");
             ref.orderByChild('idEvento').equalTo(idEvento).on('value', function(snapshot) {
               console.log(snapshot.val()); 
@@ -226,22 +334,22 @@ export class CntPage {
                 return false;
               }); 
           });
+		  var event = firebase.database().ref("Eventos/");
+          event.orderByChild("id").equalTo(idEvento).on("child_added", function(data) {
+            nombreNotificacion=data.val().nombre;
+          });
         
         setTimeout(() => {
-
+          console.log("enviar notificacion cancelada");
           console.log(ap);
           console.log(ap.length);
 
-          this.storage.get('id_user').then((id_user) =>{
-
           for(var i=0;i<ap.length;i++){
               if(ap[i]['idEvento']==idEvento){                  
-                  this.sendNotification(ap[i]['idEvento'],ap[i]['idUsuario']);
+                  this.sendNotification(ap[i]['idEvento'],ap[i]['idUsuario'],nombreNotificacion);
                   cont++;                     
               }
           } 
-
-        });
 
           for(var i=0;i<ap.length;i++){
             if(ap[i]['idEvento']==idEvento){
@@ -249,15 +357,16 @@ export class CntPage {
             }
           }
 
-
-
-          firebase.database().ref('/Eventos').child(idEvento).remove();
-      }, 1000);
+         
+          
+      }, 1500);
+      firebase.database().ref('/Eventos').child(idEvento).remove();
       this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      this.mensaje.mostrarMensaje(this.translateService.instant("CANCELAR_PLAN"),this.translateService.instant("CANCELAR_PLAN2"));
   }
-
-  sendNotification(idEvento,idUser) {  
-    let body;
+ 
+  sendNotification(idEvento,idUser,nombre) {  
+    let body; 
     var id_creador="";
     var token="";
     var notificacion:boolean;
@@ -279,16 +388,16 @@ export class CntPage {
 
       setTimeout(() => { 
 
-        if(notificacion && nombreE!=undefined){  
+        if(notificacion){  
      body = {
-        "notification":{
-          "title": "Se ha Eliminado un plan",
-          "body": "El plan "+nombreE+ " ha sido cancelado. Consulta tu calendario",
+        "notification":{ 
+          "title": this.translateService.instant("NOTI_CANCELADO"),
+          "body": this.translateService.instant("PLAN")+nombre+this.translateService.instant("PLAN2"),
           "sound":"default",
           "click_action":"FCM_PLUGIN_ACTIVITY",
-          "icon":"./assets/img/logo.png"
+          "icon":"fcm_push_icon"
         },
-        "data":{
+        "data":{ 
           // 
         },
           "to": token,
@@ -304,15 +413,15 @@ export class CntPage {
     } else{
       console.log(idUser+" usuario con notificaciones desactivadas");
     }
-    }, 2000);  
+    }, 1500);  
   
   }
 
   loadEvents() {
 
     let events = this.eventSource;
-    var fecha1;
-    var fecha2;
+    let fecha1;
+    let fecha2;
     var a=[];
     var b=[];
 
@@ -326,32 +435,39 @@ export class CntPage {
          b=[];
         var aRef = firebase.database().ref("Eventos/");
         aRef.orderByChild("id").equalTo(data.val().idEvento).on("child_added", function(data) {
-         // console.log(data.val());
+          console.log("cargamos array");
+          console.log(data.val());
           b.push(data.val());
           b.reverse();
 
-          fecha1=data.val().fecha+" "+data.val().horaInicio+":00";
-          fecha2=data.val().fecha+" "+data.val().horaFinal+":00";
+          fecha1=data.val().fecha+' 12:00:00';
+          fecha2=data.val().fecha+' 12:50:00';//franja horaria
+
+        //alert(fecha1 +' '+ (typeof fecha1));
 
           events.push({
             title:  data.val().nombre,
             startTime: new Date(fecha1),
             endTime: new Date(fecha2),
-            allDay: false
+            allDay: true
           });
         
-        }); 
-      });        
+        });  
+      });  
+    
+
      });
 
     // this.info=b;
-
-     console.log(b);
+     //console.log("eventos en el calendario");
+     //console.log(b);
 
   /*  let dateString = '2018-06-1 10:00:00' 
     let newDate = new Date(dateString);
     let dateString2 = '2018-06-1 14:00:00' 
     let newDate2 = new Date(dateString2);*/
+    //console.log("eventos subidos al calendario");
+    //console.log(events);
 
        
     this.eventSource = [];
@@ -360,26 +476,26 @@ export class CntPage {
       this.eventSource = events;
       this.listo=true;
       this.finalizado=true;
-    }, 800);
+    }, 500);
   }
-
+ 
   onViewTitleChanged(title) {
-      this.viewTitle = title;
+      this.viewTitle = title; 
   }
-
-  onEventSelected(event) {
+ 
+  onEventSelected(event) { 
 
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 
   changeMode(mode) {
-    this.calendar.mode = mode;
+    this.calendar.mode = mode; 
   }
 
   today() {
     console.log(this.calendar.currentDate = new Date());
   } 
-
+ 
   onTimeSelected(ev) {
 
     console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
@@ -388,7 +504,7 @@ export class CntPage {
       var cambiar =new Date(ev.selectedTime);
 
       var mes;
-      var dia;
+      var dia; 
 
       if(cambiar.getMonth()<10){
         mes=0+""+(cambiar.getMonth()+1);
@@ -428,7 +544,7 @@ export class CntPage {
       mes=(event.getMonth()+1);
     }
 
-    if((event.getDate()+1)<10){
+    if((event.getDate()+1)<=10){
       dia=0+""+event.getDate();
     }else{
       dia=event.getDate();
@@ -443,6 +559,8 @@ export class CntPage {
   onRangeChanged(ev) {
     //console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
   }
+
+
 
   markDisabled = (date: Date) => {
     var current = new Date();
@@ -551,13 +669,8 @@ export class CntPage {
                     localdate.setSeconds(localdate.getSeconds()+1);
                     //console.log("hora"+hora);
                     //console.log("fecha"+fecha);
-                    if(fecha==hora){        
-                            let alert = that.alertCtrl.create({
-                              title: 'No te puedes desapuntar de este plan',
-                              subTitle: 'Te puedes desapuntar con un máximo de antelación de 24h',
-                              buttons: ['Ok']
-                            });
-                            alert.present();
+                    if(fecha==hora){
+                        that.mensaje.mostrarMensaje(that.translateService.instant("DESAPUNTAR_PLAN"),that.translateService.instant("DESAPUNTAR_PLAN2"));        
                             visto=false;
                           }else if(cont==0){
                             cont++;
@@ -575,7 +688,7 @@ export class CntPage {
 
   }
 
-  permitirEliminar(id){
+  permitirEliminar(id){ 
     var a="";
     var b="";
     var coord="";
@@ -657,24 +770,19 @@ export class CntPage {
                 if(d==undefined && m==undefined){
                   hora=yy+"-"+mm+"-"+dd;
                 }else if(d==undefined && m!=undefined){
-                  hora=yy+"-"+m+"-"+dd;
+                  hora=yy+"-"+m+"-"+dd; 
                 }else if(d!=undefined && m==undefined){
                   hora=yy+"-"+mm+"-"+d;
                 }
                 else{
                   hora=yy+"-"+m+"-"+d;
                 }
-                setInterval(function(){
+                setInterval(function(){ 
                   if(visto==true){
                     localdate.setSeconds(localdate.getSeconds()+1);
                     //console.log("hora"+hora);
-                    if(fecha==hora){        
-                            let alert = that.alertCtrl.create({
-                              title: 'No puedes eliminar este evento',
-                              subTitle: 'Se puede eliminar con un máximo de antelación de 24h',
-                              buttons: ['Ok']
-                            });
-                            alert.present();
+                    if(fecha==hora){
+                      that.mensaje.mostrarMensaje(that.translateService.instant("ELIMINAR_PLAN"),that.translateService.instant("ELIMINAR_PLAN2"));
                             visto=false;
                           }else if(cont==0){
                             cont++;

@@ -1,4 +1,9 @@
 page-configuracion {
+
+    .select-text{
+        color: #7DAFB0 !important;
+    }
+
     .filters {
         list-style: none;
         display: flex;
@@ -16,6 +21,17 @@ page-configuracion {
           width: 31.75%;
           margin: 0.25em;
           text-align: center;}
+
+
+        ion-item {
+        border: 1px solid #7DAFB0 !important;
+        border-radius: 10px !important;
+        box-shadow: 3px 3px 7px 0px #9c9c9c !important;
+        height: 25px !important;
+        width: 98% !important;
+        color: white !important;
+        }
+        
 }
 
 #map{

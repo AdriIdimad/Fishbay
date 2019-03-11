@@ -1,3 +1,24 @@
 page-ajustes {
 
+    .select-text{
+        color: #7DAFB0 !important;
+    }
+    
+    .lista{
+        border-top: 1px solid grey;
+    }
+
+    #idiomas {
+        border: 1px solid #7DAFB0 !important;
+        border-radius: 10px !important;
+        box-shadow: 3px 3px 7px 0px #9c9c9c !important;
+        height: 25px !important;
+        width: 95% !important;
+        color: white !important;
+        margin: 0 auto;
+        }
+
+    div{
+        border-bottom: 0px solid #dedede !important;
+    }
 }

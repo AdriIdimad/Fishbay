@@ -4,37 +4,119 @@ page-cnt {
     .item-md ion-avatar img {
       border-radius: 50%;
       overflow: hidden;
-      width: 53px !important;
-      height: 53px !important;
+      width: 90px !important;
+      height: 90px !important;
     }
-    .table-bordered[_ngcontent-c2] > thead[_ngcontent-c2] > tr[_ngcontent-c2] > th[_ngcontent-c2]{
-      border: 1px solid white !important;
+
+    .monthview-selected[_ngcontent-c2]{
+      border: 2px solid #E5AC39 !important;
     }
-  
-    .table-bordered[_ngcontent-c2]{
-      border: 1px solid white !important;
+
+    .rojo{
+      color: #7DAFB0 !important;
     }
   
     thead{
       background-color: transparent !important;
       color: #E5AC39 !important;
+      text-transform: uppercase;
+    }
+    
+    #circulo{
+      left: 22% !important;
+    }
+
+    ion-fab[bottom]{
+      bottom: 20px !important;
+    } 
+
+    .fechaDiseno{
+      color: white !important;
+      font-size: 100%; //Preferred size here
+      background-color: #7DAFB0;
+      width: 30px !important;
+      height: 30px !important;
+  }
+
+    th{
+      border: 1px solid white !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    td{
+      color: #424242;
     }
   
     .loading{
       margin-top: 40% !important;
       text-align: center !important;
-      
+      z-index: 10000 !important;
   }
-  
-  
-  
+
+  .separar{
+    margin-right: 5px !important;
+  }
+
+  .botonesTarjeta{
+    color: #7DAFB0 !important;
+    padding: 0px 2em !important;
+  }
+
+  small {
+    font-size: 60% !important;
+  }
+
+  div > table > tbody > tr:nth-child(1) > td:nth-child(6){
+    background-color: rgba(237, 231, 231, 1)  !important
+  }
+
+  div > table > tbody > tr:nth-child(1) > td:nth-child(7){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
+  div > table > tbody > tr:nth-child(2) > td:nth-child(6){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
+  div > table > tbody > tr:nth-child(2) > td:nth-child(7){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+  div > table > tbody > tr:nth-child(3) > td:nth-child(6){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
+  div > table > tbody > tr:nth-child(3) > td:nth-child(7){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+  div > table > tbody > tr:nth-child(4) > td:nth-child(6){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
+  div > table > tbody > tr:nth-child(4) > td:nth-child(7){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+  div > table > tbody > tr:nth-child(5) > td:nth-child(6){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
+  div > table > tbody > tr:nth-child(5) > td:nth-child(7){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+  div > table > tbody > tr:nth-child(6) > td:nth-child(6){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
+  div > table > tbody > tr:nth-child(6) > td:nth-child(7){
+    background-color: rgba(237, 231, 231, 1) !important
+  }
+
       #tarjeta{
         border-radius: 5px;  
         box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
       }
   
       #tarjeta:hover {
-        box-shadow: 0 3px 5px #13c1ac, 0 3px 3px #13c1ac;
+        box-shadow: 0 3px 5px #7DAFB0, 0 3px 3px #7DAFB0;
       }
       
       button{
@@ -60,10 +142,11 @@ page-cnt {
       }
   
       #informacion{
-        background-color: #7DAFB0 !important;
+        /*background-color: #7DAFB0 !important;*/
+        color: #7DAFB0 !important;
       }
   
-      button{
+      .botonesBarra{
         color: #7DAFB0 !important;
       }
   
@@ -86,6 +169,10 @@ page-cnt {
   
       ion-segment{
         border-top: 1px solid #9c9c9c;
+      }
+
+      .item-md .item-button{
+        padding: 0 0em !important;
       }
       
   

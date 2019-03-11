@@ -41,12 +41,11 @@ export class AjustesPage {
         selected: this.ing
       }
     ];
-  }, 500);
+  }, 800);
   }
 
   spain(){
-    if (localStorage.getItem("idioma") === null) {
-      console.log("no hay idioma");
+    if (this.storage.get('idioma') === null) {
       this.spa=true;
       this.ing=false;
     }else{
@@ -58,6 +57,7 @@ export class AjustesPage {
             this.translateService.use("es");
             this.spa=true;
             this.ing=false;
+
           }else if(idioma=="en"){
             this.translateService.use("en");
             this.spa=false;

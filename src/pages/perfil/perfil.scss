@@ -1,14 +1,78 @@
 page-perfil {
+
+    #noBorde2 > div.item-inner > div > ion-label > button > span{
+        justify-content: center !important;
+        margin-top: -2px !important;
+    }
+
+    ion-header{
+        border-bottom: 1px solid #9c9c9c;
+    }
+
+    ion-icon{
+        vertical-align: sub !important;
+    }
+
     .profile-image{
         width: 200px;
         height: 200px;
         border-radius: 50%;
-        border: 4px solid #13c1ac;
+        border: 4px solid #9c9c9c;
     }
+    .eventos{
+        border-radius: 15px !important;
+        height: 30px !important;
+        background-color: #7DAFB0 !important;
+        padding-left: 3% !important;
+        color: white !important;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #7DAFB0 !important;
+        -webkit-box-shadow: inset 0 -1px 0 0 #7DAFB0 !important;
+        box-shadow: inset 0 -1px 0 0 #7DAFB0 !important
+    }
+
+    #noBorde .item-inner{
+        border-bottom: 0px solid #dedede;
+    }
+
+    #noBorde2 .item-inner{
+        border-bottom: 0px solid #dedede;
+    }
+
+    .button-inner{
+        justify-content: left !important;
+        margin-top: -1px;
+    }
+    
+    #tabpanel-t1-3 > page-perfil > ion-content > div.scroll-content > ion-list > ion-item:nth-child(9) > div.item-inner > div > ion-label > button > span {
+        justify-content: center !important;
+    }
+
+    ul {
+        padding: 0px;
+        text-align: center;
+        &.rating li {
+          padding: 2px 1px !important;
+          background: none;
+          color: #E5AC39 ;
+          ion-icon {
+            font-size: 20px;
+          }
+        }
+      }
 
     button{
         //background-color: #13c1ac !important; 
-        color: white !important;
+        
+      }
+
+      .item-md.item-input.item-input-has-focus .item-inner,
+      .item-md.item-input.input-has-focus .item-inner {
+        border-bottom-color: #7DAFB0 !important;
+        -webkit-box-shadow: inset 0 -1px 0 0 #7DAFB0 !important;
+        box-shadow: inset 0 -1px 0 0 #7DAFB0 !important;
       }
 
 }

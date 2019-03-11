@@ -1,3 +1,33 @@
 page-cuestionario1 {
+    ion-item {
+        border-radius: 30px !important;
+        padding-left: 30px !important;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        border: 1px solid #f32525;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
+    }
 
+    input{
+        border: 1px solid #f4f4f4 !important;
+        border-radius: 15px !important;
+        box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+        height: 30px !important;
+        padding-left: 3% !important;
+    }
+
+    ion-icon{
+        color: #7DAFB0 !important;
+    }
+
+
+    #guardarPaso1{
+        border: 1px solid #7DAFB0 !important;
+        border-radius: 15px !important;
+        box-shadow: 3px 3px 7px 0px #9c9c9c !important;
+        height: 30px !important;
+        width: 100% !important;
+        color: white !important;
+    }
 }

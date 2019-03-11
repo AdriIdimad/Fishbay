@@ -5,83 +5,112 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
   <ion-navbar>
-      <button ion-button [menuToggle]="menu1"> 
-          <ion-icon name="menu"></ion-icon>
-        </button>   
-        <ion-buttons right>
-            <button ion-button icon-only color="royal" (click)="out()">
-              <ion-icon name="log-out"></ion-icon>
-            </button>
-          </ion-buttons>
-    <ion-title class="center">Publica tu plan</ion-title>
+    <button ion-button [menuToggle]="menu1">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons right>
+      <button ion-button icon-only color="royal" (click)="ajustes()">
+        <ion-icon name="fishbay-configuracion"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title class="center"></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content class="left-padding">
-<ion-label stacked><ion-icon name="navigate"></ion-icon> Lugar</ion-label>
 
-<input id="pac-input" class="controls" type="text" placeholder="Indica la dirección de tu plan">
-<div #mapa id="map-canvas"></div>
-
-  <ion-item class="no-left-padding"> 
-    <ion-label stacked><ion-icon name="calendar"></ion-icon> Titulo</ion-label>
+  <ion-item >
+    <ion-label stacked>
+      <ion-icon name="fishbay-titulo"></ion-icon> {{"DER_PLAN_TITULO" | translate}}
+    </ion-label>
     <ion-input type="text" [(ngModel)]="evento.nombre"></ion-input>
   </ion-item>
-    
-  <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="clipboard"></ion-icon> Descripcion</ion-label>
-    <ion-textarea type="text" [(ngModel)]="evento.descripcion"></ion-textarea>
+
+  <ion-item  id="lista">
+    <ion-label>
+      <ion-icon name="fishbay-categoria"></ion-icon> {{"DER_PLAN_SELECT_TITULO" | translate}}
+    </ion-label>
+    <ion-select #C (ionChange)="onChange(C.value)" [(ngModel)]="evento.categoria" cancelText="Cancelar" okText="Ok">
+      <ion-option value="deportes">{{"OPTION_CATEGORIA_DEPORTES" | translate}}</ion-option>
+      <ion-option value="cultura">{{"OPTION_CATEGORIA_CULTURA" | translate}}</ion-option>
+      <ion-option value="Gastronomia">{{"OPTION_CATEGORIA_GASTRONOMIA" | translate}}</ion-option>
+      <ion-option value="Aire libre">{{"OPTION_CATEGORIA_AIRELIBRE" | translate}}</ion-option>
+      <ion-option value="Noche/Fiesta">{{"OPTION_CATEGORIA_NOCHEFIESTA" | translate}}</ion-option>
+      <ion-option value="Viajes">{{"OPTION_CATEGORIA_VIAJES" | translate}}</ion-option>
+      <ion-option value="Con niños">{{"OPTION_CATEGORIA_CONNINOS" | translate}}</ion-option>
+      <ion-option value="Solo con mujeres">{{"OPTION_CATEGORIA_SOLOMUJERES" | translate}}</ion-option>
+      <ion-option value="Solo con hombres">{{ "OPTION_CATEGORIA_SOLOHOMBRES" | translate}}</ion-option>
+      <ion-option value="Con animales">{{"OPTION_CATEGORIA_ANIMALES" | translate}}</ion-option>
+      <ion-option value="Gratuito">{{"OPTION_CATEGORIA_GRATUITOS" | translate}}</ion-option>
+      <ion-option value="Solidario">{{"OPTION_CATEGORIA_SOLIDARIOS" | translate}}</ion-option>
+      <ion-option value="Otro">{{ "OPTION_CATEGORIA_OTHERS" | translate}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <br>
+  <div id="avatar" style="text-align: center;">
+    <img class="profile-image" src="{{myPhotoURL}}" style="object-fit: cover;">
+    <button style="margin-top: -25%;color: #9c9c9c !important; text-transform: none;" ion-button clear icon-left
+      (click)="subirImagen()">
+      <ion-icon style="font-size: 1.4rem;" name="fishbay-fechasubir"></ion-icon> {{"DER_PLAN_IMAGEN" | translate}}
+    </button>
+  </div>
+  <br> 
+  <ion-label stacked style="Color:#999;padding-left:16px;">
+      <ion-icon style="Color:#999;" name="fishbay-fecharegistro"></ion-icon> {{"DER_PLAN_FECHA" | translate}}
+    </ion-label>
+  <ion-item >
+    <span ion-datepicker
+    [(value)]="initDate"
+    [(min)]="initDate"
+    [localeStrings]="localeString"
+    clear
+    class="ScheduleDate">
+    <p>{{initDate | date: 'dd/MM/yyyy'}}</p>
+    </span>
   </ion-item>
 
-    <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="people"></ion-icon> Limite de Personas</ion-label>
-    <ion-input type="number" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.cupo"></ion-input>
-  </ion-item>
-  
-  <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="calendar"></ion-icon> Fecha</ion-label>
-    <ion-datetime displayFormat="DD/MM/YYYY" cancelText="Cancelar" [min]="fecha" doneText="Hecho" [(ngModel)]="evento.fecha"></ion-datetime>
-  </ion-item>
+  <!--<ionic-calendar-date-picker (onSelect)="dateSelected($event)" [date]="fecha3" [itemSelectedStyle]="{ 'background': '#7DAFB0', 'color': '#E5AC39 ','font-weight': 'bold' }" [notInCalendarStyle]="{'color': 'grey'}" [dayLabels]="['D', 'L', 'M', 'MI', 'J', 'V', 'S']" [monthLabels]="['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre' , 'Diciembre']" [fromDate]="fecha" ></ionic-calendar-date-picker>-->	
 
-  <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="lock"></ion-icon> Hora de inicio</ion-label>
+
+  <ion-item>
+    <ion-label stacked>
+      <ion-icon name="fishbay-fechainicio"></ion-icon> {{"DER_PLAN_HORA" | translate}}
+    </ion-label>
     <ion-datetime displayFormat="HH:mm" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.horaInicio"></ion-datetime>
   </ion-item>
 
-  <ion-item class="no-left-padding">
-    <ion-label stacked><ion-icon name="lock"></ion-icon> Duración</ion-label>
+  <ion-item> 
+    <ion-label stacked>
+      <ion-icon name="fishbay-limitepersonas"></ion-icon> {{"DER_PLAN_LIMITEPERSONAS" | translate}}
+    </ion-label>
+    <ion-input type="number" placeholder="Sin Límite" min="1" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.cupo"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>
+      <ion-icon name="fishbay-descripcion"></ion-icon> {{"DER_PLAN_DESCRIPCION" | translate}}
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="evento.descripcion"></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label stacked style="color: #9c9c9c !important;">
+      <ion-icon name="fishbay-lugar"></ion-icon> {{"DER_PLAN_LUGAR" | translate}}
+    </ion-label>
+  </ion-item>
+  <input id="pac-input" class="controls" type="text" placeholder="{{'DER_PLACEHOLDER_MAP' | translate}}">
+  <div #mapa id="map-canvas"></div>
+  <br>
+  <!--<ion-item class="no-left-padding">
+    <ion-label stacked><ion-icon name="lock"></ion-icon> {{"DER_PLAN_DURACION" | translate}}</ion-label>
     <ion-datetime displayFormat="HH:mm" cancelText="Cancelar" doneText="Hecho" [(ngModel)]="evento.horaFinal"></ion-datetime>
-  </ion-item>
+  </ion-item>-->
 
-  <ion-item class="no-left-padding" id="lista">
-      <ion-label>Categoria del evento</ion-label>
-      <ion-select #C (ionChange)="onChange(C.value)" [(ngModel)]="evento.categoria" cancelText="Cancelar" okText="Ok">
-        <ion-option value="deportes">Deportes</ion-option>
-        <ion-option value="cultura">Cultura</ion-option>
-        <ion-option value="Gastronomía">Gastronomía</ion-option>
-        <ion-option value="Aire libre">Aire Libre</ion-option>
-        <ion-option value="Noche/Fiesta">Noche/Fiesta</ion-option>
-        <ion-option value="Viajes">Viajes</ion-option>
-        <ion-option value="Con niños">Con niños</ion-option>
-        <ion-option value="Sólo con mujeres">Sólo con mujeres</ion-option>
-        <ion-option value="Sólo con hombres">Sólo con hombres</ion-option>
-        <ion-option value="Con animales">Con animales</ion-option>
-        <ion-option value="Gratuito">Gratuito</ion-option>
-        <ion-option value="Solidario">Solidario</ion-option>
-        <ion-option value="Otro">Otro</ion-option>
-      </ion-select>
-  </ion-item>
-
-  <ion-item class="no-left-padding" id="itemFoto">
-      <ion-thumbnail item-start>
-        <ion-img width="80" height="80" src="{{myPhotoURL}}"></ion-img>
-      </ion-thumbnail>
-      <button ion-button icon-left (click)="subirImagen()" color="secondary"><ion-icon name="cloud-upload"></ion-icon> Imagen del evento</button>
-    </ion-item>
-    <button id="crear" ion-button icon-left (click)="registrarEvento(evento)" full ><ion-icon name="add-circle"></ion-icon> Crear evento</button>
-    <br>
+  <button id="crear" class="botones" ion-button icon-left (click)="registrarEvento(evento)" full>
+    {{"DER_PLAN_CREAREPLAN" | translate}}
+  </button>
+  <br>
 </ion-content>
-

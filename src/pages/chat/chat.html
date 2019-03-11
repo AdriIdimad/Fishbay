@@ -7,33 +7,61 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Chat del plan</ion-title>
+    <ion-title>Chat plan</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
-  <div id="chatMensajes">
+<ion-content style="background-image: url('/assets/img/ondas_fondo.svg'); width: 100%; height: 100%; padding-bottom: 0px !important;">
+ <div id="chatMensajes" style="height: 100%;">
     <div class="message" *ngFor="let message of messages">
-      <div  [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
-        <div [ngStyle]="{'color':message.color}" class="username">{{message.username}}</div>
-        <div class="message">{{message.message}}</div>
-        <div class="hora">{{message.hora}}</div>
+      <div [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
+          <div>
+            <div class="username">{{message.username}}</div>
+            <div class="message">{{message.message}}</div>
+            <div class="hora">{{message.hora}}</div> 
+          </div>
       </div>
-  </div>
-</div>
+      <img [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'" style="background-color:transparent !important;width: 15%;border-radius: 50%;margin-top: 2%;" src="{{message.imagen}}">
+    </div>
 
+   <!-- <div style="display: flex;justify-content:space-between;height:45px;border-top: 1px solid #9c9c9c;">
+        <div style="height:100%;" class="elem"><ion-input type="text" [(ngModel)]="message">Footer</ion-input></div>
+        <div style="height:100%;" id="enviar" class="elem"><button ion-button icon-only (click)="enviarMensaje()"><ion-icon name="send" style="color: white !important; background: #7DAFB0 !important;"></ion-icon></button></div>
+    </div>-->
+  </div>
+    <ion-toolbar>
+      <form >
+        <ion-input type="text"
+          #chat_input 
+          [(ngModel)]="message"
+          (keyup.enter)="sendMessage()"
+          (focus)="updateScroll()"
+          name="message"
+          placeholder="...">
+        </ion-input>
+      </form>
+      <ion-buttons right>
+        <div ion-button icon-only item-right (click)="enviarMensaje()">
+            <ion-icon style="color:#7DAFB0;" name="send"></ion-icon>
+          </div>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-content>
 
-    <ion-footer>  
-        <ion-toolbar>
-          <div id="footer">
-            <div class="elem"><ion-input type="text" [(ngModel)]="message">Footer</ion-input></div>
-            <div id="enviar" class="elem"><button ion-button icon-only (click)="enviarMensaje()"><ion-icon name="send"></ion-icon></button></div>
-        </div>
-        </ion-toolbar>     
-      </ion-footer>
+  
+
+ <!-- <ion-footer>
+    <div style="display: flex;justify-content:space-between;height:45px;border-top: 1px solid #9c9c9c;">
+      <div style="height:100%;width:90%;padding:1px;" class="elem"><input tyle="height:100%;width:100%;" type="text" [(ngModel)]="message"></div>
+      <div style="height:100%;width:10%;padding:1px;" id="enviar" class="elem"><button ion-button icon-only (click)="enviarMensaje()"><ion-icon name="send" style="color: white !important; background: #7DAFB0 !important;"></ion-icon></button></div>
+  </div>
+  </ion-footer>-->
+  
+  
+
+ 
+
 
 

@@ -11,53 +11,65 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons right>
+        <!--<button style="color: #7DAFB0 !important;" ion-button icon-center clear large color="primary" (click)="gestorNotificaciones()">
+            <ion-icon name="notifications" large></ion-icon>
+          </button>-->
       <button style="color: #7DAFB0 !important;" ion-button icon-center clear large color="primary" (click)="busqueda()">
-        <ion-icon name="settings" large></ion-icon>
+        <ion-icon name="md-search" large></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar>
+  </ion-navbar> 
 
 </ion-header>
 
 <ion-content style="height:100%;width:100%;">
+  <div id="acaba" [hidden]="mostrarUltimo" style="height:100%;width:100%;color: #9c9c9c;text-align: center;margin-top: 50%;">
+    <h1>{{ 'IZQ_NOHAYMASPLANES' | translate}}</h1>
+        <ion-item id="noBorde2">
+            <ion-buttons>
+            <button center ion-button full class="eventos" color="primary" (click)="recargar()"> 
+                {{ 'VOLVER_REVISAR' | translate}}
+            </button>
+          </ion-buttons>
+        </ion-item>  
+  </div>
   <!-- <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar"></ion-searchbar>-->
-  <div style="z-index:10000;width: 360px;height: 440px;" swing-stack #myswing1 [stackConfig]="stackConfig"
+  <div style="z-index:10000;width: 100%;height: 100%;" swing-stack #myswing1 [stackConfig]="stackConfig"
     (throwoutleft)="pasar()" (throwoutright)="voteSwipe()" id="card-stack">
     <div class="loading" *ngIf="!finalizado">
       <img src="assets/img/Loading.gif">
     </div>
 
-    <ion-card #mycards1 swing-card *ngFor="let c of loadedeventList; let last = last" style="height:100%;width:94%;">
-
+    <ion-card name="cartas" #mycards1 swing-card (touchmove)="foco()" *ngFor="let c of loadedeventList; let last = last" style="height:100%;width:95%;">
       <span *ngIf="last">{{cargado()}}</span>
-      <ion-item class="no-left-padding" *ngIf="c.imagen" style="height:73%;width:100%;">
+      <ion-item id="imagenPlan" class="no-left-padding" *ngIf="c.imagen" style="height:70%;width:100%;">
 
-        <p id="spinner" [hidden]="loaded"><img id="loaderImg" src="assets/img/Loading.gif" style="width: 80px; height: 80px;"
+        <p id="spinner" [hidden]="loaded"><img id="loaderImg" src="assets/img/Loading.gif" style="width: 200px; height: 200px;"
             [hidden]="loaded"></p>
         <div style="position:absolute; visibility:visible; z-index:2; width: 100%; height: 100%;"><img src="assets/img/marco.png"
             style="background-size: cover; width: 100%; height: 100%;" /></div>
         <ion-fab id="circulo" top center>
           <div ion-fab class="fechaDiseno"></div>
         </ion-fab>
-        <div style="margin-top: 35px;color: white;text-align: center;position: absolute;width: 100%;z-index: 1000;">
-          <p style="font-weight: bold;font-size:150%;color:white;">{{c.fecha| date: 'dd' }}</p>
-          <p style="color:white;">{{ c.fecha | date: 'MMMM' | translate}}</p>
+        <div style="margin-top: 22px;color: white;text-align: center;position: absolute;width: 100%;z-index: 1000;">
+          <p style="font-weight: bold;font-size:250%;color:white;">{{c.fecha| date: 'dd' }}</p>
+          <p id="mes" style="color:white;font-size:90%;margin-top: -15px;margin-left: 1%;">{{ c.fecha | date: 'MMMM' | translate}}</p>
         </div>
         <ion-fab middle left>
           <button ion-fab color="light" class="voteNo" large clear icon-center (click)="pasar()">
-            <ion-icon name="close"></ion-icon>
+            <ion-icon name="fishbay-x"></ion-icon>
           </button>
         </ion-fab>
 
         <ion-fab middle right>
           <button ion-fab color="light" class="vote" icon-center clear large color="primary" (click)="voteUp(c.id)">
-            <ion-icon name="heart" large></ion-icon>
+            <ion-icon name="fishbay-corazon" large></ion-icon>
           </button>
         </ion-fab>
-        <img class="full-image" *ngIf="c.imagen" [src]="c.imagen" (load)="loaded = true" [hidden]="!loaded" style="background-size: cover; width: 99%; height: 100%;" />
+        <img class="full-image" *ngIf="c.imagen" [src]="c.imagen" (load)="loaded = true" [hidden]="!loaded" style="object-fit: cover;" />
 
       </ion-item>
-      <ion-card-content style="width:100%;height: 27%;">
+      <ion-card-content id="content" style="width:100%;height:30%;">
         <div class="cols" style="width:100%;height: 100%;background-color:white;">
           <div class="col1" style="width:35%;height: 100%;">
             <ion-item padding id="divAvatar">
@@ -65,25 +77,24 @@
                 <img id="usuario" *ngIf="c.idCreador" [src]="cogerImagen(c.idCreador)">
               </ion-avatar>
             </ion-item>
-            <rating [(ngModel)]="c.ptnOrganizador" readOnly="true" max="5" emptyStarIconName="star-outline"
-              halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)">
+            <rating [(ngModel)]="c.ptnOrganizador" readOnly="true" max="5" emptyStarIconName="fishbay-estrella"
+              halfStarIconName="fishbay-estrella2" starIconName="fishbay-estrella2" nullable="false" (ngModelChange)="onModelChange($event)">
             </rating>
 
-
           </div>
-          <div class="col2" style="width:65%;margin-top:3%;">
+          <div class="col2" style="width:65%;margin-top:1%;">
             <ion-item center id="infor">
-              <p style="color:#7DAFB0;">
-                <ion-icon id="personas" name="time"></ion-icon> {{c.fecha| date: 'H:mm'}} <span>
-                  <ion-icon id="personas" name="person"></ion-icon> {{contar(c.id)}}
+              <p style="color:#7DAFB0;" (click)="verApuntados(c.id)">
+                <ion-icon id="personas" style="vertical-align: text-bottom;" name="fishbay-reloj"></ion-icon> {{ c.horaInicio }} <span style="margin-left: 10%;">
+                  <ion-icon id="personas" style="vertical-align: text-bottom;" name="fishbay-perosnasevento"></ion-icon> {{contar(c.id)}}
                 </span>
-              </p>
-              <p class="titulo">{{c.nombre}}</p>
-              <p>{{c.ciudad}} </p>
-              <p id="descripcion">{{c.descripcion}}</p>
+              </p> 
+              <p class="titulo" style="margin-left:3px !important;">{{c.nombre}}</p>
+              <p style="color:#575757 !important;margin-left:3px !important;">{{c.ciudad}} </p>
+              <p style="color:#575757 !important;margin-left:3px !important;" id="descripcion">{{c.descripcion}}</p>
               <ion-fab id="botonVer1" bottom right>
                 <button id="botonVer" ion-fab clear color="royal" large (click)="detallesEvento(c.id)">
-                  <ion-icon id="info" name="information-circle" large></ion-icon>
+                  <ion-icon style="font-size:1.6rem !important;" name="add" ></ion-icon>
                 </button>
               </ion-fab>
             </ion-item>
@@ -93,3 +104,9 @@
     </ion-card>
   </div>
 </ion-content>
+
+
+
+
+
+

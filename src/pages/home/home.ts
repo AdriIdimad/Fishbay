@@ -37,21 +37,21 @@ export class HomePage {
     //this.navCtrl.setRoot(HomePage,{listaFiltrada:this.ListaFiltrada});
     this.tokensetup().then((token) => {
       this.storetoken(token);
-    })
-    this.permitirEliminar();
+    }) 
+    //this.permitirEliminar();
     //this.planesGenericos();
     this.storage.get('idioma').then((idioma) =>{
       this.translateService.use(idioma);
-    });
+    }); 
 
 
-  }
+  }  
 
   ionViewDidLoad() {
     FCMPlugin.onNotification(function(data){
     if(data.wasTapped){
       //Notification was received on device tray and tapped by the user.
-        console.log( JSON.stringify(data) );
+        //alert("al clicar notificacion"+ JSON.stringify(data) );
     }else{
       //Notification was received in foreground. Maybe the user needs to be notified.
       console.log( JSON.stringify(data) );
@@ -59,11 +59,13 @@ export class HomePage {
     });
 
     FCMPlugin.onTokenRefresh(function(token){
-      console.log( token );
+      console.log( token ); 
     });    
-  }
+  } 
 
-  tokensetup() {
+  //cojer el token del movil para enviar notificaciones, se actualiza con el ultimo dispositivo con el que se conecta el usuario.
+
+  tokensetup() { 
     var promise = new Promise((resolve, reject) => {
       FCMPlugin.getToken(function(token){
     resolve(token);
@@ -118,9 +120,9 @@ export class HomePage {
         console.log(elim.length);
   
         for(var i=0;i<elim.length;i++){
-            if(elim[i]['idEvento']==idEvento){
-              firebase.database().ref('/Apuntados').child(elim[i]['id']).remove();
-            }
+           // if(elim[i]['idEvento']==idEvento){
+              firebase.database().ref('Apuntados/').child(elim[i]['id']).remove();
+            //}
         }
    
   }
@@ -195,7 +197,7 @@ export class HomePage {
 
     }  
 
-  }, 1500);
+  }, 2000);
 
 
 }

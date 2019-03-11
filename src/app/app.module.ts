@@ -18,7 +18,6 @@ import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { GoogleMaps } from '@ionic-native/google-maps';
-import { Geolocation } from '@ionic-native/geolocation';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LoginPage } from '../pages/login/login';
@@ -32,6 +31,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { DatePickerModule } from 'ion-datepicker';
+import { DatePipe } from '@angular/common';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,6 +50,7 @@ export function createTranslateLoader(http: Http) {
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     SwingModule,
+    DatePickerModule,
     Ionic2RatingModule,
     NgCalendarModule,
     AngularFireDatabaseModule,
@@ -74,8 +76,8 @@ export function createTranslateLoader(http: Http) {
     EmailComposer,
     Funciones_utilesProvider,
     Crop,
+    DatePipe,
     NativeStorage,
-    Geolocation,
     GoogleMaps,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ScreenOrientation

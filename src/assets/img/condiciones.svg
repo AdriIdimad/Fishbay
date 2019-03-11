@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Capa_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 21.1 21.1"
+	 style="enable-background:new 0 0 21.1 21.1;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#7EAEAF;}
+</style>
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  width="17.5" height="16.9" bottomLeftOrigin="true" x="289.2" y="-429.8"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<switch>
+	<foreignObject requiredExtensions="&ns_ai;" x="0" y="0" width="1" height="1">
+		<i:pgfRef  xlink:href="#adobe_illustrator_pgf">
+		</i:pgfRef>
+	</foreignObject>
+	<g i:extraneous="self">
+		<g id="XMLID_4176_">
+			<path id="XMLID_4144_" class="st0" d="M5.1,11l-3.2,5c-0.1,0.2,0,0.3,0.2,0.2l2.9-0.6c0.2,0,0.4,0.1,0.4,0.3l0.6,2.9
+				c0,0.2,0.2,0.2,0.3,0l3.2-5C7.6,13.6,6,12.5,5.1,11z"/>
+			<path id="XMLID_4142_" class="st0" d="M19.2,16L16,11c-1,1.5-2.5,2.5-4.3,2.9l3.2,5c0.1,0.2,0.2,0.1,0.3,0l0.6-2.9
+				c0-0.2,0.2-0.3,0.4-0.3l2.9,0.6C19.2,16.3,19.3,16.2,19.2,16z"/>
+			<path id="XMLID_4140_" class="st0" d="M10.5,2.1c-3,0-5.4,2.4-5.4,5.4c0,3,2.4,5.4,5.4,5.4c3,0,5.4-2.4,5.4-5.4
+				C15.9,4.5,13.5,2.1,10.5,2.1z"/>
+		</g>
+	</g>
+</switch>
+</svg>

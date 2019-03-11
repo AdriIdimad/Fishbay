@@ -55,15 +55,17 @@ export class LostpassPage {
       this.doAlert();
       
     }catch(e){
-      let error: string= e.code;
-      if(error == "auth/invalid-email"){
-        this.fallo.aviso_error("El formato del email es incorrecto.");
-      }else if(error=="auth/user-not-found"){
-        this.fallo.aviso_error("El email introducido no corresponde a ningún usuario.");
-      }else if(error=="auth/wrong-password"){
-        this.fallo.aviso_error("Contraseña incorrecta");
-      }else if(error=="auth/argument-error"){
-        this.fallo.aviso_error("El campo email esta vacio.")
+      let error: string = e.code;
+      if (error == "auth/invalid-email") {
+        this.fallo.aviso_error(this.translateService.instant("FORMATO_MAIL"));
+      } else if (error == "auth/user-not-found") {
+        this.fallo.aviso_error(this.translateService.instant("EMAIL_NOVALIDO"));
+      } else if (error == "auth/wrong-password") {
+        this.fallo.aviso_error(this.translateService.instant("PASSWORD_NO"));
+      } else if (error == "auth/argument-error") {
+        this.fallo.aviso_error(this.translateService.instant("EMPTLY_FIELDS"));
+      } else if (error == "auth/email-already-in-use") {
+        this.fallo.aviso_error(this.translateService.instant("EMAIL_NO"));
       }
     
 

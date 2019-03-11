@@ -5,11 +5,11 @@ page-register {
     }
 
     .fixed-content{
-        margin-top: 170px !important;
+        margin-top: 190px !important;
     }
 
     .scroll-content{
-        margin-top: 170px !important;
+        margin-top: 190px !important;
         padding-top: 0px !important;
     }
     
@@ -21,6 +21,14 @@ page-register {
         z-index: 1000;
         position: absolute;
         visibility: visible;
+    }
+
+    button{
+        color: white !important;
+    }
+
+    #ultimo{
+        margin-bottom: 30px !important;
     }
 
     .toolbar-background.toolbar-background-md{
@@ -47,9 +55,10 @@ page-register {
 
     input{
         border: 1px solid #f4f4f4 !important;
-        border-radius: 10px !important;
+        border-radius: 15px !important;
         box-shadow: 3px 4px 7px 0px #9c9c9c !important;
-        height: 25px !important;
+        height: 30px !important;
+        padding-left: 3% !important;
     }
     
     ion-label{

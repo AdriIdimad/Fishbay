@@ -12,5 +12,6 @@ export interface User{
     puntuacion:number
     nVotos:number;
     descripcion:String;
+    profesion:String;
     token:string;
 }

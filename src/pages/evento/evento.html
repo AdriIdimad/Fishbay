@@ -1,98 +1,107 @@
-
 <ion-header>
-  <ion-navbar>
-    <ion-title>Plan</ion-title>
-    <ion-buttons end>
-        <button ion-button icon-only (click)="denunciar()">
-          <ion-icon name="megaphone"></ion-icon>
-        </button>
-      </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="denunciar()">
+                {{'DENUNCIAR' | translate}}<ion-icon style="font-size: 1.5rem !important;" name="fishbay-denunciar"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-<ion-card *ngFor="let evento of infoEvento | async" class="cards">
-  <img src="{{evento.imagen}}">
-  
-  <ion-fab right top (click)="verPerfil(evento.idCreador)">
-      <div id="avatar" align="center" *ngIf="!facebook">   
-          <a><img class="profile-image" src="{{(infoUsuario | async)?.imagen}}"></a>
-    </div>
-  </ion-fab>
-  <ion-item>
-    <ion-icon name="clipboard" item-start large></ion-icon>
-    <h2 class="titulos">{{evento.nombre}}</h2>
-    <ion-item text-wrap>{{evento.descripcion}}</ion-item>
-    <ion-fab right middle >
-        <button id="botonChat" disabled='true' ion-button icon-only color="royal" (click)="goChat(evento.id)">
-            <ion-icon name="chatboxes"></ion-icon>
-        </button>
-    </ion-fab>   
-  </ion-item>
+    <ion-card *ngFor="let evento of infoEvento | async" class="cards">
+        <div style="position:absolute; visibility:visible; z-index:2; width: 100%;margin-top:-15%"><img src="assets/img/marco_evento.png"
+                style="background-size: cover; width: 100%; height: 100%;" /></div>
+        <img src="{{evento.imagen}}">
 
-  <ion-item>
-    <ion-icon name="pin" item-left large ></ion-icon>
-    <h2 class="titulos">{{evento.ciudad}}</h2>
-    <a href="{{navegador}}"><ion-item text-wrap >{{evento.direccion}}</ion-item></a>
-  </ion-item> 
+        <ion-fab center top style="left: 44.5% !important;" (click)="verPerfil(evento.idCreador)">
+            <div id="avatar" align="center">
+                <a><img class="profile-image" src="{{(infoUsuario | async)?.imagen}}"></a>
+            </div>
+        </ion-fab>
 
-  <ion-item>
-    <ion-icon name="calendar" item-left large ></ion-icon>
-    <h2>{{evento.fecha| date: 'dd/MM/yyyy'}}</h2> 
-  </ion-item>
+        <ion-item>
+            <ion-icon class="iconos" name="fishbay-perosnasevento" item-left large></ion-icon>
+            <h2 (click)="verApuntados(evento.id)" *ngIf="evento.cupo!=null"  class="titulos">{{contar(evento.id)}} / {{evento.cupo}}</h2> 
+            <h2 (click)="verApuntados(evento.id)" *ngIf="evento.cupo==null" class="titulos">{{contar(evento.id)}} / Sin Límite</h2>
+            <ion-fab right middle>
+                <button id="botonChat" disabled='true' ion-button icon-only color="royal" (click)="goChat(evento.id)">
+                    <ion-icon name="fishbay-chat"></ion-icon>
+                </button>
+            </ion-fab>
+        </ion-item>
 
-  <ion-item >
-    <ion-icon name="time" item-left large ></ion-icon>
-    <span item-center>{{evento.horaInicio}}</span>
-    <span item-center>-</span>
-    <span item-center>{{evento.horaFinal}}</span>
-    <button class="eventos" ion-button icon-left clear item-end>
-      <ion-icon name="person"></ion-icon>
-      {{contar(evento.id)}}/{{evento.cupo}}
-    </button>
+        <ion-item style="color: #575757 !important;font-weight:bold;">
+            <h1 text-wrap style="margin-left: 9px;font-weight:bold;">{{evento.nombre}}</h1>
+            <p text-wrap style="text-align:justify;margin-left: 9px;">{{evento.descripcion}}</p>
+        </ion-item>
 
-  </ion-item> 
-<!--<button id="apuntarse" class="eventos" icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al plan</button>
+        <ion-item style="color: #7DAFB0 !important;">
+            <ion-icon class="iconos" style="margin-top: -12px;" name="fishbay-lugarevento" item-left large></ion-icon>
+            <h2 class="titulos" >{{evento.ciudad}}</h2>
+            <a href="{{navegador}}">
+                <p text-wrap>{{evento.direccion}}</p>
+            </a>
+        </ion-item>
+
+        <ion-item style="color: #7DAFB0 !important;"> 
+            <ion-icon class="iconos" name="fishbay-fechaevento" item-left large></ion-icon>
+            <h2 class="titulos">{{evento.fecha| date: 'dd/MM/yyyy'}}</h2>
+        </ion-item>
+
+        <ion-item style="color: #7DAFB0 !important;">
+            <ion-icon class="iconos" name="fishbay-horaevento" item-left large></ion-icon>
+            <h2 class="titulos">{{evento.horaInicio}}</h2>
+        </ion-item>
+        <!--<button id="apuntarse" class="eventos" icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al plan</button>
 <rating class="rating" [(ngModel)]="rate" max="5" emptyStarIconName="star-outline"  halfStarIconName="star-half" starIconName="star"  nullable="false"  (ngModelChange)="onModelChange($event)"></rating>-->
-<button id="apuntarse" class="eventos"  icon-left ion-button color="primary" full (click)="permitirVotar(evento.id,evento.idCreador)"><ion-icon name="add-person"></ion-icon>vota este plan !</button>       
-</ion-card>
-<div #mapa id="mapa"></div>
-<!--<ion-item>
+        <button id="apuntarse" disabled='true' class="eventos" icon-left ion-button color="primary" full (click)="permitirVotar(evento.id,evento.idCreador)">
+            <ion-icon name="add-person"></ion-icon>{{'EVENTO_BOTON_VOTAR' | translate}}
+        </button>
+    </ion-card>
+    <div #mapa id="mapa"></div>
+    <!--<ion-item>
   <button [disabled]='deshabilitado' icon-left ion-button color="primary" full (click)="apuntarse(evento.id)"><ion-icon name="add-person"></ion-icon>Apuntarse al evento</button>
 </ion-item>-->
-<div *ngIf="mostrarFooter" style="height: 11%;">
+    <div *ngIf="mostrarFooter" style="height: 11%;">
 
-</div>
+    </div>
 
-</ion-content> 
+</ion-content>
 
 <ion-footer *ngIf="mostrarFooter">
-        <ion-toolbar id="footer" *ngIf="!calendario" >
-            <ion-grid>
-                <ion-row no-padding no-margin>
-                    <ion-col col-6 no-padding center>
-                        <button class="voteNo" ion-button full clear icon-center  color="primary" (click)="accionDescartar()">
-                            <ion-icon name="close-circle"></ion-icon>              
+    <ion-toolbar id="footer" *ngIf="!calendario">
+        <ion-grid>
+            <ion-row no-padding no-margin>
+                <ion-col col-6 no-padding center>
+                    <ion-fab left>
+                        <button ion-fab color="light" class="voteNo" large clear icon-center (click)="accionDescartar()">
+                            <ion-icon name="fishbay-x"></ion-icon>
                         </button>
-                    </ion-col>
-                    <ion-col col-6 no-padding center> 
-                        <button class="vote" ion-button icon-center clear  full color="primary" (click)="accionVotar()" >
-                            <ion-icon name="heart"></ion-icon> 
+                    </ion-fab>
+                </ion-col>
+                <ion-col col-6 no-padding center>
+                    <ion-fab right>
+                        <button ion-fab color="light" class="vote" icon-center clear large color="primary" (click)="accionVotar()">
+                            <ion-icon name="fishbay-corazon" large></ion-icon>
                         </button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-toolbar>
-        <ion-toolbar id="footer" *ngIf="calendario" >
-          <ion-grid>
-              <ion-row no-padding no-margin>
-                  <ion-col col-12 no-padding center> 
-                      <button class="vote" ion-button icon-center clear  full color="primary" (click)="accionVotar2()" >
-                          <ion-icon name="heart"></ion-icon> 
-                      </button>
-                  </ion-col>
-              </ion-row>
-          </ion-grid>
-      </ion-toolbar>
+                    </ion-fab>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+    <ion-toolbar id="footer" *ngIf="calendario">
+        <ion-grid>
+            <ion-row no-padding no-margin>
+                <ion-col col-12 no-padding center>
+                    <ion-fab center>
+                        <button ion-fab color="light" class="vote" icon-center clear large color="primary" (click)="accionVotar2()">
+                            <ion-icon name="fishbay-corazon" large></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
 </ion-footer>

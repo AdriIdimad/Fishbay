@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:944185704251:android:764d2cb7da3280eb",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "io.ionic.fishbay"
         }
       },
       "oauth_client": [
@@ -18,12 +18,12 @@
           "client_id": "944185704251-8qd8e105nmu4uu1l1s9tipnm421fedai.apps.googleusercontent.com",
           "client_type": 3
         }
-      ],
+      ], 
       "api_key": [
         {
           "current_key": "AIzaSyBxViocR4sk3WK97iwIhrxzvwQ2xSSJGrk"
         }
-      ],
+      ], 
       "services": {
         "analytics_service": {
           "status": 1

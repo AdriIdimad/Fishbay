@@ -1,0 +1,10 @@
+page-apuntados {
+    #tarjeta{
+        border-radius: 5px;  
+        box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
+      }
+  
+      #tarjeta:hover {
+        box-shadow: 0 3px 5px #7DAFB0, 0 3px 3px #7DAFB0;
+      }
+}

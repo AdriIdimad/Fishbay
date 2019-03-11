@@ -1,17 +1,69 @@
 page-izq {
-    
+    @media only screen and (max-height: 600px) {
+      #usuario {
+        border: 1px solid #7DAFB0;
+        width: 85px !important;
+        height: 85px !important;
+     }
+    }
+    @media only screen and (max-height: 300px) {
+        #usuario {
+          border: 1px solid #7DAFB0;
+          width: 75px !important;
+          height: 75px !important;
+       }
+      }
+    @media only screen and (max-height: 650px) {
+        #card-stack {
+            height: 92% !important;
+        }
+    }
+    @media only screen and (max-height: 700px) {
+        #card-stack {
+            height: 92% !important;
+        }
+    }
+
+    @media only screen and (max-height: 580px) {
+        #imagenPlan {
+            height: 68% !important;           
+        }
+        #content{
+            height: 32% !important;
+        }
+        #mes{
+            font-size:80% !important;
+        }
+    }
+
         #avatar{
             min-width: 100% !important;
             min-height: 100% !important;
             margin: 0 auto;
         }
 
+        #noBorde2 > div.item-inner > div > ion-label > button > span{
+            justify-content: center !important;
+            margin-top: -2px !important;
+        }
+
+        #noBorde2 .item-inner{
+            border-bottom: 0px solid #dedede;
+            margin: 20px !important;
+        }
+
+
+
         .bar-buttons-md[right]{
             margin-right: 6% !important;
         }
 
+        ul.rating li ion-icon{
+            font-size: 10px !important;
+        }
+
         #descripcion{
-            margin-right: 9% !important;
+            margin-right: 15% !important;
         }
 
         #infor{
@@ -20,7 +72,7 @@ page-izq {
         }
 
         .rating{
-            margin-top: 1% !important;            
+            margin-top: 0% !important;
         }
 
         .fab{
@@ -29,61 +81,63 @@ page-izq {
         }
 
         .fab ion-icon{
-            font-size: 5.4rem !important;
+            font-size: 3.4rem !important;
         }
 
         #circulo{
-            left: 43.5% !important;
+            left: 44% !important;
         }
-     
+
         .avatars img{
             margin: auto;
         }
+
         #divAvatar{
             padding-bottom: 0px !important;
             padding-top: 10% !important;
+            padding: 7px !important;
         }
-    
-    
+
+
         .cols {
             display: flex;
             margin-top: -1%;
           }
-          
-          /*.cols div { 
+
+          /*.cols div {
             flex: 1;
           }*/
-          
+
           .col1 {
             border-right: 1px solid gainsboro;
           }
-          
+
           .col2 {
             /*background-color: skyblue;*/
           }
-          
+
         ion-label{
             width: 100%;
             height: 100%;
         }
-    
+
         .button-large-md {
             height: 100% !important;
             padding: 0 7% !important;
           }
-    
-    
-    
+
+
+
           #busqueda{
-            
+
             margin-top: -4% !important;
           }
-          
+
           .busqueda{
             color: #7DAFB0 !important;
             font-size: 100% !important;
           }
-     
+
         ul {
             padding: 0px;
             &.rating li {
@@ -95,54 +149,58 @@ page-izq {
               }
             }
           }
-    
+
         .label-md{
-            margin-bottom: 1px !important; 
-            margin-top: 0px !important; 
+            margin-bottom: 1px !important;
+            margin-top: 0px !important;
             margin: 0px;
         }
-     
+
         .full-image {
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-          }
-    
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+        }
+
         #botonVer{
-            color: #7DAFB0 !important;
+            box-shadow: 0px 0px !important;
+            background-color: #7DAFB0 !important;
             font-size: 10px !important;
             width: 20px !important;
             height: 20px !important;
-            background-color: white;
-        } 
+            color: white; 
+        }
         #botonVer1{
-            right: 0% !important;
-        } 
+            right: 5% !important;
+            bottom: 25% !important;
+        }
 
         ion-icon {
             font-size: 200%; //Preferred size here
         }
-    
+
         .loading{
             margin-top: 40% !important;
             text-align: center !important;
-        }
-    
-        #loaderImg{
-            margin-top: 20%;
-    
-        }
-    
-        #spinner{
-            width: 100%;
+            width: 200px;
             height: 200px;
-            padding-left: 35%;
+            margin-left: 20%;        }
+
+        #loaderImg{
+            margin-top: 30%;
+            margin-left: 20%;
+            height: 200px !important; 
+        }
+        
+        #spinner{
+            width: 100% !important;
+            height: 100% !important;
         }
         .item-md.item-block .item-inner{
             border-bottom: 0px solid;
         }
-    
+
         #card-stack {
             width: 95%;
             height: 95%;
@@ -151,7 +209,7 @@ page-izq {
             position: relative;
             z-index: 10000;
           }
-    
+
           .user_img {
             width: 100%;
             height: 100%;
@@ -163,55 +221,56 @@ page-izq {
         #mycards1{
             z-index:100 !important;
         }
-        
+
         div#card-stack{
             z-index:100 !important;
         }
-    
+
         .item-md.item-block .item-inner {
             padding-right: 0px !important;
         }
-    
+
         .item-ios.item-block .item-inner{
             padding-right: 0px !important;
         }
-    
-    
+
+
           #myswing1{
               margin: 0 auto !important;
               align-content: center;
               z-index: 100;
           }
-            
+
           #card-stack ion-card {
             border-radius: 5px;
             position: absolute;
             text-align: center;
             top: 0%;
-            height: 95%;
+            height: 100%;
+            background-color: #fff;
           }
-    
+
         #imagenEvento{
             border-bottom: 1px solid #7DAFB0;
         }
-    
+
         #info{
             font-size: 2.4rem !important;
             color: #7DAFB0 !important;
         }
-    
+
         #busqueda{
             color: #7DAFB0 !important;
             font-size: 10px; //Preferred size here
         }
-    
+
         .voteNo{
             color: #E5AC39 !important;
             font-size: 160%; //Preferred size here
-            background-color: #9c9c9c;
-            opacity: 0.5;
+            background-color: white;
+            opacity: 0.8;
         }
-    
+
         .fechaDiseno{
             color: white !important;
             font-size: 100%; //Preferred size here
@@ -219,61 +278,63 @@ page-izq {
             width: 100px !important;
             height: 100px !important;
         }
-    
+
         .vote{
             color: #E5AC39 !important;
             font-size: 160%; //Preferred size here
-            background-color: #9c9c9c;
-            opacity: 0.5;
+            background-color: white;
+            opacity: 0.8;
         }
-            
+
         .centrar{
             margin: 0 auto !important;
         }
-    
-    
+
+
         #usuario{
             border: 1px solid #7DAFB0;
-            width: 100% !important;
-            height: 100% !important;
+            width: 82px ;
+            height: 82px ;
         }
-        
+
         button{
-            //background-color: #13c1ac !important; 
+            //background-color: #13c1ac !important;
             color: white !important;
           }
-    
+
         .titulo{
             color: #7DAFB0 !important;
-            font-size:18px;
+            font-size:20px;
+            font-weight: bold;
         }
-    
+
         .col{
             padding-bottom: 1px !important;
-            padding-top: 1px !important;  
+            padding-top: 1px !important;
         }
-    
+
         .texto-card{
             margin-left: 10px !important;
             margin-top: 4px !important;
             margin-right: 10px !important;
-    
+
         }
-        
-    
+
+
         .padding-pers{
             padding-left: 5px !important;
         }
-    
+
         .card-content-md{
             padding-bottom: 1px !important;
-            padding-top: 1px !important;        
-        } 
+            padding-top: 1px !important;
+            padding:0px 0px !important;
+        }
         .card-content-ios{
             padding-bottom: 1px !important;
             padding-top: 1px !important;
         }
-    
+
         .card-md{
             margin: 8px !important;
             box-shadow: 1px 1px 10px 0px #9c9c9c;
@@ -282,71 +343,79 @@ page-izq {
             margin:8px !important;
             box-shadow: 1px 1px 10px 0px #9c9c9c;
         }
-    
+
         .label-ios {
             margin-bottom: 1px !important;
             margin-top: 0px !important;
             margin: 0px;
         }
-    
+
         .medio{
             padding-left: 20% !important;
             padding-right: 9% !important;
             margin: 0px !important;
             padding-bottom: 1%;
         }
-    
+
         #tarjeta{
-            border-radius: 5px;  
-            box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);            
+            border-radius: 5px;
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);
         }
-    
-    
+
+
         #tarjeta:hover {
             box-shadow: 0 3px 5px , 0 3px 3px #7DAFB0;
           }
-      
+
+          .item-inner{
+            margin-left: 0px !important;
+        }
+
     }
-    
+
     .eventos{
-        background-color: #7DAFB0 !important;   
+        background-color: #7DAFB0 !important;
     }
-    
+
     .sobre {
         position:absolute;
         top:0px;
         left:0px;
         border:none;
        }
-    
+
     .compartir{
-        color: #7DAFB0 !important; 
+        color: #7DAFB0 !important;
     }
-    
+
     .derecha{
-        color: #7DAFB0 !important;  
+        color: #7DAFB0 !important;
         padding-left: 75%;
         margin-top: -30%;
-        width: 20%; 
+        width: 20%;
     }
-    
+
     .fecha{
-            color: #7DAFB0 !important;  
+            color: #7DAFB0 !important;
             padding-left: 75%;
             margin-top: -20%;
-            width: 20%; 
-        
+            width: 20%;
+
     }
-    
+
     #personas{
         font-size: 22px !important;
     }
-    
+
     ion-card{
      border: 0.4px solid #b3b4b4 !important;
      border-block-end: 1px solid #b3b4b4 !important;
     }
-    
+
+    ion-card img{
+        height: 100%;
+    }
+
     #chat{
         font-size: 2em !important;
         color: white;
@@ -354,21 +423,20 @@ page-izq {
         padding-right: 3%;
         float: right;
     }
-    
+
     #botonSi{
         background-color: #7DAFB0 !important;
         z-index: 1;
     }
-    
+
     #barraArriba{
         background-image: none !important;
-    
+
     }
     .header-md::after{
         background-image: none !important;
-    
+
     }
-    
-    
-    
-    
+
+
+

@@ -13,8 +13,10 @@ import { Ionic2RatingModule } from 'ionic2-rating';
 import { Http } from '@angular/http';
 import { Headers,RequestOptions } from '@angular/http';
 import { IzqPage } from './../izq/izq';
-declare var google;
+import { TranslateService } from '@ngx-translate/core';
 
+declare var google;
+ 
 
 @IonicPage()
 @Component({
@@ -22,9 +24,9 @@ declare var google;
   templateUrl: 'evento.html',
 })
 export class EventoPage {
-  //map: GoogleMap;
+  //map: GoogleMap; 
   deshabilitado: boolean=false;
-  
+   
   infoEvento: FirebaseListObservable<any[]>;
   infoUsuario: FirebaseObjectObservable<User>;
   public latitud:any;
@@ -38,7 +40,7 @@ export class EventoPage {
   public usuario:any;
   public calendario:any;
   mostrarFooter:boolean=false;
-
+  idUsuario:any;
   map: any;
   infoWindow: any;
   marker:any;
@@ -46,9 +48,12 @@ export class EventoPage {
   public b= document.getElementById('boton');
   public navegador:any;
   
-  constructor(private http:Http,public nav: Nav, private modal: ModalController,private emailComposer: EmailComposer,public mensaje: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, public ofAuth: AngularFireAuth,public storage: Storage,public afDatabase: AngularFireDatabase, public afAuth: AngularFireAuth, public platform:Platform, public app: App,private alertCtrl: AlertController){
+  constructor(private http:Http,public translateService: TranslateService,public nav: Nav, private modal: ModalController,private emailComposer: EmailComposer,public mensaje: Funciones_utilesProvider,public navCtrl: NavController, public navParams: NavParams, public ofAuth: AngularFireAuth,public storage: Storage,public afDatabase: AngularFireDatabase, public afAuth: AngularFireAuth, public platform:Platform, public app: App,private alertCtrl: AlertController){
       this.latitud="";
       this.longitud="";
+      this.storage.get('id_user').then((id_user) =>{
+        this.idUsuario=id_user;
+      });
   }
 
 
@@ -72,9 +77,25 @@ export class EventoPage {
 }
 
   accionDescartar(){
-    this.lista.pop();
+      this.lista.pop();
+      if(this.lista.length==1){
+        this.lista.pop();
+        console.log("solo 1");
+        this.storage.get('planes').then((arrayPlanes) =>{
+          this.storage.get('planesCargados').then((ContCargados) =>{
+            //this.lista=arrayPlanes.slice(ContCargados-1, ContCargados+2);
+            this.lista.push(arrayPlanes[ContCargados]);
+            this.lista.push(arrayPlanes[ContCargados-1]);
+            this.lista.push(arrayPlanes[ContCargados-2]);
+            console.log(this.lista);
+            this.storage.set('planesCargados',(ContCargados+2));
+          });
+        });
+      }
+
     this.navCtrl.pop();
-    //this.app.getRootNav().setRoot('IzqPage',{listaFinal:this.lista});
+    
+    ///this.app.getRootNav().setRoot('IzqPage',{listaFinal:this.lista});
   }
 
   accionVotar(){
@@ -85,6 +106,10 @@ export class EventoPage {
       //this.app.getRootNav().setRoot('IzqPage',{listaFinal:this.lista,idEvento:id_evento})
     });
     
+  }
+
+  verApuntados(idEvento){
+    this.navCtrl.push('ApuntadosPage',{idEvento:idEvento});
   }
 
   comprobarVotado(id){
@@ -181,7 +206,7 @@ export class EventoPage {
             if(desactivados[i]['idEvento']==id_evento){
               if(document.getElementById("apuntarse")){
               console.log("si");
-              //(<HTMLInputElement> document.getElementById("apuntarse")).disabled = false;
+              (<HTMLInputElement> document.getElementById("apuntarse")).disabled = false;
               (<HTMLInputElement> document.getElementById("botonChat")).disabled = false;
               that.mostrarFooter=false;
               that.comprobarVotado(id_evento);
@@ -192,6 +217,7 @@ export class EventoPage {
               console.log("no");
               //(<HTMLInputElement> document.getElementById("apuntarse")).disabled = true;
               (<HTMLInputElement> document.getElementById("botonChat")).disabled = true;
+              (<HTMLInputElement> document.getElementById("apuntarse")).disabled = true;
               that.mostrarFooter=true;
               }  
             }
@@ -251,7 +277,7 @@ export class EventoPage {
   }
 
   initMap() {
-    
+     
     let that=this;
     this.storage.get('id_evento').then((id_evento) =>{
       this.infoEvento = this.afDatabase.list('/Eventos', {
@@ -308,7 +334,7 @@ export class EventoPage {
   }
 
   mostrarToast(){
-      this.mensaje.aviso_error("Te has apuntado al evento");
+      this.mensaje.mostrarMensaje(this.translateService.instant("APUNTADO_AL_PLAN"),this.translateService.instant("APUNTADO_AL_PLAN2"));
   }
 
   async apuntarse(id_evento){ 
@@ -370,45 +396,171 @@ export class EventoPage {
     }
 
     accionVotar2(){
-      var cupo=0;
-      var limite=0;
-      
-
       this.storage.get('id_evento').then((id_evento) =>{
-        limite=this.contar(id_evento);
-        
-        var event = firebase.database().ref("Eventos/");
-        event.orderByChild("id").equalTo(id_evento).on("child_added", function(data) {
-          cupo=data.val().cupo
+        var limite=this.contar(id_evento);
+        var rootRef = firebase.database().ref().child("Apuntados");
+        var newKey = rootRef.push().key;
+        var playersRef = firebase.database().ref("Eventos/"); 
+        var a="";
+        var b=""; 
+        var coord="";
+        var entra=true;
+        var fecha;
+        var finaliza;
+        var empieza;
+        var entra2=true;
+        var cupo;
+
+        playersRef.orderByChild("id").equalTo(id_evento).on("value", function(snapshot) {
+          snapshot.forEach( item => {
+          a=item.val().lat;
+          b=item.val().lng;
+          fecha=item.val().fecha;
+          finaliza=item.val().horaFinal;
+          empieza=item.val().horaInicio;
+          cupo=item.val().cupo;
+          return false;
+          }); 
         });
-
-
+      
+        console.log(cupo);
+        console.log(limite);
         if(cupo==limite){
-          let alert = this.alertCtrl.create({
-            title: 'Este plan esta completo',
-            subTitle: 'Lo sentimos mucho este plan a llegado al limite de personas.',
-            buttons: ['Ok']
-          });
-          alert.present();
+          this.mensaje.mostrarMensaje(this.translateService.instant("COMPLETO"),this.translateService.instant("COMPLETO2"));
         }else{
 
-          var rootRef = firebase.database().ref().child("Apuntados");
-          var newKey = rootRef.push().key; 
-          this.storage.get('id_user').then((id_user) =>{
-        
-            this.afDatabase.object(`Apuntados/${newKey}`).set({
-              id: newKey,
-              idUsuario: id_user,
-              idEvento: id_evento 
-            })
+          coord=a+", "+b;
+          //console.log(coord);
           
-            this.sendNotification(id_user,id_evento);
-           
-          }); 
-          this.mostrarToast();
-          this.navCtrl.setRoot("HomePage")
+          var empieza2 = empieza.split(":")[0];
+          empieza2=empieza2.replace(/^0+/, '');
+          console.log(empieza2);
+      
+          var apikey="AIzaSyBxViocR4sk3WK97iwIhrxzvwQ2xSSJGrk";
+          var targetDate = new Date() // Current date/time of user computer
+          var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+          var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + coord + '&timestamp=' + timestamp + '&key=' + apikey;
+          var horaa;
+          var cont=0;
+          var dd=targetDate.getUTCDate();
+          var mm=targetDate.getMonth()+1;;
+          var yy=targetDate.getFullYear();
+          var horaHoy;
+          var that=this;
+          var visto=true;
+      
+          if(dd<10) {
+            var d=dd.toString();
+            d = "0"+dd
+          } 
+          if(mm<10) {
+          var m=mm.toString();
+            m = "0"+mm
+          } 
+          if(d==undefined && m==undefined){
+            horaHoy=yy+"-"+m+"-"+d;
+          }else if(d==undefined && m!=undefined){
+            horaHoy=yy+"-"+m+"-"+dd;
+          }else if(d!=undefined && m==undefined){
+            horaHoy=yy+"-"+mm+"-"+dd;
+          }
+          else{
+            horaHoy=yy+"-"+mm+"-"+dd;
+          }
+      
+          var xhr = new XMLHttpRequest(); 
+          xhr.abort();
+          xhr.open('GET', apicall);
+          xhr.onload = function(){
+              if (xhr.status === 200){ 
+                      var output = JSON.parse(xhr.responseText);
+                      //console.log(output);
+                      var offsets = output.dstOffset * 1000 + output.rawOffset * 1000;
+                      var localdate = new Date(timestamp * 1000 + offsets); 
+                      var refreshDate = new Date(); 
+                      var millisecondselapsed=refreshDate.getTime() - targetDate.getTime(); 
+                      localdate.setMilliseconds(localdate.getMilliseconds()+millisecondselapsed); 
+                      var hora;
+      
+                      var dd=localdate.getUTCDate();
+                      var mm=localdate.getMonth()+1;;
+                      var yy=localdate.getFullYear();
+                      var hour=localdate.getHours();
+                  
+                      if(dd<10) {
+                        var d=dd.toString();
+                        d = "0"+dd
+                      } 
+                      if(mm<10) {
+                      var m=mm.toString();
+                        m = "0"+mm
+                      } 
+                      if(d==undefined && m==undefined){
+                        hora=yy+"-"+mm+"-"+dd;
+                      }else if(d==undefined && m!=undefined){
+                        hora=yy+"-"+m+"-"+dd;
+                      }else if(d!=undefined && m==undefined){
+                        hora=yy+"-"+mm+"-"+d;
+                      }
+                      else{
+                        hora=yy+"-"+m+"-"+d;
+                      }
+                      setInterval(function(){
+                        if(visto==true){
+                          localdate.setSeconds(localdate.getSeconds()+1);
+                          //console.log("hora"+hora);
+                          //console.log(fecha+" y la otra "+hora);
+                         if(fecha==hora){
+                            if(hour>empieza2){
+                             // console.log("entra2");
+                              if(entra){
+                                that.mensaje.mostrarMensaje(that.translateService.instant("NO_PUEDES_APUNTAR"),that.translateService.instant("NO_PUEDES_APUNTAR2"));  
+                                //that.pasar();this.translateService.instant("NOTI_APUNTADO")
+                                entra=false;
+                              }                         
+                            }else{
+                              if(entra2){
+                                that.storage.get('id_user').then((id_user) =>{
+                                  
+                                        that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                          id: newKey,
+                                          idUsuario: id_user,
+                                          idEvento: id_evento 
+                                        })
+                                          that.sendNotification(id_user,id_evento);
+                                      });
+                                  
+                                      that.mostrarToast();                 
+                                      entra2=false;
+                              }
+                            }
+                          }else{   
+                            if(entra2){
+                              that.storage.get('id_user').then((id_user) =>{
+                                
+                                      that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                        id: newKey,
+                                        idUsuario: id_user,
+                                        idEvento: id_evento 
+                                      })
+                                        that.sendNotification(id_user,id_evento);
+                                    });
+                                
+                                    that.mostrarToast();          
+                                    entra2=false;
+                            }
+                          }
+                        } 
+                      }, 1000);
+                   }
+              else{
+                //alert('Request failed.  Returned status of ' + xhr.status)
+              }    
+          }
+          xhr.send();
         }
-      });
+        this.navCtrl.setRoot("HomePage")
+    });
     }
 
     voteUp(id_evento) {
@@ -416,41 +568,168 @@ export class EventoPage {
         var i=this.lista.length-1
         var id=this.lista[i].id;
         var limite=this.contar(id);
+        var rootRef = firebase.database().ref().child("Apuntados");
+        var newKey = rootRef.push().key;
         var cupo=this.lista[i].cupo;
       
         console.log(cupo);
         console.log(limite);
         if(cupo==limite){
-          let alert = this.alertCtrl.create({
-            title: 'Este plan esta completo',
-            subTitle: 'Lo sentimos mucho este plan a llegado al limite de personas.',
-            buttons: ['Ok']
-          });
-          alert.present();
-          this.lista.pop();
-          
+          this.mensaje.mostrarMensaje(this.translateService.instant("COMPLETO"),this.translateService.instant("COMPLETO2"));
         }else{
+
+          var a="";
+          var b=""; 
+          var coord="";
+          var entra=true;
+          var fecha;
+          var finaliza;
+          var empieza;
+          var entra2=true;
       
-          var rootRef = firebase.database().ref().child("Apuntados");
-          var newKey = rootRef.push().key; 
-          this.storage.get('id_user').then((id_user) =>{
-        
-            this.afDatabase.object(`Apuntados/${newKey}`).set({
-              id: newKey,
-              idUsuario: id_user,
-              idEvento: id_evento 
-            })
-          
-            this.sendNotification(id_user,id_evento);
-           
+          var playersRef = firebase.database().ref("Eventos/"); 
+          playersRef.orderByChild("id").equalTo(id).on("value", function(snapshot) {
+            snapshot.forEach( item => {
+            a=item.val().lat;
+            b=item.val().lng;
+            fecha=item.val().fecha;
+            finaliza=item.val().horaFinal;
+            empieza=item.val().horaInicio;
+            return false;
+            }); 
           });
-          this.mostrarToast();
-          this.lista.pop();
-          if(this.lista.length==0){
-            const appDiv: HTMLElement = document.getElementById('capa');
-            appDiv.innerHTML = `<h1>No hay mas eventos.</h1>`;
-            appDiv.style.height = "20%";
+          coord=a+", "+b;
+          //console.log(coord);
+          
+          var empieza2 = empieza.split(":")[0];
+          empieza2=empieza2.replace(/^0+/, '');
+          console.log(empieza2);
+      
+          var apikey="AIzaSyBxViocR4sk3WK97iwIhrxzvwQ2xSSJGrk";
+          var targetDate = new Date() // Current date/time of user computer
+          var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+          var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + coord + '&timestamp=' + timestamp + '&key=' + apikey;
+          var horaa;
+          var cont=0;
+          var dd=targetDate.getUTCDate();
+          var mm=targetDate.getMonth()+1;;
+          var yy=targetDate.getFullYear();
+          var horaHoy;
+          var that=this;
+          var visto=true;
+      
+          if(dd<10) {
+            var d=dd.toString();
+            d = "0"+dd
+          } 
+          if(mm<10) {
+          var m=mm.toString();
+            m = "0"+mm
+          } 
+          if(d==undefined && m==undefined){
+            horaHoy=yy+"-"+m+"-"+d;
+          }else if(d==undefined && m!=undefined){
+            horaHoy=yy+"-"+m+"-"+dd;
+          }else if(d!=undefined && m==undefined){
+            horaHoy=yy+"-"+mm+"-"+dd;
           }
+          else{
+            horaHoy=yy+"-"+mm+"-"+dd;
+          }
+      
+          var xhr = new XMLHttpRequest(); 
+          xhr.abort();
+          xhr.open('GET', apicall);
+          xhr.onload = function(){
+              if (xhr.status === 200){ 
+                      var output = JSON.parse(xhr.responseText);
+                      //console.log(output);
+                      var offsets = output.dstOffset * 1000 + output.rawOffset * 1000;
+                      var localdate = new Date(timestamp * 1000 + offsets); 
+                      var refreshDate = new Date(); 
+                      var millisecondselapsed=refreshDate.getTime() - targetDate.getTime(); 
+                      localdate.setMilliseconds(localdate.getMilliseconds()+millisecondselapsed); 
+                      var hora;
+      
+                      var dd=localdate.getUTCDate();
+                      var mm=localdate.getMonth()+1;;
+                      var yy=localdate.getFullYear();
+                      var hour=localdate.getHours();
+                  
+                      if(dd<10) {
+                        var d=dd.toString();
+                        d = "0"+dd
+                      } 
+                      if(mm<10) {
+                      var m=mm.toString();
+                        m = "0"+mm
+                      } 
+                      if(d==undefined && m==undefined){
+                        hora=yy+"-"+mm+"-"+dd;
+                      }else if(d==undefined && m!=undefined){
+                        hora=yy+"-"+m+"-"+dd;
+                      }else if(d!=undefined && m==undefined){
+                        hora=yy+"-"+mm+"-"+d;
+                      }
+                      else{
+                        hora=yy+"-"+m+"-"+d;
+                      }
+                      setInterval(function(){
+                        if(visto==true){
+                          localdate.setSeconds(localdate.getSeconds()+1);
+                          //console.log("hora"+hora);
+                          console.log(fecha+" y la otra "+hora);
+                         if(fecha==hora){
+                            if(hour>empieza2){
+                              console.log("entra2");
+                              if(entra){
+                                that.mensaje.mostrarMensaje(that.translateService.instant("NO_PUEDES_APUNTAR"),that.translateService.instant("NO_PUEDES_APUNTAR2"));  
+                                //that.pasar();this.translateService.instant("NOTI_APUNTADO")
+                                entra=false;
+                              }                         
+                            }else{
+                              if(entra2){
+                                that.storage.get('id_user').then((id_user) =>{
+                                  
+                                        that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                          id: newKey,
+                                          idUsuario: id_user,
+                                          idEvento: id 
+                                        })
+                                          that.sendNotification(id_user,id);
+                                      });
+                                  
+                                      that.mostrarToast();                 
+                                      entra2=false;
+                              }
+                            }
+                          }else{   
+                            if(entra2){
+                              that.storage.get('id_user').then((id_user) =>{
+                                
+                                      that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                        id: newKey,
+                                        idUsuario: id_user,
+                                        idEvento: id 
+                                      })
+                                        that.sendNotification(id_user,id);
+                                    });
+                                
+                                    that.mostrarToast();          
+                                    entra2=false;
+                            }
+                          }
+                        }
+                      }, 1000);
+                   }
+              else{
+                //alert('Request failed.  Returned status of ' + xhr.status)
+              }    
+          }
+          xhr.send();
+
+          this.lista.pop();
+
         }
       }
 
@@ -463,7 +742,7 @@ export class EventoPage {
       
         var perf = firebase.database().ref("Perfil/");
         perf.orderByChild("id").equalTo(idUser).on("child_added", function(data) {
-          nombre=data.val().nombre;
+          nombre=data.val().nick;
         });
       
         var event = firebase.database().ref("Eventos/");
@@ -486,8 +765,8 @@ export class EventoPage {
             if(notificacion){  
          body = {
             "notification":{
-              "title": "Se han apuntado a tu plan!!",
-              "body": nombre+" se ha apuntado a tu plan",
+              "title": this.translateService.instant("NOTI_APUNTADO"),
+              "body": nombre+this.translateService.instant("APUNTADO_PLAN"),
               "sound":"default",
               "click_action":"FCM_PLUGIN_ACTIVITY",
               "icon":"https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/Marca-Fishbay.png?alt=media&token=2a8028ee-e472-4664-9a0f-85b6d35c61d8"
@@ -510,19 +789,20 @@ export class EventoPage {
         } else{
           console.log("usuario con notificaciones desactivadas");
         }
-        }, 1000);  
+        }, 1200);  
       
       }
 
       permitirVotar(id,idCreador){
+        if(idCreador!=this.idUsuario){
+      
         var a="";
-        var b="";
+        var b=""; 
         var coord="";
         var entra=true;
         var fecha;
         var finaliza;
         var empieza;
-        var entra=true;
         var entra2=true;
     
         var playersRef = firebase.database().ref("Eventos/"); 
@@ -635,25 +915,13 @@ export class EventoPage {
                             }                         
                           }else{
                             if(entra2){
-                            console.log("entra3");              
-                            let alert = that.alertCtrl.create({
-                              title: 'Todavia no puedes votar este plan',
-                              subTitle: 'Podrás votar el plan cuando comienze',
-                              buttons: ['Ok']
-                            });
-                            alert.present();
+                            that.mensaje.mostrarMensaje(that.translateService.instant("NO_PUEDES_APUNTAR"),that.translateService.instant("NO_PUEDES_APUNTAR2"));                   
                             entra2=false;
                             }
                           }
                         }else{   
                           if(entra2){
-                          console.log("entra3");              
-                          let alert = that.alertCtrl.create({
-                            title: 'Todavia no puedes votar este plan',
-                            subTitle: 'Podrás votar el plan cuando comienze',
-                            buttons: ['Ok']
-                          });
-                          alert.present();
+                          that.mensaje.mostrarMensaje(that.translateService.instant("NO_PUEDES_APUNTAR"),that.translateService.instant("NO_PUEDES_APUNTAR2"));            
                           entra2=false;
                           }
                         }
@@ -665,8 +933,11 @@ export class EventoPage {
             }    
         }
         xhr.send();
+      }else{
+        this.mensaje.mostrarMensaje(this.translateService.instant("NO_VOTE"),this.translateService.instant("NO_VOTE2")); 
       }
 
+    }
 
       notificacionVoto(id){
         let votaciones=[];
@@ -743,11 +1014,11 @@ export class EventoPage {
     
           setTimeout(() => { 
     
-            if(notificacion && nombreE!=undefined){  
+            if(notificacion){  
          body = {
             "notification":{
-              "title": "Ya puedes votar el plan!",
-              "body": "El plan "+nombreE+ "tiene activada la votación",
+              "title": this.translateService.instant("NOTI_VOTAR"),
+              "body": this.translateService.instant("PLAN")+nombreE+this.translateService.instant("VOTAR"),
               "sound":"default",
               "click_action":"FCM_PLUGIN_ACTIVITY",
               "icon":"./assets/img/logo.png"

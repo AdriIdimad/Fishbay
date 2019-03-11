@@ -1,5 +1,5 @@
 import { Evento } from './../../models/evento';
-import { Component } from '@angular/core';
+import { Component,ElementRef } from '@angular/core';
 import { NavController, Nav,NavParams, IonicPage,Content , App} from 'ionic-angular';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
@@ -8,10 +8,9 @@ import { AngularFireAuth} from "angularfire2/auth";
 import { Http } from '@angular/http';
 import { Camera } from '@ionic-native/camera';
 import { Funciones_utilesProvider } from './../../providers/funciones_utiles/funciones_utiles';
-import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
-import { SocialSharing } from '@ionic-native/social-sharing'; 
+import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database'; 
 import {ViewChild, ViewChildren, QueryList } from '@angular/core';
-import {StackConfig,Stack,Card,ThrowEvent,DragEvent,SwingStackComponent,SwingCardComponent} from 'angular2-swing';
+import {StackConfig,Stack,Card,ThrowEvent,Direction,DragEvent,SwingStackComponent,SwingCardComponent} from 'angular2-swing';
 import { MenuController} from 'ionic-angular';
 import {Facebook} from '@ionic-native/facebook';
 import { LoadingController } from 'ionic-angular';
@@ -19,81 +18,89 @@ import { configuracionPage } from './../configuracion/configuracion';
 import { AlertController } from 'ionic-angular';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { Observable } from "rxjs/Rx"; 
-import 'rxjs/Rx';
+import 'rxjs/Rx'; 
 import { Headers,RequestOptions } from '@angular/http';
 import { User } from './../../models/user';
 import { TranslateService } from '@ngx-translate/core';
 import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free';
+import { log } from 'util';
       
-/**      
+/**        
  * Generated class for the IzqPage page.
- *
+ * 
  * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
+ * on Ionic pages and navigation.  
  */ 
-          
-@IonicPage()       
+           
+@IonicPage()        
 @Component({ 
-  selector: 'page-izq', 
+  selector: 'page-izq',  
   templateUrl: 'izq.html',
 })    
-        
+             
    
 export class IzqPage {
 
   @ViewChild('myswing1') swingStack: SwingStackComponent;
-  @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
+  @ViewChildren('mycards1') swingCards: ElementRef;
      
      
   ListaFiltrada: Array<any>; 
   cards: Array<any>;
-  stackConfig: StackConfig; 
+  stackConfig: StackConfig;  
   recentCard: string = '';
-  defaultImage: string = "https://img.freepik.com/psd-gratis/diseno-de-fondo-abstracto_1297-82.jpg?size=664&ext=jpg";
   public loaded:boolean;
+  public mostrarUltimo:boolean;
   public entra:boolean; 
   public rate : any=0; 
   public cont:number;
   public cont2:number;
   public contAnuncios:number;
-  public accion:number;
+  public accion:number; 
   public idEnventoDetalles:string;
-  public listaFinal: Array<any>;
- 
+  public listaFinal: Array<any>; 
+   
   evento = {} as Evento;
   eventos: FirebaseListObservable<any[]>;
-  
-  public apun:boolean;
+   
+  public apun:boolean;        
   public eventList:Array<any>;
-  public eventList2:Array<any>;
+  public eventList2:Array<any>;    
   public loadedeventList:Array<any>;
-  public loadedeventList2:Array<any>; 
+  public loadedeventList2:Array<any>;    
   public loadedBueno:Array<any>;
   public imagenes:Array<any>;
   public finalizado:boolean;
   public eventRef:firebase.database.Reference= firebase.database().ref('/Eventos');
   perfilData: FirebaseObjectObservable<User>;
 
-  constructor(private admob: AdMobFree,private translateService: TranslateService,private httpC:Http,private alertCtrl: AlertController,public loading: LoadingController,public menuCtrl: MenuController,public mensaje: Funciones_utilesProvider, public fallo: Funciones_utilesProvider,private socialSharing: SocialSharing, private ofAuth: AngularFireAuth,
+  constructor(private admob: AdMobFree,public translateService: TranslateService,private httpC:Http,private alertCtrl: AlertController,public loading: LoadingController,public menuCtrl: MenuController,public mensaje: Funciones_utilesProvider, public fallo: Funciones_utilesProvider, private ofAuth: AngularFireAuth,
     public navCtrl: NavController,public nav: Nav, public navParams: NavParams,public app: App, private afDatabase: AngularFireDatabase, private storage: Storage,private http: Http,public Facebook:Facebook) {
       this.loaded=false;
       this.entra=false;
       this.apun=false;
+      this.mostrarUltimo=true;
       this.finalizado=false;
-      this.cont=0;  
+      this.cont=0;   
       this.cont2=0;
       this.contAnuncios=0;
       this.menuCtrl = menuCtrl;
       //this.cargarNoapuntado();
+
+
       this.stackConfig = {
+        allowedDirections: [
+          Direction.LEFT,
+          Direction.RIGHT
+        ],
         throwOutConfidence: (offsetX, offsetY, element) => {
-          return Math.min(Math.abs(offsetX) / (element.offsetWidth/2), 1);
+          return Math.min(Math.abs(offsetX) / (element.offsetWidth/2), 1);// un 2 en 0.5
         },
         transform: (element, x, y, r) => {
           this.onItemMove(element, x, y, r);
         },
         throwOutDistance: (d) => {
-          return 800;
+          return 900; //800
         }
       }; 
  
@@ -121,19 +128,22 @@ export class IzqPage {
 
 cargado(){
   this.finalizado=true;
+  if(document.getElementsByName("cartas")){
+    document.getElementsByName("cartas")[0].click();
+  }
 }
 
 
 sendNotification(idUser,idEvento) {  
   let body;
-  var id_creador=""; 
+  var id_creador="";  
   var token="";
   var nombre;
   var notificacion:boolean;
 
   var perf = firebase.database().ref("Perfil/");
   perf.orderByChild("id").equalTo(idUser).on("child_added", function(data) {
-    nombre=data.val().nombre;
+    nombre=data.val().nick;
   });
 
   var event = firebase.database().ref("Eventos/");
@@ -151,22 +161,22 @@ sendNotification(idUser,idEvento) {
       notificacion=data.val().notificaciones;
     });
     
-   
+    
     setTimeout(() => { 
       if(notificacion){  
     body = { 
       "notification":{
-        "title": "Se han apuntado a tu plan!!",
-        "body": nombre+" se ha apuntado a tu plan",
+        "title": this.translateService.instant("NOTI_APUNTADO"),
+        "body": nombre+this.translateService.instant("APUNTADO_PLAN"),
         "sound":"default",
         "click_action":"FCM_PLUGIN_ACTIVITY",
-        "icon":"https://firebasestorage.googleapis.com/v0/b/fishbay-912f5.appspot.com/o/Marca-Fishbay.png?alt=media&token=2a8028ee-e472-4664-9a0f-85b6d35c61d8"
+        "icon":"fcm_push_icon"
       },
-      "data":{  
+      "data":{    
         //   
       },
         "to": token,
-        "priority":"high",
+        "priority":"high", 
         "restricted_package_name":""
     } 
        
@@ -203,21 +213,6 @@ apuntado(id_evento){
   }, 500);
   return true;
 
-    /*this.storage.get('id_user').then((id_user) =>{
-    var ref = firebase.database().ref("Apuntados");
-    ref.orderByChild("idEvento").equalTo(id_evento).on("value", function(snapshot) {
-        snap=snapshot.val();
-        console.log(snap);
-        for(let index in snap){ 
-          if(snap.idUsuario==id_user){
-            ee=true;
-          }else{
-            ee=false;
-          }
-        }
-    }); 
-  }); */
-
 }
   
   openMenu() {
@@ -233,40 +228,7 @@ apuntado(id_evento){
     this.navCtrl.push('configuracionPage');    
   }
 
-  ionViewWillEnter() {
-
-/*
-    this.ListaFiltrada=this.navParams.get("listaFiltrada");
-    this.listaFinal=this.navParams.get("listaFinal");
-    this.idEnventoDetalles=this.navParams.get("idEventoD");
-
-    if(this.ListaFiltrada==undefined){
-
-      if(this.listaFinal==undefined){
-        console.log("lista sin filtrar");
-        this.addNewCards(1);
-      }else{
-        if(this.idEnventoDetalles==undefined){
-          //this.loadedeventList=this.listaFinal;       
-        }else{
-          this.voteUp(this.idEnventoDetalles);
-        }
-      
-      }
-
-    }else if(this.ListaFiltrada.length==0){
-      console.log("lista con todo");
-      this.addNewCards(1);
-    }else{
-      console.log("lista filtrando");
-      this.loadedeventList=this.ListaFiltrada;
-    }*/
-    //this.addNewCards(1);
-}
-
-
   ionViewDidLoad() {
-
     this.ListaFiltrada=this.navParams.get("listaFiltrada");
 
     if(this.ListaFiltrada==undefined){
@@ -277,11 +239,24 @@ apuntado(id_evento){
       this.addNewCards(1);
     }else{
       console.log("lista filtrando");
-      this.loadedeventList=this.ListaFiltrada;
+      //this.loadedeventList=this.ListaFiltrada;
+      this.storage.set('planes', this.ListaFiltrada);
+      this.loadedeventList = [];
+  
+      for(var i=0;i<this.ListaFiltrada.length;i++){ 
+        if(i<3){
+          this.loadedeventList.push(this.ListaFiltrada[i]);
+          this.storage.set('planesCargados',i+2); 
+        }else{
+          break;
+        }
+      } 
+      this.loadedeventList.reverse();
+      //console.log(this.loadedeventList);
     }
 
   }
-
+ 
 
   ngAfterViewInit() {
     // Either subscribe in controller or set in HTML
@@ -299,7 +274,7 @@ apuntado(id_evento){
        src=data.val().imagen;
     });
     return src;
-  }
+  }  
  
   cogerPuntuacion(id){
     var playersRef = firebase.database().ref("Perfil/");
@@ -308,10 +283,6 @@ apuntado(id_evento){
     playersRef.orderByChild("id").equalTo(id).on("child_added", function(data) {
        pt=data.val().puntuacion;
     });
-
-    setTimeout(() => {
-      this.rate=pt;
-    }, 1000);
 
     return pt;
     
@@ -349,13 +320,10 @@ s
     this.nav.push('EventoPage',{lista:this.loadedeventList});
   }
 
-  sharee(mensaje,imagen,url){
-    this.socialSharing.share("Apuntate a este evento: "+mensaje,imagen,this.app.getRootNav().push('HomePage'));
+  verApuntados(idEvento){
+    this.navCtrl.push('ApuntadosPage',{idEvento:idEvento});
   }
 
-  share(mensaje,imagen,url){
-    this.socialSharing.shareViaWhatsApp("Apuntate a este evento: "+mensaje,imagen,"http://localhost:8100/#/HomePage");
-  }
   
   goChat(){ 
       this.app.getRootNav().push('ChatPage'); 
@@ -399,10 +367,10 @@ s
     });
 
     console.log(q, this.eventList.length);
-
+ 
 }
 mostrarToast(){
-  this.mensaje.aviso_error("Te has apuntado al evento");
+  this.mensaje.mostrarMensaje(this.translateService.instant("APUNTADO_AL_PLAN"),this.translateService.instant("APUNTADO_AL_PLAN2"));
 }
 
 
@@ -439,38 +407,201 @@ voteSwipe(){
   console.log(cupo);
   console.log(limite);
   if(cupo==limite){
-    let alert = this.alertCtrl.create({
-      title: 'Este plan esta completo',
-      subTitle: 'Lo sentimos mucho este plan esta completo',
-      buttons: ['Ok']
-    });
+    this.mensaje.mostrarMensaje(this.translateService.instant("COMPLETO"),this.translateService.instant("COMPLETO2"));
     this.pasar();
   }else{
 
-    this.storage.get('id_user').then((id_user) =>{
+    var a="";
+    var b=""; 
+    var coord="";
+    var entra=true;
+    var fecha;
+    var finaliza;
+    var empieza;
+    var entra2=true;
 
-      this.afDatabase.object(`Apuntados/${newKey}`).set({
-        id: newKey,
-        idUsuario: id_user,
-        idEvento: id 
-      })
-        this.sendNotification(id_user,id);
+    var playersRef = firebase.database().ref("Eventos/"); 
+    playersRef.orderByChild("id").equalTo(id).on("value", function(snapshot) {
+      snapshot.forEach( item => {
+      a=item.val().lat;
+      b=item.val().lng;
+      fecha=item.val().fecha;
+      finaliza=item.val().horaFinal;
+      empieza=item.val().horaInicio;
+      return false;
+      }); 
     });
+    coord=a+", "+b;
+    //console.log(coord);
+    
+    var empieza2 = empieza.split(":")[0];
+    empieza2=empieza2.replace(/^0+/, '');
+    console.log(empieza2);
 
-    this.mostrarToast();
-    this.loadedeventList.pop();
+    var apikey="AIzaSyBxViocR4sk3WK97iwIhrxzvwQ2xSSJGrk";
+    var targetDate = new Date() // Current date/time of user computer
+    var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+    var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + coord + '&timestamp=' + timestamp + '&key=' + apikey;
+    var horaa;
+    var cont=0;
+    var dd=targetDate.getUTCDate();
+    var mm=targetDate.getMonth()+1;;
+    var yy=targetDate.getFullYear();
+    var horaHoy;
+    var that=this;
+    var visto=true;
+
+    if(dd<10) {
+      var d=dd.toString();
+      d = "0"+dd
+    } 
+    if(mm<10) {
+    var m=mm.toString();
+      m = "0"+mm
+    } 
+    if(d==undefined && m==undefined){
+      horaHoy=yy+"-"+m+"-"+d;
+    }else if(d==undefined && m!=undefined){
+      horaHoy=yy+"-"+m+"-"+dd;
+    }else if(d!=undefined && m==undefined){
+      horaHoy=yy+"-"+mm+"-"+dd;
+    }
+    else{
+      horaHoy=yy+"-"+mm+"-"+dd;
+    }
+
+    var xhr = new XMLHttpRequest(); 
+    xhr.abort();
+    xhr.open('GET', apicall);
+    xhr.onload = function(){
+        if (xhr.status === 200){ 
+                var output = JSON.parse(xhr.responseText);
+                //console.log(output);
+                var offsets = output.dstOffset * 1000 + output.rawOffset * 1000;
+                var localdate = new Date(timestamp * 1000 + offsets); 
+                var refreshDate = new Date(); 
+                var millisecondselapsed=refreshDate.getTime() - targetDate.getTime(); 
+                localdate.setMilliseconds(localdate.getMilliseconds()+millisecondselapsed); 
+                var hora;
+
+                var dd=localdate.getUTCDate();
+                var mm=localdate.getMonth()+1;;
+                var yy=localdate.getFullYear();
+                var hour=localdate.getHours();
+            
+                if(dd<10) {
+                  var d=dd.toString();
+                  d = "0"+dd
+                } 
+                if(mm<10) {
+                var m=mm.toString();
+                  m = "0"+mm
+                } 
+                if(d==undefined && m==undefined){
+                  hora=yy+"-"+mm+"-"+dd;
+                }else if(d==undefined && m!=undefined){
+                  hora=yy+"-"+m+"-"+dd;
+                }else if(d!=undefined && m==undefined){
+                  hora=yy+"-"+mm+"-"+d;
+                }
+                else{
+                  hora=yy+"-"+m+"-"+d;
+                }
+                setInterval(function(){
+                  if(visto==true){
+                    localdate.setSeconds(localdate.getSeconds()+1); 
+                    //console.log("hora"+hora);
+                    console.log(fecha+" y la otra "+hora);
+                   if(fecha==hora){
+                      if(hour>empieza2){
+                        console.log("entra2");
+                        if(entra){
+                          that.mensaje.mostrarMensaje(that.translateService.instant("NO_PUEDES_APUNTAR"),that.translateService.instant("NO_PUEDES_APUNTAR2"));    
+                          entra=false;
+                        }                         
+                      }else{
+                        if(entra2){
+                          that.storage.get('id_user').then((id_user) =>{
+                            
+                                  that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                    id: newKey,
+                                    idUsuario: id_user,
+                                    idEvento: id 
+                                  })
+                                    that.sendNotification(id_user,id);
+                                });
+                            
+                                that.mostrarToast();                 
+                                entra2=false;
+                        }
+                      }
+                    }else{   
+                      if(entra2){
+                        that.storage.get('id_user').then((id_user) =>{
+                          
+                                that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                  id: newKey,
+                                  idUsuario: id_user,
+                                  idEvento: id 
+                                })
+                                  that.sendNotification(id_user,id);
+                              });
+                           
+                              that.mostrarToast();          
+                              entra2=false;
+                      }
+                    }
+                  }  
+                }, 1000);
+             } 
+        else{ 
+          //alert('Request failed.  Returned status of ' + xhr.status)
+        }    
+    }
+    xhr.send();
+  
+    this.storage.get('planes').then((arrayPlanes) =>{
+      this.storage.get('planesCargados').then((ContCargados) =>{
+        console.log("contador cargados: "+ContCargados);      
+        var final=0;
+        do{
+          if(ContCargados==4){
+            console.log("entra");
+            this.loadedeventList.pop();
+            this.loadedeventList=arrayPlanes.slice(ContCargados-3, ContCargados);
+            this.loadedeventList.reverse();
+            this.storage.set('planesCargados',(ContCargados+1)); 
+            console.log(this.loadedeventList);
+          }else{
+            this.loadedeventList=arrayPlanes.slice(ContCargados-3, ContCargados);
+            this.loadedeventList.reverse();
+            this.storage.set('planesCargados',(ContCargados+1)); 
+            console.log(this.loadedeventList);
+          }
+
+          if((ContCargados+1)>arrayPlanes.length){
+            final=1; 
+          }
+
+        }while(this.loadedeventList.length<3 && final!=1);
+
+        if(ContCargados>arrayPlanes.length+2){
+          this.mostrarUltimo=false;
+        }else{
+          setTimeout(() => {
+			if(this.loadedeventList.length>0 ){
+            document.getElementsByName("cartas")[0].focus();
+			}
+          }, 300);
+            
+        }
+ 
+      });
+
+    }); 
 
     this.contAnuncios++;
     
-    if(this.contAnuncios==3){
-      this.launchInterstitial();
-      this.contAnuncios=0;
-    }
-
-    if(this.loadedeventList.length==0){
-      const appDiv: HTMLElement = document.getElementById('capa');
-      appDiv.innerHTML = `<h1 style="text-align:justify; vertical-align: middle;">No hay mas eventos</h1>`;
-    }
   }
 }
 
@@ -480,57 +611,261 @@ voteUp(id_evento) {
   var id=this.loadedeventList[i].id;
   var limite=this.contar(id);
   var cupo=this.loadedeventList[i].cupo;
+  var rootRef = firebase.database().ref().child("Apuntados");
+  var newKey = rootRef.push().key;
 
   console.log(cupo);
   console.log(limite);
   if(cupo==limite){
-    let alert = this.alertCtrl.create({
-      title: 'Este plan esta completo',
-      subTitle: 'Lo sentimos mucho plan este plan a llegado al limite de personas.',
-      buttons: ['Ok']
-    });
-    alert.present();
+    this.mensaje.mostrarMensaje(this.translateService.instant("COMPLETO"),this.translateService.instant("COMPLETO2"));
     this.pasar();
     
   }else{
 
-    var rootRef = firebase.database().ref().child("Apuntados");
-    var newKey = rootRef.push().key; 
-    this.storage.get('id_user').then((id_user) =>{
-  
-      this.afDatabase.object(`Apuntados/${newKey}`).set({
-        id: newKey,
-        idUsuario: id_user,
-        idEvento: id_evento 
-      })
-    
-      this.sendNotification(id_user,id_evento);
-     
+    var a="";
+    var b=""; 
+    var coord="";
+    var entra=true;
+    var fecha;
+    var finaliza;
+    var empieza;
+    var entra2=true;
+
+    var playersRef = firebase.database().ref("Eventos/"); 
+    playersRef.orderByChild("id").equalTo(id).on("value", function(snapshot) {
+      snapshot.forEach( item => {
+      a=item.val().lat;
+      b=item.val().lng;
+      fecha=item.val().fecha;
+      finaliza=item.val().horaFinal;
+      empieza=item.val().horaInicio;
+      return false;
+      }); 
     });
-    this.mostrarToast();
-    this.loadedeventList.pop();
-    if(this.loadedeventList.length==0){
-      const appDiv: HTMLElement = document.getElementById('capa');
-      appDiv.innerHTML = `<h1>No hay mas eventos.</h1>`;
-      appDiv.style.height = "20%";
+    coord=a+", "+b;
+    //console.log(coord);
+    
+    var empieza2 = empieza.split(":")[0];
+    empieza2=empieza2.replace(/^0+/, '');
+    console.log(empieza2);
+
+    var apikey="AIzaSyBxViocR4sk3WK97iwIhrxzvwQ2xSSJGrk";
+    var targetDate = new Date() // Current date/time of user computer
+    var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+    var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + coord + '&timestamp=' + timestamp + '&key=' + apikey;
+    var horaa;
+    var cont=0;
+    var dd=targetDate.getUTCDate();
+    var mm=targetDate.getMonth()+1;;
+    var yy=targetDate.getFullYear();
+    var horaHoy;
+    var that=this;
+    var visto=true;
+
+    if(dd<10) {
+      var d=dd.toString();
+      d = "0"+dd
+    } 
+    if(mm<10) {
+    var m=mm.toString();
+      m = "0"+mm
+    } 
+    if(d==undefined && m==undefined){
+      horaHoy=yy+"-"+m+"-"+d;
+    }else if(d==undefined && m!=undefined){
+      horaHoy=yy+"-"+m+"-"+dd;
+    }else if(d!=undefined && m==undefined){
+      horaHoy=yy+"-"+mm+"-"+dd;
     }
+    else{
+      horaHoy=yy+"-"+mm+"-"+dd;
+    }
+
+    var xhr = new XMLHttpRequest(); 
+    xhr.abort();
+    xhr.open('GET', apicall);
+    xhr.onload = function(){
+        if (xhr.status === 200){ 
+                var output = JSON.parse(xhr.responseText);
+                //console.log(output);
+                var offsets = output.dstOffset * 1000 + output.rawOffset * 1000;
+                var localdate = new Date(timestamp * 1000 + offsets); 
+                var refreshDate = new Date(); 
+                var millisecondselapsed=refreshDate.getTime() - targetDate.getTime(); 
+                localdate.setMilliseconds(localdate.getMilliseconds()+millisecondselapsed); 
+                var hora;
+
+                var dd=localdate.getUTCDate();
+                var mm=localdate.getMonth()+1;;
+                var yy=localdate.getFullYear();
+                var hour=localdate.getHours(); 
+             
+                if(dd<10) {
+                  var d=dd.toString();
+                  d = "0"+dd
+                } 
+                if(mm<10) {
+                var m=mm.toString();
+                  m = "0"+mm
+                } 
+                if(d==undefined && m==undefined){
+                  hora=yy+"-"+mm+"-"+dd;
+                }else if(d==undefined && m!=undefined){
+                  hora=yy+"-"+m+"-"+dd;
+                }else if(d!=undefined && m==undefined){
+                  hora=yy+"-"+mm+"-"+d;
+                }
+                else{
+                  hora=yy+"-"+m+"-"+d;
+                }
+                setInterval(function(){
+                  if(visto==true){
+                    localdate.setSeconds(localdate.getSeconds()+1);
+                    //console.log("hora"+hora);
+                    console.log(fecha+" y la otra "+hora);
+                   if(fecha==hora){
+                      if(hour>empieza2){
+                        console.log("entra2");
+                        if(entra){
+                          that.mensaje.mostrarMensaje(that.translateService.instant("NO_PUEDES_APUNTAR"),that.translateService.instant("NO_PUEDES_APUNTAR2"));
+                          //that.pasar();
+                          entra=false;
+                        }                         
+                      }else{
+                        if(entra2){
+                          that.storage.get('id_user').then((id_user) =>{
+                            
+                                  that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                    id: newKey,
+                                    idUsuario: id_user,
+                                    idEvento: id 
+                                  })
+                                    that.sendNotification(id_user,id);
+                                });
+                            
+                                that.mostrarToast();                 
+                                entra2=false;
+                        }
+                      }
+                    }else{   
+                      if(entra2){
+                        that.storage.get('id_user').then((id_user) =>{
+                          
+                                that.afDatabase.object(`Apuntados/${newKey}`).set({
+                                  id: newKey,
+                                  idUsuario: id_user,
+                                  idEvento: id 
+                                })
+                                  that.sendNotification(id_user,id);
+                              });
+                          
+                              that.mostrarToast();          
+                              entra2=false;
+                      }
+                    }
+                  }
+                }, 1000);
+             }
+        else{
+          //alert('Request failed.  Returned status of ' + xhr.status)
+        }    
+    }
+    xhr.send();
+
+
+
+    this.storage.get('planes').then((arrayPlanes) =>{
+      this.storage.get('planesCargados').then((ContCargados) =>{
+        console.log("contador cargados: "+ContCargados);      
+        var final=0;
+        do{ 
+          if(ContCargados==4){
+            console.log("entra");
+            this.loadedeventList.pop();
+            this.loadedeventList=arrayPlanes.slice(ContCargados-3, ContCargados);
+            this.loadedeventList.reverse();
+            this.storage.set('planesCargados',(ContCargados+1)); 
+            console.log(this.loadedeventList);
+          }else{
+            this.loadedeventList=arrayPlanes.slice(ContCargados-3, ContCargados);
+            this.loadedeventList.reverse();
+            this.storage.set('planesCargados',(ContCargados+1)); 
+            console.log(this.loadedeventList);
+          }
+
+          if((ContCargados+1)>arrayPlanes.length){
+            final=1; 
+          }
+
+        }while(this.loadedeventList.length<3 && final!=1);
+
+        if(ContCargados>arrayPlanes.length+2){
+          this.mostrarUltimo=false;
+        }else{
+          setTimeout(() => {
+           if(this.loadedeventList.length>0 ){
+            document.getElementsByName("cartas")[0].focus();          
+          }
+          }, 300);
+            
+        }
+ 
+      });
+
+    }); 
+
   }
 }
 
-pasar(){
-  this.loadedeventList.pop();
-  if(this.loadedeventList.length==0){
-    const appDiv: HTMLElement = document.getElementById('capa');
-    appDiv.innerHTML = `<h1>No hay mas eventos.</h1>`;
-    appDiv.style.height = "80%";
-  }
+async pasar(){
+  var pasar=0;
 
-  this.contAnuncios++;
+    this.storage.get('planes').then((arrayPlanes) =>{
+      this.storage.get('planesCargados').then((ContCargados) =>{
+        console.log("contador cargados: "+ContCargados);      
+        var final=0;
+        do{
+          if(ContCargados==4){
+            this.loadedeventList.pop();
+            this.loadedeventList=arrayPlanes.slice(ContCargados-3, ContCargados);
+            this.loadedeventList.reverse();
+            this.storage.set('planesCargados',(ContCargados+1)); 
+            console.log(this.loadedeventList);
+          }else{
+            this.loadedeventList=arrayPlanes.slice(ContCargados-3, ContCargados);
+            this.loadedeventList.reverse();
+            this.storage.set('planesCargados',(ContCargados+1)); 
+            console.log(this.loadedeventList);
+          }
+
+          if((ContCargados+1)>arrayPlanes.length){
+            final=1;  
+          }
+
+        }while(this.loadedeventList.length<3 && final!=1);
+
+        if(ContCargados>arrayPlanes.length+2){
+          this.mostrarUltimo=false;
+          pasar=1;
+        }
+
+
+      }); 
+
+    });
+
+    if(this.loadedeventList.length>0 && pasar==0){
+      await document.getElementsByName("cartas")[0].click();
+      console.log("click pasar");
+    }
+            
+
+  //this.contAnuncios++;
   
-  if(this.contAnuncios==3){
+  /*if(this.contAnuncios==3){
     this.launchInterstitial();
     this.contAnuncios=0;
-  }
+  }*/
 }
 
 // Add new cards to our array
@@ -547,23 +882,20 @@ addNewCards(count: number) {
     var c=[];
     var d=[];
     var e=[];
+    var foco=0;
 
    this.storage.get('id_user').then((id_user) =>{
-    var that=this;
+
+    var that=this; 
 
     var playersRef = firebase.database().ref("Apuntados/"); 
     playersRef.orderByChild("idUsuario").equalTo(id_user).on("value", function(snapshot) {
       snapshot.forEach( item => {
       a.push(item.val());
-      return false;
+      return false; 
       }); 
     });
 
-    var ref = firebase.database().ref("Eventos/");
-    ref.on("child_added", function(snapshot) {
-        b.push(snapshot.val());
-
-    });
     
     var ref = firebase.database().ref("Eventos/");
     ref.on("child_added", function(snapshot) {
@@ -571,11 +903,6 @@ addNewCards(count: number) {
 
     });
 
-    var ref = firebase.database().ref("Eventos/");
-    ref.on("child_added", function(snapshot) {
-        e.push(snapshot.val());
-
-    });
 
     var playersRef = firebase.database().ref("bloqueados/"); 
     playersRef.orderByChild("idUsuario").equalTo(id_user).on("value", function(snapshot) {
@@ -585,76 +912,113 @@ addNewCards(count: number) {
       }); 
     });
 
-    setTimeout(() => {
-      console.log("apuntados");
-      console.log(a);
-      console.log("eventos");
-      console.log(b);
-      console.log("bloqueados");
-      console.log(d);
-    }, 2000);
- 
-
    setTimeout(() => {
 
-    for(var i=0;i<a.length;i++){
-      var index = c.findIndex(function(el) {
-        return el.id == a[i]['idEvento'];
-      });
-      c.splice(index,1);
-    }  
+    console.log("apuntados");
+    console.log(a);
 
-    console.log("sinApuntados");
+    console.log("eventos");
     console.log(c);
 
-    for(var i=0;i<c.length;i++){
-      for(var j=0;j<d.length;j++){
-        var index = c.findIndex(function(el) {
-        return el.idCreador==d[j]['idBloqueado'];
-        });
-        c.splice(index,1);
+    for(var i=0;i<a.length;i++){
+      var index = c.findIndex(function(el) {     
+        return el.id == a[i]['idEvento'];        
+      });
+      console.log(index);
+      if(index!=-1){
+      c.splice(index,1);
+      }
+    }   
+  
+    console.log("quito a los que esta Apuntado");
+    console.log(c);
+
+    console.log("longitud"+c.length);
+    var cont=0;
+
+    var array = [];
+    var array2= [];
+    for (var i = 0; i < c.length; i++) {
+        var igual=false;
+        for (var j = 0; j < d.length && !igual; j++) {
+            if(c[i]['idCreador'] == d[j]['idBloqueado']) 
+                    igual=true;
+        }
+        if(!igual)array.push(c[i]);
+    }
+ 
+    console.log("Quito los que tiene bloqueados");
+    console.log(array);
+    array.reverse();
+    //modificado
+    this.storage.set('planes', array);
+    this.loadedeventList = [];
+
+    for(var i=0;i<array.length;i++){ 
+      if(i<3){
+        this.loadedeventList.push(array[i]);
+        this.storage.set('planesCargados',i+2); 
+      }else{
+        break;
       }
     } 
+    this.loadedeventList.reverse();
 
-    console.log("sinbloqueados");
-    console.log(c);
+    //this.loadedeventList=array2;
+    console.log("Final");
+    console.log(this.loadedeventList); 
 
-    this.loadedeventList=c;
-    console.log("FInal");
-    console.log(this.loadedeventList);
-}, 2000);
+    if(this.loadedeventList.length==0){
+      this.mostrarUltimo=false;
+      foco=1;
+    }
+    if(this.loadedeventList.length>0 && foco==0){
+      setTimeout(() => {
+        document.getElementsByName("cartas")[0].click();
+        console.log("click");
+      }, document.getElementsByName("cartas")[0]);
+      
 
+    }
+
+    
+  }, 1200);
+  
   
 });
 
-/*setTimeout(() => {
-      this.eventRef.on('value', itemSnapshot => {
-        this.loadedeventList = [];
-        itemSnapshot.forEach( itemSnap => {
-          this.loadedeventList.push(itemSnap.val());
-          return false;
-        });
-      });
-    }, 1000);*/
+
+
  
-  /*});
-  loader.dismiss();*/
+}
+
+foco(){
+  document.getElementsByName("cartas")[0].click();
+  console.log("foco");
 }
   
-// http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
 decimalToHex(d, padding) {
   var hex = Number(d).toString(16);
   padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
   
   while (hex.length < padding) {
-    hex = "0" + hex;
+    hex = "0" + hex;  
   }
   
   return hex;
-} 
+}  
+
+ 
+recargar(){
+  this.finalizado=false; 
+  this.mostrarUltimo=true;
+  this.addNewCards(1);
+}
 
 verPerfil(id){
+ 
   this.navCtrl.push('VerPerfilPage',{id: id });
 }
 
 }
+   

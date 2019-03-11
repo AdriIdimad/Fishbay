@@ -14,15 +14,88 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
 .no-left-padding{
     padding-left: 0;
 }
+
+.iconosMenu{
+  vertical-align: bottom !important;
+}
+
+@media only screen and (max-height: 600px) {
+  #usuario {
+    border: 1px solid #7DAFB0;
+    width: 85px !important;
+    height: 85px !important;
+ }
+}
+@media only screen and (max-height: 300px) {
+    #usuario {
+      border: 1px solid #7DAFB0;
+      width: 75px !important;
+      height: 75px !important;
+   }
+   ul.rating li ion-icon {
+    font-size: 8px !important;
+  }
+  }
+@media only screen and (max-height: 650px) {
+    #card-stack {
+        height: 90% !important;
+    }
+}
+@media only screen and (max-height: 700px) {
+    #card-stack {
+        height: 90% !important;
+    }
+}
+
+@media only screen and (max-height: 580px) {
+    #imagenPlan {
+        height: 68% !important;           
+    }
+    #content{
+        height: 32% !important;
+    }
+    #mes{
+        font-size:80% !important;
+    }
+}
+
 .center{
     text-align: center;
 }
 
+.alert-md .alert-wrapper{
+  border-radius: 14px !important;
+}
+
+.alert-title{
+  color:#7DAFB0 !important;
+  font-weight: bold !important;
+}
+
+.alert-radio-group{
+  border-top: 0px solid #dedede!important;
+  border-bottom: 0px solid #dedede !important;
+}
+
+.alert-md .alert-button{
+  border-radius: 10px !important;
+}
+
 .negro{
-    color:black !important;
+    color:#7DAFB0 !important;
+}
+
+ion-icon{
+  line-height: unset !important;
+}
+
+button{
+  color:#7DAFB0 !important;
 }
 
 .picker-md .picker-opt.picker-opt-selected {
@@ -68,3 +141,230 @@
     width: 100%;
     height: 50%;
   }
+
+  .alert-wp .alert-radio-label {
+    white-space: normal !important;
+  }
+
+  .alert-md .alert-radio-label{
+    color: #575757;
+  }
+  
+
+  .item-md.item-input.item-input-has-focus .item-inner,
+  .item-md.item-input.input-has-focus .item-inner {
+    border-bottom-color: #7DAFB0 !important;
+    -webkit-box-shadow: inset 0 0px 0 0 #7DAFB0 !important;
+    box-shadow: inset 0 0px 0 0 #7DAFB0 !important;
+  }
+
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    border-bottom-color: #7DAFB0 !important;
+    -webkit-box-shadow: inset 0 0px 0 0 #7DAFB0 !important;
+    box-shadow: inset 0 0px 0 0 #7DAFB0 !important;
+  }
+
+  .controls{
+    border: 1px solid #f4f4f4 !important;
+    border-radius: 15px !important;
+    box-shadow: 3px 4px 7px 0px #9c9c9c !important;
+    height: 30px !important;
+    padding-left: 3% !important;
+
+  }
+
+  .alert-ios .alert-radio-label{
+    white-space: pre-line !important;
+  }
+
+  .alert-md .alert-radio-label{ 
+    white-space: pre-line !important;
+  }
+
+  .alert-wp .alert-radio-label{ 
+    white-space: pre-line !important;
+  }
+
+  #map{
+    margin:10px auto;
+    z-index: 1;
+  }
+
+  #logo_login{
+    content:url(../assets/img/Registro_Login.png);
+  }
+
+
+  ion-icon {
+    &[class*="fishbay-"] {
+        // Instead of using the font-based icons
+        // We're applying SVG masks
+        mask-size: contain;
+        mask-position: 50% 50%;
+        mask-repeat: no-repeat;
+        background: currentColor;
+        width: 1.3em;
+        height: 1.3em;
+    }
+    // custom icons
+    &[class*="fishbay-reloj"] {
+        mask-image: url(../assets/img/hora.svg);
+    }
+    &[class*="fishbay-roseta"] {
+        mask-image: url(../assets/img/Explorar.svg); 
+    }
+    &[class*="fishbay-misplanes"] {
+        mask-image: url(../assets/img/mis_planes_2.svg);
+    }
+    &[class*="fishbay-publicar"] {
+      mask-image: url(../assets/img/publicar.svg);
+    }
+    &[class*="fishbay-persona"] {
+    mask-image: url(../assets/img/mi_perfil.svg);
+    }
+    &[class*="fishbay-chat"] {
+      mask-image: url(../assets/img/chat.svg);
+      }
+    &[class*="fishbay-detalles"] {
+      mask-image: url(../assets/img/mas.svg);
+    }
+    &[class*="fishbay-estrella"] {
+      mask-image: url(../assets/img/estrella.svg);
+    }
+    &[class*="fishbay-configuracion"] {
+      mask-image: url(../assets/img/Configuracion.svg);
+    }
+    &[class*="fishbay-editar"] {
+      mask-image: url(../assets/img/editar.svg);
+    }
+    &[class*="fishbay-conducta"] {
+      mask-image: url(../assets/img/codigo_conducta2.svg);
+    }
+    &[class*="fishbay-cerrarsesion"] {
+      mask-image: url(../assets/img/cerrar_sesion.svg);
+    }
+    &[class*="fishbay-corazon"] {
+      mask-image: url(../assets/img/corazon.svg);
+    }
+    &[class*="fishbay-x"] {
+      mask-image: url(../assets/img/X.svg);
+    }
+    &[class*="fishbay-fechasubir"] {
+      mask-image: url(../assets/img/fecha_subir.svg);
+    }
+    &[class*="fishbay-titulo"] {
+      mask-image: url(../assets/img/titulo.svg);
+    }
+    &[class*="fishbay-descripcion"] {
+      mask-image: url(../assets/img/descripcion.svg);
+    }
+    &[class*="fishbay-limitepersonas"] {
+      mask-image: url(../assets/img/n_personas3.svg);
+    }
+    &[class*="fishbay-fecharegistro"] {
+      mask-image: url(../assets/img/fecha3.svg);
+    }
+    &[class*="fishbay-fechainicio"] {
+      mask-image: url(../assets/img/hora3.svg);
+    }
+    &[class*="fishbay-categoria"] {
+      mask-image: url(../assets/img/categoria.svg);
+    }
+    &[class*="fishbay-lugar"] {
+      mask-image: url(../assets/img/lugar3.svg);
+    }
+    &[class*="fishbay-flecha"] {
+      mask-image: url(../assets/img/flecha.svg);
+    }
+    &[class*="fishbay-perosnasevento"] {
+      mask-image: url(../assets/img/n_personas.svg);
+    }
+    &[class*="fishbay-fechaevento"] {
+      mask-image: url(../assets/img/Fecha.svg);
+    }
+    &[class*="fishbay-horaevento"] {
+      mask-image: url(../assets/img/hora.svg);
+    }
+    &[class*="fishbay-lugarevento"] {
+      mask-image: url(../assets/img/lugar.svg);
+    }
+    &[class*="fishbay-estrella2"] {
+      mask-image: url(../assets/img/estrella_2.svg);
+    }
+    &[class*="fishbay-denunciar"] {
+      mask-image: url(../assets/img/denunciar.svg);
+    }
+    &[class*="fishbay-politica"] {
+      mask-image: url(../assets/img/codigo_conducta.svg);
+    }
+    &[class*="fishbay-condiciones"] {
+      mask-image: url(../assets/img/condiciones.svg);
+    }
+    &[class*="fishbay-nombre"] {
+      mask-image: url(../assets/img/CUENTA/nombre.svg);
+    }
+    &[class*="fishbay-nick"] {
+      mask-image: url(../assets/img/CUENTA/nicke.svg);
+    }
+    &[class*="fishbay-descripcionPerfil"] {
+      mask-image: url(../assets/img/CUENTA/descripcion.svg);
+    }
+    &[class*="fishbay-edadPerfil"] {
+      mask-image: url(../assets/img/CUENTA/edad.svg);
+    }
+    &[class*="fishbay-ciudadPerfil"] {
+      mask-image: url(../assets/img/CUENTA/cuidad.svg);
+    }
+    &[class*="fishbay-profesionPerfil"] {
+      mask-image: url(../assets/img/CUENTA/profesion.svg);
+    }
+    &[class*="fishbay-emailPerfil"] {
+      mask-image: url(../assets/img/CUENTA/email.svg);
+    }
+    &[class*="fishbay-guardarCambios"] {
+      mask-image: url(../assets/img/CUENTA/guardar.svg);
+    }
+    &[class*="fishbay-cambiarContraseña"] {
+      mask-image: url(../assets/img/CUENTA/cambiar_contra.svg);
+    }
+    &[class*="fishbay-usuariosBloqueados"] {
+      mask-image: url(../assets/img/CUENTA/bloquear.svg);
+    }
+    &[class*="fishbay-eliminarPerfil"] {
+      mask-image: url(../assets/img/CUENTA/eliminar.svg);
+    }
+    &[class*="fishbay-ver"] {
+      mask-image: url(../assets/img/ver.svg);
+    }
+    &[class*="fishbay-borrar"] {
+      mask-image: url(../assets/img/borrar.svg);
+    }
+    &[class*="fishbay-camara"] {
+      mask-image: url(../assets/img/camara.svg);
+    }
+    &[class*="fishbay-flechaIz"] {
+      mask-image: url(../assets/img/flecha_Iz.svg);
+    }
+    &[class*="fishbay-campana"] {
+      mask-image: url(../assets/img/denunciar/campana.svg);
+    }
+    &[class*="fishbay-hijos"] {
+      mask-image: url(../assets/img/cuestionario/hijos.svg);
+    }
+    &[class*="fishbay-hombre"] {
+      mask-image: url(../assets/img/cuestionario/hombre.svg);
+    }
+    &[class*="fishbay-mujer"] {
+      mask-image: url(../assets/img/cuestionario/mujer.svg);
+    }
+    &[class*="fishbay-nacionalidad"] {
+      mask-image: url(../assets/img/cuestionario/nacionalidad.svg);
+    }
+    &[class*="fishbay-mascota"] {
+      mask-image: url(../assets/img/cuestionario/mascotas.svg);
+    }
+
+
+
+}

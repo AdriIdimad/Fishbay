@@ -8,30 +8,34 @@ import { AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
 import {Facebook} from '@ionic-native/facebook';
+import {Keyboard } from 'ionic-native';
+import { TextInput } from 'ionic-angular/components/input/input';
 /**
  * Generated class for the ChatPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
+ * on Ionic pages and navigation. 
  */
 
 @IonicPage()
-@Component({
+@Component({   
   selector: 'ChatPage',
   templateUrl: 'chat.html',
-})
+}) 
 export class ChatPage {
   @ViewChild(Content) content: Content;
 
   public perfilData: FirebaseObjectObservable<User>;
   facebook: boolean;
   public username: string="";
+  public imagen: string="";
   message: string="";
   messages: object[]=[];
-  idEvento;
-  s;
+  idEvento; 
+  s; 
   as;
   myActualDate;
+  @ViewChild('chat_input') messageInput: TextInput;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afDatabase: AngularFireDatabase, public afAuth: AngularFireAuth,public storage: Storage,public Facebook:Facebook) {
   
@@ -46,27 +50,32 @@ export class ChatPage {
         
     });
 
-     setTimeout(() => {
+     setTimeout(() => { 
         this.content.scrollToBottom(100);
-     }, 50);
-  }
+     }, 50); 
+ 
 
+  }    
+ 
   ngOnInit(){
     this.afAuth.authState.take(1).subscribe(data =>{  
       this.as=this.afDatabase.list('/Perfil/'+data.uid).subscribe( data2 =>{
         data2.forEach(element => {
           if(element.$key=="nombre"){
             this.username=element.$value;         
-          }          
-        });
+          }
+          if(element.$key=="imagen"){
+            this.imagen=element.$value;         
+          }             
+        }); 
       });
     });
     setTimeout(() => {
       this.content.scrollToBottom(100);
-   }, 50);
+   }, 500);
 
   
-  }
+  }   
 
   getRandomColor()
   {
@@ -81,23 +90,26 @@ export class ChatPage {
 
 
   enviarMensaje(){
+    if(this.message!=""){
+
       this.storage.get('fb').then((fb) =>{ 
         this.facebook=fb;
         if(fb==true){
           this.getInfo();
         }
+
         console.log(this.username);
         const d = new Date();
         const curHour = d.getHours();
         const curMin = d.getMinutes();
         const curSec = d.getSeconds();
-        var horaMenasaje=curHour+":"+curMin+":"+curSec;
+        var horaMenasaje=curHour+":"+curMin; 
     
   
         this.afDatabase.list("/Chat/"+this.idEvento).push({
           username: this.username,
           message: this.message,
-          color: this.getRandomColor(),
+          imagen: this.imagen,
           hora: horaMenasaje
         }).then( () =>{
           this.message="";
@@ -112,23 +124,32 @@ export class ChatPage {
             this.username=data.email;
           });*/
 
-          setTimeout(() => {
-            this.content.scrollToBottom(100);
-         }, 50);
+          this.messageInput.setFocus();
+          this.updateScroll();
 
         }).catch( () =>{
         // error
         });
   
        });
+      }
   }
 
   getInfo(){
     this.Facebook.api("me/?fields=name,email,first_name,picture,last_name,birthday,hometown",['public_profile','email'])
        .then(response => {
           this.username=response.name;
+          this.imagen=response.picture.data.url;
       }); 
+   
+} 
   
+
+updateScroll() {
+  console.log('updating scroll')
+  setTimeout(() => {
+    this.content.scrollToBottom();
+  }, 400)
 }
 
 }
